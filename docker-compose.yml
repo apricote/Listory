@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:12.1
+    environment:
+      POSTGRES_PASSWORD: listory
+      POSTGRES_USER: listory
+      POSTGRES_DB: listory
+    networks:
+      - listory
+
+  service:
+    build:
+      context: .
+      target: builder
+    command: ["npm", "run", "start:dev"]
+    environment:
+      DB_USERNAME: listory
+      DB_PASSWORD: listory
+      DB_HOST: db
+    env_file: .env
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3000:3000
+    networks:
+      - listory
+
+networks:
+  listory: {}
