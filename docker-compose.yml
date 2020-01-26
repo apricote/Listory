@@ -8,12 +8,12 @@ services:
       POSTGRES_USER: listory
       POSTGRES_DB: listory
     networks:
-      - listory
+      - db
 
-  service:
+  api:
     build:
       context: .
-      target: builder
+      target: build-api
     command: ["npm", "run", "start:dev"]
     environment:
       DB_USERNAME: listory
@@ -23,9 +23,51 @@ services:
     volumes:
       - ./src:/app/src
     ports:
-      - 3000:3000
+      - 3000
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.http.routers.api.rule=PathPrefix(`/api/v1`)"
+      - "traefik.http.routers.api.entrypoints=web"
     networks:
-      - listory
+      - web
+      - db
+
+  frontend:
+    build:
+      context: .
+      target: build-frontend
+    command: ["npm", "run", "start"]
+    volumes:
+      - ./frontend/src:/app/frontend/src
+      - ./frontend/public:/app/frontend/public
+    ports:
+      - 3000
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+    networks:
+      - web
+
+  proxy:
+    image: traefik
+    command:
+      - --log.level=debug
+      #- --accesslog=true
+      - --api # Enables the web UI
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=listory_web
+      - --entrypoints.web.address=:3000
+    ports:
+      - "3000:3000" # The HTTP port
+      - "8080:8080" # The web UI
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
 
 networks:
-  listory: {}
+  db: {}
+  web: {}
