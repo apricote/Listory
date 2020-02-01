@@ -26,7 +26,7 @@ services:
       - 3000
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.http.routers.api.rule=PathPrefix(`/api/v1`)"
+      - "traefik.http.routers.api.rule=PathPrefix(`/api`)"
       - "traefik.http.routers.api.entrypoints=web"
     networks:
       - web
@@ -52,7 +52,7 @@ services:
   proxy:
     image: traefik
     command:
-      - --log.level=debug
+      #- --log.level=debug
       #- --accesslog=true
       - --api # Enables the web UI
       - --api.insecure=true

@@ -1,17 +1,17 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AuthenticationModule } from "./authentication/authentication.module";
+import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./database/database.module";
-import { ConnectionsModule } from "./connections/connections.module";
-import { FrontendModule } from './frontend/frontend.module';
+import { SourcesModule } from "./sources/sources.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
-    AuthenticationModule,
-    ConnectionsModule,
-    FrontendModule
+    AuthModule,
+    UsersModule,
+    SourcesModule
   ]
 })
 export class AppModule {}

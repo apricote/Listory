@@ -1,4 +1,4 @@
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
 
@@ -17,9 +17,9 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     entities: [join(__dirname, "..", "**/*.entity.{ts,js}")],
 
     // Migrations
-    migrationsRun: true,
-    migrations: [join(__dirname, "migrations", "*.{ts,js}")],
-    synchronize: false
+    // migrationsRun: true,
+    // migrations: [join(__dirname, "migrations", "*.{ts,js}")],
+    synchronize: true
   }),
   inject: [ConfigService]
 });
