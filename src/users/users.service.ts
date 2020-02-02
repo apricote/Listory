@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateOrUpdateDto } from "./dto/create-or-update.dto";
 import { User } from "./user.entity";
 import { UserRepository } from "./user.repository";
+import { SpotifyConnection } from "src/sources/spotify/spotify-connection.entity";
 
 @Injectable()
 export class UsersService {
@@ -15,6 +16,10 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
   async createOrUpdate(data: CreateOrUpdateDto): Promise<User> {
@@ -38,5 +43,13 @@ export class UsersService {
     await this.userRepository.save(user);
 
     return user;
+  }
+
+  async updateSpotifyConnection(
+    user: User,
+    spotify: SpotifyConnection
+  ): Promise<void> {
+    user.spotify = spotify;
+    await this.userRepository.save(user);
   }
 }

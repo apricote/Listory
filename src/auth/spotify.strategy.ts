@@ -7,8 +7,8 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class SpotifyStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private readonly config: ConfigService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    config: ConfigService
   ) {
     super({
       clientID: config.get<string>("SPOTIFY_CLIENT_ID"),

@@ -9,4 +9,7 @@ export class SpotifyConnection {
 
   @Column()
   refreshToken: string;
+
+  @Column({ type: "timestamp", nullable: true })
+  lastRefreshTime?: Date;
 }
