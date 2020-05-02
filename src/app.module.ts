@@ -4,6 +4,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./database/database.module";
 import { ListensModule } from "./listens/listens.module";
+import { LoggerModule } from "./logger/logger.module";
 import { MusicLibraryModule } from "./music-library/music-library.module";
 import { SourcesModule } from "./sources/sources.module";
 import { UsersModule } from "./users/users.module";
@@ -18,6 +19,7 @@ import { UsersModule } from "./users/users.module";
     SourcesModule,
     MusicLibraryModule,
     ListensModule,
+    LoggerModule,
   ],
 })
 export class AppModule {}
