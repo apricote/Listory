@@ -31,7 +31,7 @@ export class AuthController {
       maxAge: 15 * 60 * 1000,
 
       // Must be readable by SPA
-      httpOnly: false
+      httpOnly: false,
     });
 
     // Redirect User to SPA

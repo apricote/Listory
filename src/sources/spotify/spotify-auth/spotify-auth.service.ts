@@ -23,8 +23,8 @@ export class SpotifyAuthService {
         {
           auth: {
             username: this.clientID,
-            password: this.clientSecret
-          }
+            password: this.clientSecret,
+          },
         }
       )
       .toPromise();
@@ -40,8 +40,8 @@ export class SpotifyAuthService {
         {
           auth: {
             username: this.clientID,
-            password: this.clientSecret
-          }
+            password: this.clientSecret,
+          },
         }
       )
       .toPromise();

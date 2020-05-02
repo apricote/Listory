@@ -12,8 +12,8 @@ import { SpotifyAuthModule } from "./spotify-auth/spotify-auth.module";
     ListensModule,
     MusicLibraryModule,
     SpotifyApiModule,
-    SpotifyAuthModule
+    SpotifyAuthModule,
   ],
-  providers: [SpotifyService]
+  providers: [SpotifyService],
 })
 export class SpotifyModule {}

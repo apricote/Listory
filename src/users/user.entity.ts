@@ -12,6 +12,6 @@ export class User {
   @Column({ nullable: true })
   photo?: string;
 
-  @Column(type => SpotifyConnection)
+  @Column((type) => SpotifyConnection)
   spotify: SpotifyConnection;
 }

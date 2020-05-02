@@ -1,7 +1,7 @@
 ##################
 ## common
 ##################
-FROM node:12-alpine as common
+FROM node:14-alpine as common
 LABEL org.label-schema.schema-version="1.0" \
       org.label-schema.name="listory" \
       stage="common"

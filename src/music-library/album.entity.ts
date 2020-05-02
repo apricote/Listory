@@ -4,7 +4,7 @@ import {
   Column,
   ManyToMany,
   JoinTable,
-  OneToMany
+  OneToMany,
 } from "typeorm";
 import { SpotifyLibraryDetails } from "src/sources/spotify/spotify-library-details.entity";
 import { Artist } from "./artist.entity";
@@ -18,19 +18,13 @@ export class Album {
   @Column()
   name: string;
 
-  @ManyToMany(
-    type => Artist,
-    artist => artist.albums
-  )
+  @ManyToMany((type) => Artist, (artist) => artist.albums)
   @JoinTable()
   artists: Artist[];
 
-  @OneToMany(
-    type => Track,
-    track => track.album
-  )
+  @OneToMany((type) => Track, (track) => track.album)
   tracks: Track[];
 
-  @Column(type => SpotifyLibraryDetails)
+  @Column((type) => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;
 }

@@ -5,7 +5,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Album } from "./album.entity";
 import { Artist } from "./artist.entity";
@@ -18,16 +18,13 @@ export class Track {
   @Column()
   name: string;
 
-  @ManyToOne(
-    type => Album,
-    album => album.tracks
-  )
+  @ManyToOne((type) => Album, (album) => album.tracks)
   album: Album;
 
-  @ManyToMany(type => Artist)
+  @ManyToMany((type) => Artist)
   @JoinTable()
   artists: Artist[];
 
-  @Column(type => SpotifyLibraryDetails)
+  @Column((type) => SpotifyLibraryDetails)
   spotify?: SpotifyLibraryDetails;
 }

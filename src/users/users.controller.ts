@@ -11,7 +11,7 @@ export class UsersController {
     return {
       id: user.id,
       displayName: user.displayName,
-      photo: user.photo
+      photo: user.photo,
     };
   }
 }

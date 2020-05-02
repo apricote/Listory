@@ -19,7 +19,7 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     // Migrations
     // migrationsRun: true,
     // migrations: [join(__dirname, "migrations", "*.{ts,js}")],
-    synchronize: true
+    synchronize: true,
   }),
-  inject: [ConfigService]
+  inject: [ConfigService],
 });

@@ -51,7 +51,7 @@ export class SpotifyService {
         );
         await this.usersService.updateSpotifyConnection(user, {
           ...user.spotify,
-          accessToken
+          accessToken,
         });
         await this.processUser(user, false);
       }
@@ -62,13 +62,13 @@ export class SpotifyService {
     }
 
     await Promise.all(
-      playHistory.map(async history => {
+      playHistory.map(async (history) => {
         const track = await this.importTrack(history.track.id);
 
         this.listensService.createListen({
           user,
           track,
-          playedAt: new Date(history.played_at)
+          playedAt: new Date(history.played_at),
         });
 
         console.log(
@@ -79,19 +79,19 @@ export class SpotifyService {
 
     const newestPlayTime = new Date(
       playHistory
-        .map(history => history.played_at)
+        .map((history) => history.played_at)
         .sort()
         .pop()
     );
 
     console.log("newestPlayTime", {
       newestPlayTime,
-      times: playHistory.map(history => history.played_at).sort()
+      times: playHistory.map((history) => history.played_at).sort(),
     });
 
     this.usersService.updateSpotifyConnection(user, {
       ...user.spotify,
-      lastRefreshTime: newestPlayTime
+      lastRefreshTime: newestPlayTime,
     });
   }
 
@@ -100,7 +100,7 @@ export class SpotifyService {
     retryOnExpiredToken: boolean = true
   ): Promise<Track> {
     const track = await this.musicLibraryService.findTrack({
-      spotify: { id: spotifyID }
+      spotify: { id: spotifyID },
     });
     if (track) {
       return track;
@@ -129,7 +129,7 @@ export class SpotifyService {
         spotifyTrack.artists.map(({ id: artistID }) =>
           this.importArtist(artistID)
         )
-      )
+      ),
     ]);
 
     return this.musicLibraryService.createTrack({
@@ -140,8 +140,8 @@ export class SpotifyService {
         id: spotifyTrack.id,
         uri: spotifyTrack.uri,
         type: spotifyTrack.type,
-        href: spotifyTrack.href
-      }
+        href: spotifyTrack.href,
+      },
     });
   }
 
@@ -150,7 +150,7 @@ export class SpotifyService {
     retryOnExpiredToken: boolean = true
   ): Promise<Album> {
     const album = await this.musicLibraryService.findAlbum({
-      spotify: { id: spotifyID }
+      spotify: { id: spotifyID },
     });
     if (album) {
       return album;
@@ -186,8 +186,8 @@ export class SpotifyService {
         id: spotifyAlbum.id,
         uri: spotifyAlbum.uri,
         type: spotifyAlbum.type,
-        href: spotifyAlbum.href
-      }
+        href: spotifyAlbum.href,
+      },
     });
   }
 
@@ -196,7 +196,7 @@ export class SpotifyService {
     retryOnExpiredToken: boolean = true
   ): Promise<Artist> {
     const artist = await this.musicLibraryService.findArtist({
-      spotify: { id: spotifyID }
+      spotify: { id: spotifyID },
     });
     if (artist) {
       return artist;
@@ -225,8 +225,8 @@ export class SpotifyService {
         id: spotifyArtist.id,
         uri: spotifyArtist.uri,
         type: spotifyArtist.type,
-        href: spotifyArtist.href
-      }
+        href: spotifyArtist.href,
+      },
     });
   }
 

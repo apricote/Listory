@@ -22,7 +22,7 @@ export class MusicLibraryService {
 
   async findArtist(query: FindArtistDto): Promise<Artist | undefined> {
     return this.artistRepository.findOne({
-      where: { spotify: { id: query.spotify.id } }
+      where: { spotify: { id: query.spotify.id } },
     });
   }
 
@@ -41,7 +41,7 @@ export class MusicLibraryService {
 
   async findAlbum(query: FindAlbumDto): Promise<Album | undefined> {
     return this.albumRepository.findOne({
-      where: { spotify: { id: query.spotify.id } }
+      where: { spotify: { id: query.spotify.id } },
     });
   }
 
@@ -59,7 +59,7 @@ export class MusicLibraryService {
 
   async findTrack(query: FindTrackDto): Promise<Track | undefined> {
     return this.trackRepository.findOne({
-      where: { spotify: { id: query.spotify.id } }
+      where: { spotify: { id: query.spotify.id } },
     });
   }
 

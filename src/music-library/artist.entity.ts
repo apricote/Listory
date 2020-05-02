@@ -10,12 +10,9 @@ export class Artist {
   @Column()
   name: string;
 
-  @ManyToMany(
-    type => Album,
-    album => album.artists
-  )
+  @ManyToMany((type) => Album, (album) => album.artists)
   albums: Album[];
 
-  @Column(type => SpotifyLibraryDetails)
+  @Column((type) => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;
 }

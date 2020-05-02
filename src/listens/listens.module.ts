@@ -6,6 +6,6 @@ import { ListenRepository } from "./listen.repository";
 @Module({
   imports: [TypeOrmModule.forFeature([ListenRepository])],
   providers: [ListensService],
-  exports: [ListensService]
+  exports: [ListensService],
 })
 export class ListensModule {}

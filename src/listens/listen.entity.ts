@@ -3,7 +3,7 @@ import {
   Entity,
   Index,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Track } from "../music-library/track.entity";
 import { User } from "../users/user.entity";
@@ -14,10 +14,10 @@ export class Listen {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(type => Track)
+  @ManyToOne((type) => Track)
   track: Track;
 
-  @ManyToOne(type => User)
+  @ManyToOne((type) => User)
   user: User;
 
   @Column({ type: "timestamp" })

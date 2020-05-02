@@ -12,12 +12,12 @@ export class SpotifyApiService {
 
   async getRecentlyPlayedTracks({
     accessToken,
-    lastRefreshTime
+    lastRefreshTime,
   }: SpotifyConnection): Promise<PlayHistoryObject[]> {
     console.log("SpotifyApiService#getRecentlyPlayedTracks");
 
     const parameters: { limit: number; after?: number } = {
-      limit: 50
+      limit: 50,
     };
 
     if (lastRefreshTime) {
@@ -33,7 +33,7 @@ export class SpotifyApiService {
     const history = await this.httpService
       .get<PagingObject<PlayHistoryObject>>(`v1/me/player/recently-played`, {
         headers: { Authorization: `Bearer ${accessToken}` },
-        params: parameters
+        params: parameters,
       })
       .toPromise();
 
@@ -47,7 +47,7 @@ export class SpotifyApiService {
     console.log("SpotifyApiService#getArtist");
     const artist = await this.httpService
       .get<ArtistObject>(`v1/artists/${spotifyID}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${accessToken}` },
       })
       .toPromise();
 
@@ -59,7 +59,7 @@ export class SpotifyApiService {
 
     const album = await this.httpService
       .get<AlbumObject>(`v1/albums/${spotifyID}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${accessToken}` },
       })
       .toPromise();
 
@@ -72,7 +72,7 @@ export class SpotifyApiService {
 
     const track = await this.httpService
       .get<TrackObject>(`v1/tracks/${spotifyID}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${accessToken}` },
       })
       .toPromise();
 

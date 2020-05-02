@@ -24,14 +24,14 @@ export class UsersService {
 
   async createOrUpdate(data: CreateOrUpdateDto): Promise<User> {
     let user = await this.userRepository.findOne({
-      where: { spotify: { id: data.spotify.id } }
+      where: { spotify: { id: data.spotify.id } },
     });
 
     if (!user) {
       user = this.userRepository.create({
         spotify: {
-          id: data.spotify.id
-        }
+          id: data.spotify.id,
+        },
       });
     }
 

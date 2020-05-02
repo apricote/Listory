@@ -10,10 +10,10 @@ import { TrackRepository } from "./track.repository";
     TypeOrmModule.forFeature([
       AlbumRepository,
       ArtistRepository,
-      TrackRepository
-    ])
+      TrackRepository,
+    ]),
   ],
   providers: [MusicLibraryService],
-  exports: [MusicLibraryService]
+  exports: [MusicLibraryService],
 })
 export class MusicLibraryModule {}

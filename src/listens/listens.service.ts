@@ -10,7 +10,7 @@ export class ListensService {
   async createListen({
     user,
     track,
-    playedAt
+    playedAt,
   }: CreateListenDto): Promise<Listen> {
     const listen = this.listenRepository.create();
 
@@ -23,7 +23,7 @@ export class ListensService {
     } catch (err) {
       if (err.code === "23505") {
         return this.listenRepository.findOne({
-          where: { user, track, playedAt }
+          where: { user, track, playedAt },
         });
       }
 

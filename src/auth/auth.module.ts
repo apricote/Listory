@@ -14,14 +14,14 @@ import { SpotifyStrategy } from "./spotify.strategy";
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>("JWT_SECRET"),
-        signOptions: { expiresIn: config.get<string>("JWT_EXPIRATION_TIME") }
+        signOptions: { expiresIn: config.get<string>("JWT_EXPIRATION_TIME") },
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
-    UsersModule
+    UsersModule,
   ],
   providers: [AuthService, SpotifyStrategy, JwtStrategy],
   exports: [PassportModule],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

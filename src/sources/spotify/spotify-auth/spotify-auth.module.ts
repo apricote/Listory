@@ -6,11 +6,11 @@ import { SpotifyAuthService } from "./spotify-auth.service";
     HttpModule.registerAsync({
       useFactory: () => ({
         timeout: 5000,
-        baseURL: "https://accounts.spotify.com/"
-      })
-    })
+        baseURL: "https://accounts.spotify.com/",
+      }),
+    }),
   ],
   providers: [SpotifyAuthService],
-  exports: [SpotifyAuthService]
+  exports: [SpotifyAuthService],
 })
 export class SpotifyAuthModule {}

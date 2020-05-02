@@ -14,7 +14,7 @@ export class AuthService {
   async spotifyLogin({
     accessToken,
     refreshToken,
-    profile
+    profile,
   }: LoginDto): Promise<User> {
     const user = await this.usersService.createOrUpdate({
       displayName: profile.displayName,
@@ -22,8 +22,8 @@ export class AuthService {
       spotify: {
         id: profile.id,
         accessToken,
-        refreshToken
-      }
+        refreshToken,
+      },
     });
 
     return user;
@@ -33,7 +33,7 @@ export class AuthService {
     const payload = {
       sub: user.id,
       name: user.displayName,
-      picture: user.photo
+      picture: user.photo,
     };
 
     const token = await this.jwtService.signAsync(payload);

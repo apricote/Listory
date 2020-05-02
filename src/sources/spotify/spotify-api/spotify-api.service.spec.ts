@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SpotifyApiService } from './spotify-api.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { SpotifyApiService } from "./spotify-api.service";
 
-describe('SpotifyApiService', () => {
+describe("SpotifyApiService", () => {
   let service: SpotifyApiService;
 
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('SpotifyApiService', () => {
     service = module.get<SpotifyApiService>(SpotifyApiService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });

@@ -17,7 +17,7 @@ import { UsersModule } from "./users/users.module";
     UsersModule,
     SourcesModule,
     MusicLibraryModule,
-    ListensModule
-  ]
+    ListensModule,
+  ],
 })
 export class AppModule {}
