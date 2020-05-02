@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getUsersMe, UnauthenticatedError } from "../api/api";
-import { User } from "../api/user";
+import { User } from "../api/entities/user";
 
 const authContext = createContext<AuthContext>(
   (undefined as any) as AuthContext
