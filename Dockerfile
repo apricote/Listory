@@ -20,7 +20,7 @@ LABEL stage="build-api"
 RUN npm ci
 
 COPY src/ /app/src/
-RUN npm run build
+RUN NODE_ENV=production npm run build
 
 ##################
 ## build-frontend
@@ -32,9 +32,10 @@ WORKDIR /app/frontend
 
 RUN npm ci
 
+COPY frontend/postcss.config.js /app/frontend/postcss.config.js
 COPY frontend/src/ /app/frontend/src/
 COPY frontend/public/ /app/frontend/public/
-RUN npm run build
+RUN NODE_ENV=production npm run build
 
 ##################
 ## app

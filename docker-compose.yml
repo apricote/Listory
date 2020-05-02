@@ -38,8 +38,12 @@ services:
       target: build-frontend
     command: ["npm", "run", "start"]
     volumes:
-      - ./frontend/src:/app/frontend/src
-      - ./frontend/public:/app/frontend/public
+      - ./frontend/postcss.config.js:/app/frontend/postcss.config.js:ro
+      - ./frontend/src:/app/frontend/src:ro
+      - ./frontend/public:/app/frontend/public:ro
+      - tailwind-output:/app/frontend/src/tailwind/
+    # Workaround for https://github.com/facebook/create-react-app/issues/8688
+    stdin_open: true
     ports:
       - 3000
     labels:
@@ -67,6 +71,9 @@ services:
       - web
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+
+volumes:
+  tailwind-output: {}
 
 networks:
   db: {}
