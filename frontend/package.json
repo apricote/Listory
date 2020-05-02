@@ -11,19 +11,22 @@
     "@types/node": "^12.12.37",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "@types/react-router-dom": "^5.1.5",
     "autoprefixer": "^9.7.6",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^7.1.1",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "tailwindcss": "^1.4.2",
+    "tailwindcss": "^1.4.4",
     "typescript": "^3.7.5"
   },
   "scripts": {
     "build:tailwind": "postcss src/tailwind.css -o src/tailwind/generated.css",
     "watch:tailwind": "postcss -w src/tailwind.css -o src/tailwind/generated.css",
+    "format": "prettier --write \"./*.js\" \"src/**/*.(tsx|ts|css)\"",
     "start": "run-p start:react watch:tailwind",
     "start:react": "react-scripts start",
     "prebuild": "npm run build:tailwind",
@@ -45,8 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-router-dom": "^5.1.5"
   }
 }
