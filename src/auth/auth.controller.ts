@@ -1,10 +1,11 @@
-import { Controller, Get, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Res, UseFilters, UseGuards } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { User } from "../users/user.entity";
-import { ReqUser } from "./decorators/req-user.decorator";
 import { AuthService } from "./auth.service";
-import { ConfigService } from "@nestjs/config";
+import { ReqUser } from "./decorators/req-user.decorator";
+import { SpotifyAuthFilter } from "./spotify.filter";
 
 @Controller("api/v1/auth")
 export class AuthController {
@@ -20,6 +21,7 @@ export class AuthController {
   }
 
   @Get("spotify/callback")
+  @UseFilters(SpotifyAuthFilter)
   @UseGuards(AuthGuard("spotify"))
   async spotifyCallback(@ReqUser() user: User, @Res() res: Response) {
     const { accessToken } = await this.authService.createToken(user);
@@ -35,6 +37,6 @@ export class AuthController {
     });
 
     // Redirect User to SPA
-    res.redirect("/");
+    res.redirect("/login/success?type=spotify");
   }
 }
