@@ -23,6 +23,6 @@ export class SpotifyAuthFilter implements ExceptionFilter {
       exception.stack
     );
 
-    response.redirect(`/login/failure?reason=${reason}&type=spotify`);
+    response.redirect(`/login/failure?reason=${reason}&source=spotify`);
   }
 }

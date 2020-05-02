@@ -21,7 +21,7 @@ const getDefaultHeaders = (): Headers => {
 };
 
 export const getUsersMe = async (): Promise<User> => {
-  const res = await fetch(`api/v1/users/me`, { headers: getDefaultHeaders() });
+  const res = await fetch(`/api/v1/users/me`, { headers: getDefaultHeaders() });
 
   switch (res.status) {
     case 200: {

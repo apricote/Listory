@@ -37,6 +37,6 @@ export class AuthController {
     });
 
     // Redirect User to SPA
-    res.redirect("/login/success?type=spotify");
+    res.redirect("/login/success?source=spotify");
   }
 }
