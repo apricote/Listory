@@ -20,6 +20,7 @@ services:
       DB_USERNAME: listory
       DB_PASSWORD: listory
       DB_DATABASE: listory
+      JWT_SECRET: listory
       APP_URL: "http://localhost:3000"
     env_file: .env
     volumes:

@@ -14,7 +14,10 @@ import { SpotifyStrategy } from "./spotify.strategy";
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>("JWT_SECRET"),
-        signOptions: { expiresIn: config.get<string>("JWT_EXPIRATION_TIME") },
+        signOptions: {
+          expiresIn: config.get<string>("JWT_EXPIRATION_TIME"),
+          algorithm: config.get("JWT_ALGORITHM"),
+        },
       }),
       inject: [ConfigService],
     }),

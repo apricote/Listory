@@ -11,12 +11,14 @@ import {
       isGlobal: true,
       validationSchema: Joi.object({
         // Application
-        NODE_ENV: Joi.string().valid("dev", "production").default("dev"),
         PORT: Joi.number().default(3000),
         APP_URL: Joi.string().default("http://localhost:3000"),
 
         // JWT
         JWT_SECRET: Joi.string().required(),
+        JWT_ALGORITHM: Joi.string()
+          .default("HS256")
+          .allow("HS256", "HS384", "HS512"),
         JWT_EXPIRATION_TIME: Joi.string().default("1d"),
 
         // Spotify

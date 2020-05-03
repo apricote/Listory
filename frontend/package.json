@@ -1,7 +1,12 @@
 {
-  "name": "frontend",
+  "name": "@listory/frontend",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Julian Tölle",
+    "email": "julian.toelle97@gmail.com"
+  },
+  "license": "MIT",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.2",
     "@testing-library/jest-dom": "^4.2.4",

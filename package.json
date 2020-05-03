@@ -1,8 +1,11 @@
 {
-  "name": "listory",
-  "version": "0.0.1",
+  "name": "@listory/api",
+  "version": "0.1.0",
   "description": "Track your Spotify Listen History",
-  "author": "Julian Tölle <julian.toelle97@gmail.com>",
+  "author": {
+    "name": "Julian Tölle",
+    "email": "julian.toelle97@gmail.com"
+  },
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
