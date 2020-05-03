@@ -10,6 +10,7 @@ import { MusicLibraryModule } from "./music-library/music-library.module";
 import { SourcesModule } from "./sources/sources.module";
 import { UsersModule } from "./users/users.module";
 import { ConfigModule } from "./config/config.module";
+import { HealthCheckModule } from "./health-check/health-check.module";
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ConfigModule } from "./config/config.module";
     SourcesModule,
     MusicLibraryModule,
     ListensModule,
+    HealthCheckModule,
   ],
 })
 export class AppModule {}
