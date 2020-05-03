@@ -1,4 +1,9 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  ForbiddenException,
+} from "@nestjs/common";
 import { Response } from "express";
 import { Logger } from "../logger/logger.service";
 
@@ -16,6 +21,12 @@ export class SpotifyAuthFilter implements ExceptionFilter {
     if (exception.name === "TokenError") {
       // Error during oauth2 flow
       reason = "oauth2";
+    } else if (
+      exception instanceof ForbiddenException &&
+      exception.message === "UserNotWhitelisted"
+    ) {
+      // User ID is not in the whitelist
+      reason = "whitelist";
     }
 
     this.logger.error(

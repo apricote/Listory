@@ -27,6 +27,7 @@ import {
         SPOTIFY_AUTH_API_URL: Joi.string().default(
           "https://accounts.spotify.com/"
         ),
+        SPOTIFY_USER_FILTER: Joi.string(),
 
         // DB
         DB_HOST: Joi.string().required(),
