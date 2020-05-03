@@ -22,7 +22,7 @@ export class Track {
   album: Album;
 
   @ManyToMany((type) => Artist)
-  @JoinTable()
+  @JoinTable({ name: "track_artists" })
   artists: Artist[];
 
   @Column((type) => SpotifyLibraryDetails)

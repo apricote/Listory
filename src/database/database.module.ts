@@ -17,9 +17,15 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     entities: [join(__dirname, "..", "**/*.entity.{ts,js}")],
 
     // Migrations
-    // migrationsRun: true,
-    // migrations: [join(__dirname, "migrations", "*.{ts,js}")],
-    synchronize: true,
+    migrationsRun: true,
+    migrations: [join(__dirname, "migrations", "*.{ts,js}")],
+
+    // Debug/Development Options
+    //
+    // logging: true,
+    //
+    // synchronize: true,
+    // migrationsRun: false,
   }),
   inject: [ConfigService],
 });

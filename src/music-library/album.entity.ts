@@ -19,7 +19,7 @@ export class Album {
   name: string;
 
   @ManyToMany((type) => Artist, (artist) => artist.albums)
-  @JoinTable()
+  @JoinTable({ name: "album_artists" })
   artists: Artist[];
 
   @OneToMany((type) => Track, (track) => track.album)
