@@ -5,6 +5,7 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableShutdownHooks();
 
   // Setup API Docs
   const options = new DocumentBuilder()
