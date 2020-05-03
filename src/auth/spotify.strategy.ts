@@ -13,9 +13,9 @@ export class SpotifyStrategy extends PassportStrategy(Strategy) {
     super({
       clientID: config.get<string>("SPOTIFY_CLIENT_ID"),
       clientSecret: config.get<string>("SPOTIFY_CLIENT_SECRET"),
-      callbackURL: `${
-        config.get<string>("BASE_DOMAIN") || "http://localhost:3000"
-      }/api/v1/auth/spotify/callback`,
+      callbackURL: `${config.get<string>(
+        "APP_URL"
+      )}/api/v1/auth/spotify/callback`,
       scope: [
         "user-read-private",
         "user-read-email",

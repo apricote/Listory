@@ -1,13 +1,15 @@
 import { HttpModule, Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { SpotifyAuthService } from "./spotify-auth.service";
 
 @Module({
   imports: [
     HttpModule.registerAsync({
-      useFactory: () => ({
+      useFactory: (config: ConfigService) => ({
         timeout: 5000,
-        baseURL: "https://accounts.spotify.com/",
+        baseURL: config.get<string>("SPOTIFY_AUTH_API_URL"),
       }),
+      inject: [ConfigService],
     }),
   ],
   providers: [SpotifyAuthService],

@@ -1,13 +1,15 @@
 import { HttpModule, Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { SpotifyApiService } from "./spotify-api.service";
 
 @Module({
   imports: [
     HttpModule.registerAsync({
-      useFactory: () => ({
+      useFactory: (config: ConfigService) => ({
         timeout: 5000,
-        baseURL: "https://api.spotify.com/",
+        baseURL: config.get<string>("SPOTIFY_WEB_API_URL"),
       }),
+      inject: [ConfigService],
     }),
   ],
   providers: [SpotifyApiService],

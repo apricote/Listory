@@ -16,9 +16,11 @@ services:
       target: build-api
     command: ["npm", "run", "start:dev"]
     environment:
+      DB_HOST: db
       DB_USERNAME: listory
       DB_PASSWORD: listory
-      DB_HOST: db
+      DB_DATABASE: listory
+      APP_URL: "http://localhost:3000"
     env_file: .env
     volumes:
       - ./src:/app/src

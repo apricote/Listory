@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
@@ -10,12 +9,14 @@ import { LoggerModule } from "./logger/logger.module";
 import { MusicLibraryModule } from "./music-library/music-library.module";
 import { SourcesModule } from "./sources/sources.module";
 import { UsersModule } from "./users/users.module";
+import { ConfigModule } from "./config/config.module";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot(),
+    LoggerModule,
+    ConfigModule,
     DatabaseModule,
+    ScheduleModule.forRoot(),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "static"),
       exclude: ["/api*"],
@@ -25,7 +26,6 @@ import { UsersModule } from "./users/users.module";
     SourcesModule,
     MusicLibraryModule,
     ListensModule,
-    LoggerModule,
   ],
 })
 export class AppModule {}
