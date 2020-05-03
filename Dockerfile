@@ -45,6 +45,6 @@ LABEL stage="app"
 
 RUN npm ci --only=production
 COPY --from=build-api /app/dist/ /app/dist/
-COPY --from=build-frontend /app/frontend/dist /app/static/
+COPY --from=build-frontend /app/frontend/build /app/static/
 
 CMD ["dist/main"]
