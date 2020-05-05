@@ -1,5 +1,5 @@
 import { format, formatDistanceToNow } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Redirect } from "react-router-dom";
 import { getRecentListens } from "../api/api";
 import { Listen } from "../api/entities/listen";
@@ -17,37 +17,40 @@ export const RecentListens: React.FC = () => {
   const [listens, setListens] = useState<Listen[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadListensForPage = async () => {
-    setIsLoading(true);
+  const loadListensForPage = useMemo(
+    () => async () => {
+      setIsLoading(true);
 
-    try {
-      const listensFromApi = await getRecentListens({
-        page,
-        limit: LISTENS_PER_PAGE,
-      });
+      try {
+        const listensFromApi = await getRecentListens({
+          page,
+          limit: LISTENS_PER_PAGE,
+        });
 
-      if (totalPages !== listensFromApi.meta.totalPages) {
-        setTotalPages(listensFromApi.meta.totalPages);
+        if (totalPages !== listensFromApi.meta.totalPages) {
+          setTotalPages(listensFromApi.meta.totalPages);
+        }
+        setListens(listensFromApi.items);
+      } catch (err) {
+        console.error("Error while fetching recent listens:", err);
+      } finally {
+        setIsLoading(false);
       }
-      setListens(listensFromApi.items);
-    } catch (err) {
-      console.error("Error while fetching recent listens:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [page, totalPages, setIsLoading, setTotalPages, setListens]
+  );
 
   useEffect(() => {
     loadListensForPage();
-  }, [user, page, totalPages]);
+  }, [loadListensForPage]);
 
   if (!user) {
     return <Redirect to="/" />;
   }
 
   return (
-    <div className="lg:flex lg:justify-center p-4">
-      <div className="lg:flex-shrink-0 min-w-full lg:min-w-0 lg:w-2/3 max-w-screen-lg">
+    <div className="md:flex md:justify-center p-4">
+      <div className="md:flex-shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
         <div className="flex justify-between">
           <p className="text-2xl font-normal text-gray-700">Recent listens</p>
           <button
@@ -71,7 +74,7 @@ export const RecentListens: React.FC = () => {
           {listens.length > 0 && (
             <div className="table-auto my-2 w-full text-gray-700">
               {listens.map((listen) => (
-                <ListenItem listen={listen} />
+                <ListenItem listen={listen} key={listen.id} />
               ))}
             </div>
           )}
@@ -104,7 +107,7 @@ const Pagination: React.FC<{
       >
         Prev
       </button>
-      {pageButtons.map((buttonPage) =>
+      {pageButtons.map((buttonPage, i) =>
         buttonPage ? (
           <button
             className={`${
@@ -113,11 +116,15 @@ const Pagination: React.FC<{
                 : "bg-gray-300 hover:bg-gray-400"
             } text-gray-700 font-bold py-2 px-4`}
             onClick={() => setPage(buttonPage)}
+            key={i}
           >
             {buttonPage}
           </button>
         ) : (
-          <div className="opacity-50 cursor-default bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-l">
+          <div
+            key={i}
+            className="opacity-50 cursor-default bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-l"
+          >
             ...
           </div>
         )
@@ -143,11 +150,11 @@ const ListenItem: React.FC<{ listen: Listen }> = ({ listen }) => {
   });
   const dateTime = format(new Date(listen.playedAt), "PP p");
   return (
-    <div className="hover:bg-gray-100 border-b border-gray-200 lg:flex lg:justify-around text-gray-700 px-4 py-2">
-      <div className="lg:w-1/3 font-bold">{trackName}</div>
-      <div className=" lg:w-1/3">{artists}</div>
+    <div className="hover:bg-gray-100 border-b border-gray-200 md:flex md:justify-around text-gray-700 px-4 py-2">
+      <div className="md:w-1/3 font-bold">{trackName}</div>
+      <div className=" md:w-1/3">{artists}</div>
       <div
-        className=" lg:w-1/6 text-gray-500 font-thin text-sm"
+        className="md:w-1/6 text-gray-500 font-thin text-sm"
         title={dateTime}
       >
         {timeAgo}

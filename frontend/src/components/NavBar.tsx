@@ -49,7 +49,7 @@ const NavUserInfo: React.FC<{ user: User }> = ({ user }) => {
         <img
           className="w-6 h-6 rounded-full ml-4"
           src={user.photo}
-          alt="Profile picture of logged in user"
+          alt="Profile of logged in user"
         ></img>
       )}
     </div>
