@@ -1,5 +1,4 @@
 {
-  "extends": [
-    "config:base"
-  ]
+  "semanticCommits": true,
+  "extends": ["config:base", "schedule:weekly"]
 }
