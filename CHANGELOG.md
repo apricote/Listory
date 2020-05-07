@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/apricote/Listory/compare/v1.0.0...v1.0.1) (2020-05-07)
+
+
+### Bug Fixes
+
+* **cd:** docker image labels are missing values ([f68d05c](https://github.com/apricote/Listory/commit/f68d05ce1455d6500ab8599ffc5426d3b0aab088))
+
 # 1.0.0 (2020-05-07)
 
 
