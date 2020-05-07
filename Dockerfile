@@ -1,14 +1,15 @@
-ARG VERSION=unknown
-ARG GIT_COMMIT=unknown
-
 ##################
 ## common
 ##################
 FROM node:14-alpine as common
+
+ARG VERSION=unknown
+ARG GIT_COMMIT=unknown
+
 LABEL org.opencontainers.image.title="listory" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$GIT_COMMIT \
-      de.apricote.stage="common"
+      stage="common"
 
 WORKDIR /app
 
