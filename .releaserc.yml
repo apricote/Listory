@@ -1,0 +1,13 @@
+repositoryUrl": "https://github.com/apricote/Listory"
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - "@semantic-release/changelog"
+  - - "@semantic-release/npm"
+    - npmPublish: false
+  - - "@semantic-relase/exec"
+    - prepareCmd: "docker build -t apricote/listory --build-arg VERSION=${nextRelease.version} --build-arg GIT_COMMIT=`git rev-parse HEAD` ."
+  - - semantic-release-docker
+    - name: apricote/listory
+  - "@semantic-release/git"
+  - "@semantic-release/github"
