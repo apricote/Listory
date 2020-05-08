@@ -6,8 +6,27 @@ plugins:
   - - "@semantic-release/npm"
     - npmPublish: false
   - - "@semantic-release/exec"
-    - prepareCmd: "docker build -t apricote/listory --build-arg VERSION=${nextRelease.version} --build-arg GIT_COMMIT=`git rev-parse HEAD` ."
+    - prepareCmd: |
+        # Build Docker Container
+        docker build \
+          -t apricote/listory \
+          --build-arg VERSION=${nextRelease.version} \
+          --build-arg GIT_COMMIT=`git rev-parse HEAD` \
+          .
+
+        # Update version in Helm Chart
+        CHART_FILE=charts/listory/Chart.yaml
+
+        sed -i \
+          -e "s/version: .*/version: ${nextRelease.version}/g" \
+          -e "s/appVersion: .*/appVersion: ${nextRelease.version}/g" \
+          $CHART_FILE
   - - semantic-release-docker
     - name: apricote/listory
-  - "@semantic-release/git"
+  - - "@semantic-release/git"
+    - assets:
+        - CHANGELOG.md
+        - package.json
+        - package-lock.json
+        - charts/listory/Chart.yaml
   - "@semantic-release/github"

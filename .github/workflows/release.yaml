@@ -23,3 +23,8 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: semantic-release
+
+      - name: Release Helm Chart
+        uses: helm/chart-releaser-action@v1.0.0-rc.2
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
