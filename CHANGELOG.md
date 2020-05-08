@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/apricote/Listory/compare/v1.0.1...v1.1.0) (2020-05-08)
+
+
+### Features
+
+* **cd:** add Helm Chart with automated releases ([1bdd618](https://github.com/apricote/Listory/commit/1bdd6181baf18a3f3608298fc4a8287228357eb8))
+
 ## [1.0.1](https://github.com/apricote/Listory/compare/v1.0.0...v1.0.1) (2020-05-07)
 
 
