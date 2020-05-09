@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/apricote/Listory/compare/v1.1.0...v1.2.0) (2020-05-09)
+
+
+### Features
+
+* **api:** add listen report endpoint ([3828b84](https://github.com/apricote/Listory/commit/3828b841c2a5f30be19c923ee56ebdbad8e90398))
+* **api:** enable global ValidationPipeline ([ddcdfff](https://github.com/apricote/Listory/commit/ddcdfff89b7e23ecb30c7ef09bf000dd8ac43353))
+* **api:** filter recent listens by timespan ([c903093](https://github.com/apricote/Listory/commit/c9030937e2c816f7bbf52dad275279cd54b0a024))
+* **frontend:** render simple listen report ([ebc0794](https://github.com/apricote/Listory/commit/ebc079435d1dbedb03510ddc97add6e29c8818f7))
+
 # [1.1.0](https://github.com/apricote/Listory/compare/v1.0.1...v1.1.0) (2020-05-08)
 
 
