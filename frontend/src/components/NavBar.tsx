@@ -22,6 +22,9 @@ export const NavBar: React.FC = () => {
               <Link to="/listens">
                 <NavItem>Your Listens</NavItem>
               </Link>
+              <Link to="/reports/listens">
+                <NavItem>Listens Report</NavItem>
+              </Link>
             </>
           )}
         </div>
