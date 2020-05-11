@@ -21,6 +21,11 @@ plugins:
           -e "s/version: .*/version: ${nextRelease.version}/g" \
           -e "s/appVersion: .*/appVersion: ${nextRelease.version}/g" \
           $CHART_FILE
+
+        # Package Helm Chart
+        mkdir .helm-chart
+        helm package charts/listory --destination .helm-charts
+
   - - semantic-release-docker
     - name: apricote/listory
   - - "@semantic-release/git"
@@ -29,4 +34,7 @@ plugins:
         - package.json
         - package-lock.json
         - charts/listory/Chart.yaml
-  - "@semantic-release/github"
+  - - "@semantic-release/github"
+    - assets:
+        - path: .helm-chart/listory-*.tgz
+          label: Helm Chart
