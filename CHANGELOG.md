@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/apricote/Listory/compare/v1.2.2...v1.2.3) (2020-05-12)
+
+
+### Bug Fixes
+
+* **ci:** Helm chart still not properly released ([f0100e8](https://github.com/apricote/Listory/commit/f0100e87e23eeb8297053ebc684423d3069275be))
+
 ## [1.2.2](https://github.com/apricote/Listory/compare/v1.2.1...v1.2.2) (2020-05-11)
 
 
