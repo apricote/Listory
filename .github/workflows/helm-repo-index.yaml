@@ -8,8 +8,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Install chart-releaser
+        env:
+          VERSION: 1.0.0-beta.1
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/bin
+
+          curl -Lo $GITHUB_WORKSPACE/cr.tar.gz https://github.com/helm/chart-releaser/releases/download/v${VERSION}/chart-releaser_${VERSION}_linux_amd64.tar.gz
+          tar -xzf $GITHUB_WORKSPACE/cr.tar.gz -C $GITHUB_WORKSPACE/bin cr
+          chmod +x $GITHUB_WORKSPACE/bin/cr
+          echo "::add-path::$GITHUB_WORKSPACE/bin"
+
       - name: Generate index.yaml
-        uses: docker://quay.io/helmpack/chart-releaser:v1.0.0-beta.1
         run: |
           mkdir .helm-index
           cr index \

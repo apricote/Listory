@@ -36,5 +36,5 @@ plugins:
         - charts/listory/Chart.yaml
   - - "@semantic-release/github"
     - assets:
-        - path: .helm-chart/listory-*.tgz
+        - path: .helm-charts/listory-*.tgz
           label: Helm Chart
