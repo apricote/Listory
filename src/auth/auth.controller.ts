@@ -28,9 +28,7 @@ export class AuthController {
 
     // Transmit accessToken to Frontend
     res.cookie("listory_access_token", accessToken, {
-      // SPA will directly read cookie, save it to local storage and delete it
-      // 15 Minutes should be enough
-      maxAge: 15 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
 
       // Must be readable by SPA
       httpOnly: false,
