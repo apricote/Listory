@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/apricote/Listory/compare/v1.2.4...v1.2.5) (2020-05-13)
+
+
+### Bug Fixes
+
+* **frontend:** add selectable timeframe and styling to listens report ([cc7f4b3](https://github.com/apricote/Listory/commit/cc7f4b354df48f5e73b8cf7e82b578bbb796b7c1))
+
 ## [1.2.4](https://github.com/apricote/Listory/compare/v1.2.3...v1.2.4) (2020-05-13)
 
 
