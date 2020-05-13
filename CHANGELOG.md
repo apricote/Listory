@@ -1,3 +1,12 @@
+## [1.2.4](https://github.com/apricote/Listory/compare/v1.2.3...v1.2.4) (2020-05-13)
+
+
+### Bug Fixes
+
+* **api:** frontend sessions expire after 15 minutes (now 1d) ([8c5f495](https://github.com/apricote/Listory/commit/8c5f495ce50f732c895a8b53c939f18dbc235154))
+* **frontend:** improve reporting charts ([bdbe5f5](https://github.com/apricote/Listory/commit/bdbe5f574a52099974ef82b26fa728675b21067d))
+* **frontend:** redirect to home after login ([367f375](https://github.com/apricote/Listory/commit/367f37555fa5ccfbadf7f690137eed22ff82a0bd))
+
 ## [1.2.3](https://github.com/apricote/Listory/compare/v1.2.2...v1.2.3) (2020-05-12)
 
 
