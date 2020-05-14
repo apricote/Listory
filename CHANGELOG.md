@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/apricote/Listory/compare/v1.2.5...v1.3.0) (2020-05-14)
+
+
+### Features
+
+* **frontend:** active service worker ([fbada1e](https://github.com/apricote/Listory/commit/fbada1eaac7cedf495791dfbcaf7618f4163724c))
+* **frontend:** add favicon ([bf9aba3](https://github.com/apricote/Listory/commit/bf9aba3033f3c63048fbcf65f8f75c3b1556ce1e))
+* **frontend:** configure pwa ([b9ea880](https://github.com/apricote/Listory/commit/b9ea8808f229ca3f286cb0f33bf85e9fa6c2a20f))
+
 ## [1.2.5](https://github.com/apricote/Listory/compare/v1.2.4...v1.2.5) (2020-05-13)
 
 
