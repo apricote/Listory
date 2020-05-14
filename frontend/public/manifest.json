@@ -1,7 +1,10 @@
 {
   "short_name": "Listory",
   "name": "Listory - Track your Spotify Listens",
-  "icons": [],
+  "icons": [
+    { "src": "favicon.svg", "sizes": "256x256" },
+    { "src": "favicon.png", "sizes": "64x64" }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
