@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/apricote/Listory/compare/v1.3.0...v1.3.1) (2020-05-14)
+
+
+### Bug Fixes
+
+* **frontend:** disable broken service-worker ([7ad4b1e](https://github.com/apricote/Listory/commit/7ad4b1e52c7b53702d923d226f4aa516835ef149))
+
 # [1.3.0](https://github.com/apricote/Listory/compare/v1.2.5...v1.3.0) (2020-05-14)
 
 
