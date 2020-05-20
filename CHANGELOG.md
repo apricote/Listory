@@ -1,3 +1,12 @@
+## [1.3.2](https://github.com/apricote/Listory/compare/v1.3.1...v1.3.2) (2020-05-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nestjs/config to v0.4.2 ([f4f9432](https://github.com/apricote/Listory/commit/f4f94322c0e0624517b173689c6beeccd15b83fd))
+* **deps:** update dependency @nestjs/schedule to v0.4.0 ([5104772](https://github.com/apricote/Listory/commit/5104772acb03d48df723451389970844cd86cc6b))
+* **deps:** update dependency @nestjs/serve-static to v2.1.1 ([9ed69d2](https://github.com/apricote/Listory/commit/9ed69d2db4da36d2b70c5e64a47ebfff866f9767))
+
 ## [1.3.1](https://github.com/apricote/Listory/compare/v1.3.0...v1.3.1) (2020-05-14)
 
 
