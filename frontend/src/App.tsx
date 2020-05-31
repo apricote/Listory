@@ -7,6 +7,7 @@ import { RecentListens } from "./components/RecentListens";
 import { ReportListens } from "./components/ReportListens";
 import { useAuth } from "./hooks/use-auth";
 import "./tailwind/generated.css";
+import { ReportTopArtists } from "./components/ReportTopArtists";
 
 export function App() {
   const { isLoaded } = useAuth();
@@ -26,6 +27,7 @@ export function App() {
         <Route path="/login/failure" exact component={LoginFailure} />
         <Route path="/listens" exact component={RecentListens} />
         <Route path="/reports/listens" exact component={ReportListens} />
+        <Route path="/reports/top-artists" exact component={ReportTopArtists} />
       </Switch>
     </div>
   );

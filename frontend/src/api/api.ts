@@ -1,11 +1,13 @@
 import { formatISO, parseISO } from "date-fns";
+import { qs } from "../util/queryString";
 import { Listen } from "./entities/listen";
 import { ListenReportItem } from "./entities/listen-report-item";
 import { ListenReportOptions } from "./entities/listen-report-options";
 import { Pagination } from "./entities/pagination";
 import { PaginationOptions } from "./entities/pagination-options";
+import { TopArtistsItem } from "./entities/top-artists-item";
+import { TopArtistsOptions } from "./entities/top-artists-options";
 import { User } from "./entities/user";
-import { qs } from "../util/queryString";
 
 export class UnauthenticatedError extends Error {}
 
@@ -99,10 +101,42 @@ export const getListensReport = async (
       throw new UnauthenticatedError(`No token or token expired`);
     }
     default: {
-      throw new Error(`Unable to getRecentListens: ${res.status}`);
+      throw new Error(`Unable to getListensReport: ${res.status}`);
     }
   }
 
   const rawItems: { count: number; date: string }[] = (await res.json()).items;
   return rawItems.map(({ count, date }) => ({ count, date: parseISO(date) }));
+};
+
+export const getTopArtists = async (
+  options: TopArtistsOptions
+): Promise<TopArtistsItem[]> => {
+  const { timePreset, customTimeStart, customTimeEnd } = options;
+
+  const res = await fetch(
+    `/api/v1/reports/top-artists?${qs({
+      timePreset,
+      customTimeStart: formatISO(customTimeStart),
+      customTimeEnd: formatISO(customTimeEnd),
+    })}`,
+    {
+      headers: getDefaultHeaders(),
+    }
+  );
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to getTopArtists: ${res.status}`);
+    }
+  }
+
+  const items: TopArtistsItem[] = (await res.json()).items;
+  return items;
 };

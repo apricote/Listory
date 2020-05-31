@@ -25,6 +25,9 @@ export const NavBar: React.FC = () => {
               <Link to="/reports/listens">
                 <NavItem>Listens Report</NavItem>
               </Link>
+              <Link to="/reports/top-artists">
+                <NavItem>Top Artists</NavItem>
+              </Link>
             </>
           )}
         </div>
