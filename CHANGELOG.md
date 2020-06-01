@@ -1,3 +1,11 @@
+## [1.3.3](https://github.com/apricote/Listory/compare/v1.3.2...v1.3.3) (2020-06-01)
+
+
+### Bug Fixes
+
+* **frontend:** fix encoding of queryparameters in api calls ([40ce26e](https://github.com/apricote/Listory/commit/40ce26eadd4fa2ffdbdcf4bec4c92bc9b62133df))
+* **server:** validate listens report query params ([6f8fc02](https://github.com/apricote/Listory/commit/6f8fc0265ae50a80e593e89be0bfa0cdbce3a9e6))
+
 ## [1.3.2](https://github.com/apricote/Listory/compare/v1.3.1...v1.3.2) (2020-05-20)
 
 
