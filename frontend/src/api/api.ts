@@ -5,6 +5,7 @@ import { ListenReportOptions } from "./entities/listen-report-options";
 import { Pagination } from "./entities/pagination";
 import { PaginationOptions } from "./entities/pagination-options";
 import { User } from "./entities/user";
+import { qs } from "../util/queryString";
 
 export class UnauthenticatedError extends Error {}
 
@@ -50,9 +51,12 @@ export const getRecentListens = async (
 ): Promise<Pagination<Listen>> => {
   const { page, limit } = options;
 
-  const res = await fetch(`/api/v1/listens?page=${page}&limit=${limit}`, {
-    headers: getDefaultHeaders(),
-  });
+  const res = await fetch(
+    `/api/v1/listens?${qs({ page: page.toString(), limit: limit.toString() })}`,
+    {
+      headers: getDefaultHeaders(),
+    }
+  );
 
   switch (res.status) {
     case 200: {
@@ -77,9 +81,11 @@ export const getListensReport = async (
   const { timeFrame, timeStart, timeEnd } = options;
 
   const res = await fetch(
-    `/api/v1/reports/listens?timeFrame=${timeFrame}&timeStart=${formatISO(
-      timeStart
-    )}&timeEnd=${formatISO(timeEnd)}`,
+    `/api/v1/reports/listens?${qs({
+      timeFrame,
+      timeStart: formatISO(timeStart),
+      timeEnd: formatISO(timeEnd),
+    })}`,
     {
       headers: getDefaultHeaders(),
     }
