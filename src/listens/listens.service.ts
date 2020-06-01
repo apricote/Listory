@@ -60,8 +60,8 @@ export class ListensService {
         queryBuilder = queryBuilder.andWhere(
           "l.playedAt BETWEEN :timeStart AND :timeEnd",
           {
-            timeStart: parseISO(filter.time.start),
-            timeEnd: parseISO(filter.time.end),
+            timeStart: filter.time.start,
+            timeEnd: filter.time.end,
           }
         );
       }

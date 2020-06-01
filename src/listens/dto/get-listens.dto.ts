@@ -1,12 +1,13 @@
-import { IsOptional, ValidateNested, IsISO8601 } from "class-validator";
+import { IsDate, IsOptional, ValidateNested } from "class-validator";
+import { Interval } from "date-fns";
 import { User } from "src/users/user.entity";
 
 // tslint:disable-next-line: max-classes-per-file
-export class GetListensFilterTimeDto {
-  @IsISO8601()
-  start: string;
-  @IsISO8601()
-  end: string;
+export class GetListensFilterTimeDto implements Interval {
+  @IsDate()
+  start: Date;
+  @IsDate()
+  end: Date;
 }
 
 // tslint:disable-next-line: max-classes-per-file
