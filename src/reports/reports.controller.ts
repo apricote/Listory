@@ -13,7 +13,7 @@ export class ReportsController {
   @Get("listens")
   @Auth()
   async getListens(
-    @Query() options: Omit<GetListenReportDto, "user">,
+    @Query() options: GetListenReportDto,
     @ReqUser() user: User
   ): Promise<ListenReportDto> {
     return this.reportsService.getListens({ ...options, user });
