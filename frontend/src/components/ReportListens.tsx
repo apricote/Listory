@@ -1,5 +1,5 @@
 import { format, getTime } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Redirect } from "react-router-dom";
 import {
   Area,
@@ -7,13 +7,14 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
+  TooltipProps,
   XAxis,
   YAxis,
-  TooltipProps,
 } from "recharts";
 import { getListensReport } from "../api/api";
 import { ListenReportItem } from "../api/entities/listen-report-item";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
+import { useAsync } from "../hooks/use-async";
 import { useAuth } from "../hooks/use-auth";
 
 export const ReportListens: React.FC = () => {
@@ -24,23 +25,14 @@ export const ReportListens: React.FC = () => {
     timeStart: new Date("2020-05-01"),
     timeEnd: new Date(),
   });
-  const [report, setReport] = useState<ListenReportItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
+  const fetchData = useMemo(() => () => getListensReport(reportOptions), [
+    reportOptions,
+  ]);
 
-      try {
-        const reportFromApi = await getListensReport(reportOptions);
-        setReport(reportFromApi);
-      } catch (err) {
-        console.error("Error while fetching recent listens:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [reportOptions, setReport, setIsLoading]);
+  const { value: report, pending: isLoading } = useAsync(fetchData, []);
+
+  const reportHasItems = !isLoading && report.length !== 0;
 
   if (!user) {
     return <Redirect to="/" />;
@@ -81,12 +73,12 @@ export const ReportListens: React.FC = () => {
               <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
-          {report.length === 0 && (
+          {!reportHasItems && (
             <div>
               <p>Report is emtpy! :(</p>
             </div>
           )}
-          {report.length > 0 && (
+          {reportHasItems && (
             <div className="w-full text-gray-700 mt-5">
               <ReportGraph options={reportOptions} data={report} />
             </div>
