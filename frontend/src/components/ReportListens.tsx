@@ -78,7 +78,7 @@ export const ReportListens: React.FC = () => {
           </div>
           {isLoading && (
             <div>
-              <span>Loading Listens</span>
+              <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
           {report.length === 0 && (
