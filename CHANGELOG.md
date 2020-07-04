@@ -1,3 +1,20 @@
+## [1.3.4](https://github.com/apricote/Listory/compare/v1.3.3...v1.3.4) (2020-07-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @fullhuman/postcss-purgecss to v2.3.0 ([64817b9](https://github.com/apricote/Listory/commit/64817b9bacbd9628531f62df946cce0b855cb2ac))
+* **deps:** update dependency @nestjs/config to v0.5.0 ([4677033](https://github.com/apricote/Listory/commit/46770337e1a21d692ef9a678d82bda0bebaa2093))
+* **deps:** update dependency @nestjs/serve-static to v2.1.3 ([3d8c9f9](https://github.com/apricote/Listory/commit/3d8c9f91666d0ccc1e1fa4d2c2208b4b50ab3001))
+* **deps:** update dependency @nestjs/swagger to v4.5.12 ([f11436c](https://github.com/apricote/Listory/commit/f11436c69c161194d6fe94afdf77dbd953add6fd))
+* **deps:** update dependency @nestjs/typeorm to v7.1.0 ([ff24aee](https://github.com/apricote/Listory/commit/ff24aee4c5cd9e37b979a53b006beeceb1d9cd7b))
+* **deps:** update dependency @testing-library/jest-dom to v5.11.0 ([8383c3d](https://github.com/apricote/Listory/commit/8383c3dd83abed538670572434388a8184191faf))
+* **deps:** update dependency @testing-library/react to v10.4.3 ([161b731](https://github.com/apricote/Listory/commit/161b731405b5c5445e6fea9e0541077f7d604500))
+* **deps:** update dependency @testing-library/user-event to v10.4.1 ([e7463b5](https://github.com/apricote/Listory/commit/e7463b57f734b60d5d64e2d2528ccf0de81ca322))
+* **deps:** update dependency @types/node to v12.12.47 ([1dd5b3a](https://github.com/apricote/Listory/commit/1dd5b3a4ad6e45bb755b5af9bc9aa5873d5de2f1))
+* **deps:** update dependency @types/react to v16.9.41 ([f9107b7](https://github.com/apricote/Listory/commit/f9107b74aaed2e36212b400ad187a5e05fab6a0b))
+* **deps:** update dependency @types/react-dom to v16.9.8 ([cd5dcfa](https://github.com/apricote/Listory/commit/cd5dcfa12681b9ef1f5cedb1038c99ea00767282))
+
 ## [1.3.3](https://github.com/apricote/Listory/compare/v1.3.2...v1.3.3) (2020-06-01)
 
 
