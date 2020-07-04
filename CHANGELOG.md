@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/apricote/Listory/compare/v1.3.4...v1.4.0) (2020-07-04)
+
+
+### Features
+
+* add top-artists report ([6fc10c4](https://github.com/apricote/Listory/commit/6fc10c40caa3d79c0e0e8b931e0fd194942fc47e))
+* **frontend:** improve loading spinner ([42e8b88](https://github.com/apricote/Listory/commit/42e8b886a05bd8129523ebd77d294352b7e91971))
+
 ## [1.3.4](https://github.com/apricote/Listory/compare/v1.3.3...v1.3.4) (2020-07-04)
 
 
