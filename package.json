@@ -32,7 +32,7 @@
     "@nestjs/platform-express": "7.3.1",
     "@nestjs/schedule": "0.4.0",
     "@nestjs/serve-static": "2.1.1",
-    "@nestjs/swagger": "4.5.4",
+    "@nestjs/swagger": "4.5.12",
     "@nestjs/terminus": "7.0.1",
     "@nestjs/typeorm": "7.0.0",
     "class-transformer": "0.2.3",
