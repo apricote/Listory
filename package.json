@@ -60,7 +60,7 @@
     "@types/jest": "26.0.13",
     "@types/node": "13.13.16",
     "@types/passport-jwt": "3.0.3",
-    "@types/supertest": "2.0.9",
+    "@types/supertest": "2.0.10",
     "jest": "25.5.4",
     "prettier": "2.0.5",
     "supertest": "4.0.2",
