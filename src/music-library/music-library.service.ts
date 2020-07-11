@@ -32,8 +32,6 @@ export class MusicLibraryService {
     artist.name = data.name;
     artist.spotify = data.spotify;
 
-    console.log("createArtist", { data, artist });
-
     await this.artistRepository.save(artist);
 
     return artist;

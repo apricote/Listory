@@ -61,12 +61,6 @@ export class AuthService {
 
     const whitelistedIDs = this.userFilter.split(",");
 
-    console.log("whitelisted ids", {
-      whitelistedIDs,
-      uf: this.userFilter,
-      spotifyID,
-    });
-
     return whitelistedIDs.includes(spotifyID);
   }
 }

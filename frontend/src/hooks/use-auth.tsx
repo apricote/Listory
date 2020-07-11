@@ -34,7 +34,6 @@ function useProvideAuth(): AuthContext {
   useEffect(() => {
     (async () => {
       try {
-        console.log("before calling getUsersMe");
         const currentUser = await getUsersMe();
         setUser(currentUser);
       } catch (err) {

@@ -73,7 +73,6 @@ export const getRecentListens = async (
   }
 
   const listens: Pagination<Listen> = await res.json();
-  console.log("getRecentListens", { listens });
   return listens;
 };
 

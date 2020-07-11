@@ -29,7 +29,6 @@ export class SpotifyService {
 
   @Interval(20 * 1000)
   async getRecentlyPlayedTracks(): Promise<void> {
-    console.log("SpotifyService#getRecentlyPlayedTracks");
     const users = await this.usersService.findAll();
 
     for (const user of users) {
