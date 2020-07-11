@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/apricote/Listory/compare/v1.4.0...v1.4.1) (2020-07-11)
+
+
+### Bug Fixes
+
+* improve top-artists response time ([aecc825](https://github.com/apricote/Listory/commit/aecc82576a356321a6bb86345c67fd42da8c8215))
+* remove debug logging ([f562186](https://github.com/apricote/Listory/commit/f56218602e9a56221867f4357901e58e37720579))
+
 # [1.4.0](https://github.com/apricote/Listory/compare/v1.3.4...v1.4.0) (2020-07-04)
 
 
