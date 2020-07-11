@@ -15,6 +15,7 @@ import {
   startOfDay,
   sub,
 } from "date-fns";
+import { ListenRepository } from "../listens/listen.repository";
 import { ListensService } from "../listens/listens.service";
 import { GetListenReportDto } from "./dto/get-listen-report.dto";
 import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
@@ -62,7 +63,10 @@ const PAGINATION_LIMIT_UNLIMITED = 10000000;
 
 @Injectable()
 export class ReportsService {
-  constructor(private readonly listensService: ListensService) {}
+  constructor(
+    private readonly listensService: ListensService,
+    private readonly listenRepository: ListenRepository
+  ) {}
 
   async getListens(options: GetListenReportDto): Promise<ListenReportDto> {
     const { user, timeFrame, timeStart, timeEnd } = options;
@@ -108,40 +112,41 @@ export class ReportsService {
       customTimeEnd,
     });
 
-    const { items: listens } = await this.listensService.getListens({
-      user,
-      filter: { time: interval },
-      page: 1,
-      limit: PAGINATION_LIMIT_UNLIMITED,
-    });
+    const getArtistsWithCountQB = this.listenRepository
+      .createQueryBuilder("l")
+      .andWhere('l."userId" = :userID', { userID: user.id })
+      .andWhere("l.playedAt BETWEEN :timeStart AND :timeEnd", {
+        timeStart: interval.start,
+        timeEnd: interval.end,
+      })
+      .leftJoin("l.track", "track")
+      .leftJoinAndSelect("track.artists", "artists")
+      .groupBy("artists.id")
+      .select("artists.*")
+      .addSelect("count(*) as listens")
+      .orderBy("listens", "DESC");
 
-    // Declare types for metrics calculation
-    type Item = TopArtistsReportDto["items"][0];
-    type Accumulator = {
-      [x: string]: Item;
+    const rawArtistsWithCount = await getArtistsWithCountQB.getRawMany();
+
+    const items: TopArtistsReportDto["items"] = rawArtistsWithCount.map(
+      (data) => ({
+        count: Number.parseInt(data.listens, 10),
+        artist: {
+          id: data.id,
+          name: data.name,
+          spotify: {
+            id: data.spotifyId,
+            uri: data.spotifyUri,
+            type: data.spotifyType,
+            href: data.spotifyHref,
+          },
+        },
+      })
+    );
+
+    return {
+      items,
     };
-
-    const items: TopArtistsReportDto["items"] = Object.values<Item>(
-      listens
-        .flatMap((listen) => listen.track.artists)
-        .reduce<Accumulator>((counters, artist) => {
-          if (!counters[artist.id]) {
-            counters[artist.id] = {
-              artist,
-              count: 0,
-            };
-          }
-
-          counters[artist.id].count += 1;
-
-          return counters;
-        }, {})
-    )
-      .sort((a, b) => a.count - b.count)
-      .reverse() // sort descending
-      .slice(0, 20); // TODO: Make configurable
-
-    return { items };
   }
 
   private getIntervalFromPreset(options: {

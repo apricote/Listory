@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import { SpotifyLibraryDetails } from "src/sources/spotify/spotify-library-details.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Album } from "./album.entity";
 
 @Entity()
@@ -11,7 +11,7 @@ export class Artist {
   name: string;
 
   @ManyToMany((type) => Album, (album) => album.artists)
-  albums: Album[];
+  albums?: Album[];
 
   @Column((type) => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;

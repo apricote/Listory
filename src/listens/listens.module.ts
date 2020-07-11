@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
-import { ListensService } from "./listens.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ListenRepository } from "./listen.repository";
 import { ListensController } from "./listens.controller";
+import { ListensService } from "./listens.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ListenRepository])],
   providers: [ListensService],
-  exports: [ListensService],
+  exports: [ListensService, TypeOrmModule],
   controllers: [ListensController],
 })
 export class ListensModule {}
