@@ -8,7 +8,7 @@ import {
 import { CreateListenDto } from "./dto/create-listen.dto";
 import { GetListensDto } from "./dto/get-listens.dto";
 import { Listen } from "./listen.entity";
-import { ListenRepository } from "./listen.repository";
+import { ListenRepository, ListenScopes } from "./listen.repository";
 
 @Injectable()
 export class ListensService {
@@ -63,5 +63,9 @@ export class ListensService {
       page,
       limit,
     });
+  }
+
+  getScopedQueryBuilder(): ListenScopes {
+    return this.listenRepository.scoped;
   }
 }

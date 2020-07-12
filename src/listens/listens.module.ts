@@ -7,7 +7,7 @@ import { ListensService } from "./listens.service";
 @Module({
   imports: [TypeOrmModule.forFeature([ListenRepository])],
   providers: [ListensService],
-  exports: [ListensService, TypeOrmModule],
+  exports: [ListensService],
   controllers: [ListensController],
 })
 export class ListensModule {}

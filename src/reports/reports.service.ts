@@ -15,7 +15,6 @@ import {
   startOfDay,
   sub,
 } from "date-fns";
-import { ListenRepository } from "../listens/listen.repository";
 import { ListensService } from "../listens/listens.service";
 import { GetListenReportDto } from "./dto/get-listen-report.dto";
 import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
@@ -63,10 +62,7 @@ const PAGINATION_LIMIT_UNLIMITED = 10000000;
 
 @Injectable()
 export class ReportsService {
-  constructor(
-    private readonly listensService: ListensService,
-    private readonly listenRepository: ListenRepository
-  ) {}
+  constructor(private readonly listensService: ListensService) {}
 
   async getListens(options: GetListenReportDto): Promise<ListenReportDto> {
     const { user, timeFrame, timeStart, timeEnd } = options;
@@ -112,7 +108,8 @@ export class ReportsService {
       customTimeEnd,
     });
 
-    const getArtistsWithCountQB = this.listenRepository.scoped
+    const getArtistsWithCountQB = this.listensService
+      .getScopedQueryBuilder()
       .byUser(user)
       .duringInterval(interval)
       .leftJoin("listen.track", "track")
