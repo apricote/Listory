@@ -112,14 +112,10 @@ export class ReportsService {
       customTimeEnd,
     });
 
-    const getArtistsWithCountQB = this.listenRepository
-      .createQueryBuilder("l")
-      .andWhere('l."userId" = :userID', { userID: user.id })
-      .andWhere("l.playedAt BETWEEN :timeStart AND :timeEnd", {
-        timeStart: interval.start,
-        timeEnd: interval.end,
-      })
-      .leftJoin("l.track", "track")
+    const getArtistsWithCountQB = this.listenRepository.scoped
+      .byUser(user)
+      .duringInterval(interval)
+      .leftJoin("listen.track", "track")
       .leftJoinAndSelect("track.artists", "artists")
       .groupBy("artists.id")
       .select("artists.*")

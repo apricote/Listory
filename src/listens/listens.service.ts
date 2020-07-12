@@ -45,25 +45,17 @@ export class ListensService {
   ): Promise<Pagination<Listen>> {
     const { page, limit, user, filter } = options;
 
-    let queryBuilder = this.listenRepository
-      .createQueryBuilder("l")
-      .leftJoin("l.user", "user")
-      .where("user.id = :userID", { userID: user.id })
-      .leftJoinAndSelect("l.track", "track")
+    let queryBuilder = this.listenRepository.scoped
+      .byUser(user)
+      .leftJoinAndSelect("listen.track", "track")
       .leftJoinAndSelect("track.artists", "artists")
       .leftJoinAndSelect("track.album", "album")
       .leftJoinAndSelect("album.artists", "albumArtists")
-      .orderBy("l.playedAt", "DESC");
+      .orderBy("listen.playedAt", "DESC");
 
     if (filter) {
       if (filter.time) {
-        queryBuilder = queryBuilder.andWhere(
-          "l.playedAt BETWEEN :timeStart AND :timeEnd",
-          {
-            timeStart: filter.time.start,
-            timeEnd: filter.time.end,
-          }
-        );
+        queryBuilder = queryBuilder.duringInterval(filter.time);
       }
     }
 
