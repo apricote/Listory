@@ -24,9 +24,9 @@ export class ReportsController {
   @Get("top-artists")
   @Auth()
   async getTopArtists(
-    @Query() options: Omit<GetTopArtistsReportDto, "user">,
+    @Query() time: ReportTimeDto,
     @ReqUser() user: User
   ): Promise<TopArtistsReportDto> {
-    return this.reportsService.getTopArtists({ ...options, user });
+    return this.reportsService.getTopArtists({ user, time });
   }
 }

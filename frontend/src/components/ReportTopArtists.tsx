@@ -5,19 +5,20 @@ import { TimePreset } from "../api/entities/time-preset.enum";
 import { TopArtistsOptions } from "../api/entities/top-artists-options";
 import { useAsync } from "../hooks/use-async";
 import { useAuth } from "../hooks/use-auth";
-import { ReportOptions } from "./ReportOptions";
+import { ReportTimeOptions } from "./ReportTimeOptions";
+import { TimeOptions } from "../api/entities/time-options";
 
 export const ReportTopArtists: React.FC = () => {
   const { user } = useAuth();
 
-  const [reportOptions, setReportOptions] = useState<TopArtistsOptions>({
+  const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_90_DAYS,
     customTimeStart: new Date(0),
     customTimeEnd: new Date(),
   });
 
-  const fetchData = useMemo(() => () => getTopArtists(reportOptions), [
-    reportOptions,
+  const fetchData = useMemo(() => () => getTopArtists({ time: timeOptions }), [
+    timeOptions,
   ]);
 
   const { value: report, pending: isLoading } = useAsync(fetchData, []);
@@ -35,9 +36,9 @@ export const ReportTopArtists: React.FC = () => {
           <p className="text-2xl font-normal text-gray-700">Top Artists</p>
         </div>
         <div className="shadow-xl bg-gray-100 rounded p-5 m-2">
-          <ReportOptions
-            reportOptions={reportOptions}
-            setReportOptions={setReportOptions}
+          <ReportTimeOptions
+            timeOptions={timeOptions}
+            setTimeOptions={setTimeOptions}
           />
           {isLoading && (
             <div>

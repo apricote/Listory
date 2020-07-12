@@ -1,11 +1,11 @@
 import React from "react";
+import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
-import { TopArtistsOptions } from "../api/entities/top-artists-options";
 import { DateSelect } from "./inputs/DateSelect";
 
-interface ReportOptionsProps {
-  reportOptions: TopArtistsOptions;
-  setReportOptions: (options: TopArtistsOptions) => void;
+interface ReportTimeOptionsProps {
+  timeOptions: TimeOptions;
+  setTimeOptions: (options: TimeOptions) => void;
 }
 
 const timePresetOptions = [
@@ -18,9 +18,9 @@ const timePresetOptions = [
   { value: TimePreset.CUSTOM, description: "Custom" },
 ];
 
-export const ReportOptions: React.FC<ReportOptionsProps> = ({
-  reportOptions,
-  setReportOptions,
+export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
+  timeOptions,
+  setTimeOptions,
 }) => {
   return (
     <div className="md:flex">
@@ -29,33 +29,37 @@ export const ReportOptions: React.FC<ReportOptionsProps> = ({
         <select
           className="block appearance-none min-w-full md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
           onChange={(e) =>
-            setReportOptions({
-              ...reportOptions,
+            setTimeOptions({
+              ...timeOptions,
               timePreset: e.target.value as TimePreset,
             })
           }
         >
           {timePresetOptions.map(({ value, description }) => (
-            <option value={value} key={value}>
+            <option
+              value={value}
+              key={value}
+              selected={value === timeOptions.timePreset}
+            >
               {description}
             </option>
           ))}
         </select>
       </div>
-      {reportOptions.timePreset === TimePreset.CUSTOM && (
+      {timeOptions.timePreset === TimePreset.CUSTOM && (
         <div className="md:flex text-gray-700">
           <DateSelect
             label="Start"
-            value={reportOptions.customTimeStart}
+            value={timeOptions.customTimeStart}
             onChange={(newDate) =>
-              setReportOptions({ ...reportOptions, customTimeStart: newDate })
+              setTimeOptions({ ...timeOptions, customTimeStart: newDate })
             }
           />
           <DateSelect
             label="End"
-            value={reportOptions.customTimeEnd}
+            value={timeOptions.customTimeEnd}
             onChange={(newDate) =>
-              setReportOptions({ ...reportOptions, customTimeEnd: newDate })
+              setTimeOptions({ ...timeOptions, customTimeEnd: newDate })
             }
           />
         </div>

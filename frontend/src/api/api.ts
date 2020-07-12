@@ -111,7 +111,9 @@ export const getListensReport = async (
 export const getTopArtists = async (
   options: TopArtistsOptions
 ): Promise<TopArtistsItem[]> => {
-  const { timePreset, customTimeStart, customTimeEnd } = options;
+  const {
+    time: { timePreset, customTimeStart, customTimeEnd },
+  } = options;
 
   const res = await fetch(
     `/api/v1/reports/top-artists?${qs({

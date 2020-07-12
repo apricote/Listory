@@ -100,13 +100,9 @@ export class ReportsService {
   async getTopArtists(
     options: GetTopArtistsReportDto
   ): Promise<TopArtistsReportDto> {
-    const { user, timePreset, customTimeStart, customTimeEnd } = options;
+    const { user, time: timePreset } = options;
 
-    const interval = this.getIntervalFromPreset({
-      timePreset,
-      customTimeStart,
-      customTimeEnd,
-    });
+    const interval = this.getIntervalFromPreset(timePreset);
 
     const getArtistsWithCountQB = this.listensService
       .getScopedQueryBuilder()
