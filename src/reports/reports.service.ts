@@ -65,14 +65,9 @@ export class ReportsService {
   constructor(private readonly listensService: ListensService) {}
 
   async getListens(options: GetListenReportDto): Promise<ListenReportDto> {
-    const { user, timeFrame, timeStart, timeEnd } = options;
+    const { user, timeFrame, time: timePreset } = options;
 
-    // Function should eventually be rewritten to accept a timepreset
-    const interval = this.getIntervalFromPreset({
-      timePreset: TimePreset.CUSTOM,
-      customTimeStart: timeStart,
-      customTimeEnd: timeEnd,
-    });
+    const interval = this.getIntervalFromPreset(timePreset);
 
     const { items: listens } = await this.listensService.getListens({
       user,
@@ -81,20 +76,15 @@ export class ReportsService {
       limit: PAGINATION_LIMIT_UNLIMITED,
     });
 
-    const reportInterval: Interval = {
-      start: parseISO(timeStart),
-      end: parseISO(timeEnd),
-    };
-
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
 
-    const reportItems = eachOfInterval(reportInterval).map((date) => {
+    const reportItems = eachOfInterval(interval).map((date) => {
       const count = listens.filter((listen) => isSame(date, listen.playedAt))
         .length;
       return { date: formatISO(date), count };
     });
 
-    return { items: reportItems, timeStart, timeEnd, timeFrame };
+    return { items: reportItems };
   }
 
   async getTopArtists(

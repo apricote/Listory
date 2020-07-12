@@ -1,5 +1,5 @@
 import { format, getTime } from "date-fns";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Redirect } from "react-router-dom";
 import {
   Area,
@@ -14,21 +14,29 @@ import {
 import { getListensReport } from "../api/api";
 import { ListenReportItem } from "../api/entities/listen-report-item";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
+import { TimeOptions } from "../api/entities/time-options";
+import { TimePreset } from "../api/entities/time-preset.enum";
 import { useAsync } from "../hooks/use-async";
 import { useAuth } from "../hooks/use-auth";
+import { ReportTimeOptions } from "./ReportTimeOptions";
 
 export const ReportListens: React.FC = () => {
   const { user } = useAuth();
 
-  const [reportOptions, setReportOptions] = useState<ListenReportOptions>({
-    timeFrame: "day",
-    timeStart: new Date("2020-05-01"),
-    timeEnd: new Date(),
+  const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
+    "day"
+  );
+
+  const [timeOptions, setTimeOptions] = useState<TimeOptions>({
+    timePreset: TimePreset.LAST_7_DAYS,
+    customTimeStart: new Date(0),
+    customTimeEnd: new Date(),
   });
 
-  const fetchData = useMemo(() => () => getListensReport(reportOptions), [
-    reportOptions,
-  ]);
+  const fetchData = useMemo(
+    () => () => getListensReport({ timeFrame, time: timeOptions }),
+    [timeFrame, timeOptions]
+  );
 
   const { value: report, pending: isLoading } = useAsync(fetchData, []);
 
@@ -51,14 +59,9 @@ export const ReportListens: React.FC = () => {
               <select
                 className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) =>
-                  setReportOptions({
-                    ...reportOptions,
-                    timeFrame: e.target.value as
-                      | "day"
-                      | "week"
-                      | "month"
-                      | "year",
-                  })
+                  setTimeFrame(
+                    e.target.value as "day" | "week" | "month" | "year"
+                  )
                 }
               >
                 <option value="day">Daily</option>
@@ -67,6 +70,10 @@ export const ReportListens: React.FC = () => {
                 <option value="year">Yearly</option>
               </select>
             </div>
+            <ReportTimeOptions
+              timeOptions={timeOptions}
+              setTimeOptions={setTimeOptions}
+            />
           </div>
           {isLoading && (
             <div>
@@ -80,7 +87,7 @@ export const ReportListens: React.FC = () => {
           )}
           {reportHasItems && (
             <div className="w-full text-gray-700 mt-5">
-              <ReportGraph options={reportOptions} data={report} />
+              <ReportGraph timeFrame={timeFrame} data={report} />
             </div>
           )}
         </div>
@@ -90,9 +97,9 @@ export const ReportListens: React.FC = () => {
 };
 
 const ReportGraph: React.FC<{
-  options: ListenReportOptions;
+  timeFrame: ListenReportOptions["timeFrame"];
   data: ListenReportItem[];
-}> = ({ options, data }) => {
+}> = ({ timeFrame, data }) => {
   const dataLocal = data.map(({ date, ...other }) => ({
     ...other,
     date: getTime(date),
@@ -108,10 +115,7 @@ const ReportGraph: React.FC<{
     }
 
     const [{ value: listens }] = payload;
-    const date = format(
-      label as number,
-      dateFormatFromTimeFrame(options.timeFrame)
-    );
+    const date = format(label as number, dateFormatFromTimeFrame(timeFrame));
 
     return (
       <div className="bg-gray-100 shadow-xl p-2 rounded text-sm font-light">
@@ -145,7 +149,7 @@ const ReportGraph: React.FC<{
             domain={["auto", "auto"]}
             dataKey="date"
             tickFormatter={(date) =>
-              format(date, shortDateFormatFromTimeFrame(options.timeFrame))
+              format(date, shortDateFormatFromTimeFrame(timeFrame))
             }
           />
           <YAxis />

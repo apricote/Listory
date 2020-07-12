@@ -79,13 +79,17 @@ export const getRecentListens = async (
 export const getListensReport = async (
   options: ListenReportOptions
 ): Promise<ListenReportItem[]> => {
-  const { timeFrame, timeStart, timeEnd } = options;
+  const {
+    timeFrame,
+    time: { timePreset, customTimeStart, customTimeEnd },
+  } = options;
 
   const res = await fetch(
     `/api/v1/reports/listens?${qs({
       timeFrame,
-      timeStart: formatISO(timeStart),
-      timeEnd: formatISO(timeEnd),
+      timePreset,
+      customTimeStart: formatISO(customTimeStart),
+      customTimeEnd: formatISO(customTimeEnd),
     })}`,
     {
       headers: getDefaultHeaders(),

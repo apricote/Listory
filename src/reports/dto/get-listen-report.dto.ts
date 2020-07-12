@@ -1,6 +1,7 @@
-import { IsEnum, IsISO8601 } from "class-validator";
+import { IsEnum, ValidateNested } from "class-validator";
 import { User } from "../../users/user.entity";
 import { Timeframe } from "../timeframe.enum";
+import { ReportTimeDto } from "./report-time.dto";
 
 export class GetListenReportDto {
   user: User;
@@ -8,9 +9,6 @@ export class GetListenReportDto {
   @IsEnum(Timeframe)
   timeFrame: Timeframe;
 
-  @IsISO8601()
-  timeStart: string;
-
-  @IsISO8601()
-  timeEnd: string;
+  @ValidateNested()
+  time: ReportTimeDto;
 }

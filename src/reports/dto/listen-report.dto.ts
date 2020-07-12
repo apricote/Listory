@@ -5,10 +5,4 @@ export class ListenReportDto {
     date: string;
     count: number;
   }[];
-
-  timeFrame: Timeframe;
-
-  timeStart: string;
-
-  timeEnd: string;
 }

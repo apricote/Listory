@@ -2,11 +2,11 @@ import { Controller, Get, Query } from "@nestjs/common";
 import { Auth } from "src/auth/decorators/auth.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
-import { GetListenReportDto } from "./dto/get-listen-report.dto";
-import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
 import { ListenReportDto } from "./dto/listen-report.dto";
+import { ReportTimeDto } from "./dto/report-time.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
 import { ReportsService } from "./reports.service";
+import { Timeframe } from "./timeframe.enum";
 
 @Controller("api/v1/reports")
 export class ReportsController {
@@ -15,10 +15,11 @@ export class ReportsController {
   @Get("listens")
   @Auth()
   async getListens(
-    @Query() options: GetListenReportDto,
+    @Query() time: ReportTimeDto,
+    @Query("timeFrame") timeFrame: Timeframe,
     @ReqUser() user: User
   ): Promise<ListenReportDto> {
-    return this.reportsService.getListens({ ...options, user });
+    return this.reportsService.getListens({ user, timeFrame, time });
   }
 
   @Get("top-artists")
