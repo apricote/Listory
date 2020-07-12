@@ -10,7 +10,6 @@ import {
   isSameMonth,
   isSameWeek,
   isSameYear,
-  parseISO,
   parseJSON,
   startOfDay,
   sub,
@@ -69,12 +68,11 @@ export class ReportsService {
 
     const interval = this.getIntervalFromPreset(timePreset);
 
-    const { items: listens } = await this.listensService.getListens({
-      user,
-      filter: { time: interval },
-      page: 1,
-      limit: PAGINATION_LIMIT_UNLIMITED,
-    });
+    const listens = await this.listensService
+      .getScopedQueryBuilder()
+      .byUser(user)
+      .duringInterval(interval)
+      .getMany();
 
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
 
