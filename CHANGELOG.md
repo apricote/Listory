@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/apricote/Listory/compare/v1.4.1...v1.4.2) (2020-07-12)
+
+
+### Bug Fixes
+
+* **server:** improve listens report response time ([fb9b83d](https://github.com/apricote/Listory/commit/fb9b83d440e10984ed6bb93719d9443d9c9ecb2c))
+
 ## [1.4.1](https://github.com/apricote/Listory/compare/v1.4.0...v1.4.1) (2020-07-11)
 
 
