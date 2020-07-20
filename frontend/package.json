@@ -30,7 +30,7 @@
     "react-scripts": "3.4.1",
     "recharts": "1.8.5",
     "tailwindcss": "1.4.5",
-    "typescript": "3.9.6"
+    "typescript": "3.9.7"
   },
   "scripts": {
     "build:tailwind": "postcss src/tailwind.css -o src/tailwind/generated.css",
