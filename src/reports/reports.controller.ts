@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Auth } from "src/auth/decorators/auth.decorator";
+import { Auth } from "../auth/decorators/auth.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
 import { ListenReportDto } from "./dto/listen-report.dto";

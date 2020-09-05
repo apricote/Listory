@@ -1,5 +1,5 @@
-import { SpotifyLibraryDetails } from "src/sources/spotify/spotify-library-details.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Album } from "./album.entity";
 
 @Entity()

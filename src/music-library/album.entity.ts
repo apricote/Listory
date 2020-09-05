@@ -1,12 +1,12 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
+  Entity,
   JoinTable,
+  ManyToMany,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { SpotifyLibraryDetails } from "src/sources/spotify/spotify-library-details.entity";
+import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Artist } from "./artist.entity";
 import { Track } from "./track.entity";
 

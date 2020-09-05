@@ -1,4 +1,3 @@
-import { SpotifyLibraryDetails } from "src/sources/spotify/spotify-library-details.entity";
 import {
   Column,
   Entity,
@@ -7,6 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Album } from "./album.entity";
 import { Artist } from "./artist.entity";
 

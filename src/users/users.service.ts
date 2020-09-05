@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { SpotifyConnection } from "../sources/spotify/spotify-connection.entity";
 import { CreateOrUpdateDto } from "./dto/create-or-update.dto";
 import { User } from "./user.entity";
 import { UserRepository } from "./user.repository";
-import { SpotifyConnection } from "src/sources/spotify/spotify-connection.entity";
 
 @Injectable()
 export class UsersService {

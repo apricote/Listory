@@ -1,6 +1,6 @@
 import { IsDate, IsOptional, ValidateNested } from "class-validator";
 import { Interval } from "date-fns";
-import { User } from "src/users/user.entity";
+import { User } from "../../users/user.entity";
 
 // tslint:disable-next-line: max-classes-per-file
 export class GetListensFilterTimeDto implements Interval {
