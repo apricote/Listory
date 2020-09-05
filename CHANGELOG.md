@@ -1,3 +1,26 @@
+## [1.4.3](https://github.com/apricote/Listory/compare/v1.4.2...v1.4.3) (2020-09-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nestjs/jwt to v7.1.0 ([e43f2ee](https://github.com/apricote/Listory/commit/e43f2ee1358ef5c47aa06ad435f07c83ead5b564))
+* **deps:** update dependency @testing-library/jest-dom to v5.11.4 ([aaa9bff](https://github.com/apricote/Listory/commit/aaa9bff029b11c3d4fc907f92e8dff31ebe2b975))
+* **deps:** update dependency @testing-library/react to v10.4.9 ([9a52905](https://github.com/apricote/Listory/commit/9a52905f12edc1a87f219521240525222157a702))
+* **deps:** update dependency @testing-library/user-event to v12 ([8196db1](https://github.com/apricote/Listory/commit/8196db1280ae4a228f0cd0af6c46ff8da85d5ca9))
+* **deps:** update dependency @types/node to v12.12.55 ([22aa30d](https://github.com/apricote/Listory/commit/22aa30d82dc8f6a785d4d780778785914ccfd4fb))
+* **deps:** update dependency @types/react to v16.9.49 ([382f96f](https://github.com/apricote/Listory/commit/382f96f7f101f956af19cba848beee545736fd91))
+* **deps:** update dependency @types/recharts to v1.8.15 ([f5f9dec](https://github.com/apricote/Listory/commit/f5f9decf95018a10b72bca0f690e6a2894c00b45))
+* **deps:** update dependency autoprefixer to v9.8.6 ([60cedf0](https://github.com/apricote/Listory/commit/60cedf068c1f8bed66cb8f82af41cb724405fc44))
+* **deps:** update dependency class-transformer to v0.3.1 [security] ([6c54ad0](https://github.com/apricote/Listory/commit/6c54ad0a7408f80f722591444b05e4f4359fc3eb))
+* **deps:** update dependency date-fns to v2.16.1 ([0e25114](https://github.com/apricote/Listory/commit/0e2511430e682c30f84f3ff0bf61ccbfda3759f9))
+* **deps:** update dependency nestjs-typeorm-paginate to v2.1.1 ([0ffb3da](https://github.com/apricote/Listory/commit/0ffb3da1dbbe2d9a57ce0fb1ae66aba9c43737b4))
+* **deps:** update dependency pg to v8.3.3 ([349b28e](https://github.com/apricote/Listory/commit/349b28e879cd3599c88c23a2b44251ddad2c3b8f))
+* **deps:** update dependency react-router-dom to v5.2.0 ([2930bb3](https://github.com/apricote/Listory/commit/2930bb31ceb9e3a81c97d7130acc5c7c9eedaf8d))
+* **deps:** update dependency rxjs to v6.6.2 ([341a2ab](https://github.com/apricote/Listory/commit/341a2ab68b86a80345fb6f19ddb54b915adf3e75))
+* **deps:** update dependency tailwindcss to v1.8.2 ([759d7aa](https://github.com/apricote/Listory/commit/759d7aac5f8e8e232fcaf5d1319803c7437ac0dc))
+* **deps:** update package-lock.json after deps updates ([71591bf](https://github.com/apricote/Listory/commit/71591bf6ff4bb59cd174b7cd2dafd7fbd5906e66))
+* jest root folder config ([0d8bc26](https://github.com/apricote/Listory/commit/0d8bc26f0d10516e6ca812dd995be4ccdc92e953))
+
 ## [1.4.2](https://github.com/apricote/Listory/compare/v1.4.1...v1.4.2) (2020-07-12)
 
 
