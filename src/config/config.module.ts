@@ -1,9 +1,6 @@
 import * as Joi from "@hapi/joi";
 import { Module } from "@nestjs/common";
-import {
-  ConfigModule as NestConfigModule,
-  ConfigService,
-} from "@nestjs/config";
+import { ConfigModule as NestConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -19,7 +16,9 @@ import {
         JWT_ALGORITHM: Joi.string()
           .default("HS256")
           .allow("HS256", "HS384", "HS512"),
-        JWT_EXPIRATION_TIME: Joi.string().default("1d"),
+
+        JWT_EXPIRATION_TIME: Joi.string().default("15m"),
+        SESSION_EXPIRATION_TIME: Joi.string().default("1y"),
 
         // Spotify
         SPOTIFY_CLIENT_ID: Joi.string().required(),

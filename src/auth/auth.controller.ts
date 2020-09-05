@@ -1,10 +1,23 @@
-import { Controller, Get, Res, UseFilters, UseGuards } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Res,
+  UseFilters,
+  UseGuards,
+} from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { User } from "../users/user.entity";
+import { AuthSession } from "./auth-session.entity";
 import { AuthService } from "./auth.service";
+import { COOKIE_REFRESH_TOKEN } from "./constants";
 import { ReqUser } from "./decorators/req-user.decorator";
+import { RefreshAccessTokenResponseDto } from "./dto/refresh-access-token-response.dto";
+import {
+  RefreshTokenAuthGuard,
+  SpotifyAuthGuard,
+} from "./guards/auth-strategies.guard";
 import { SpotifyAuthFilter } from "./spotify.filter";
 
 @Controller("api/v1/auth")
@@ -15,26 +28,33 @@ export class AuthController {
   ) {}
 
   @Get("spotify")
-  @UseGuards(AuthGuard("spotify"))
+  @UseGuards(SpotifyAuthGuard)
   spotifyRedirect() {
     // User is redirected by AuthGuard
   }
 
   @Get("spotify/callback")
   @UseFilters(SpotifyAuthFilter)
-  @UseGuards(AuthGuard("spotify"))
+  @UseGuards(SpotifyAuthGuard)
   async spotifyCallback(@ReqUser() user: User, @Res() res: Response) {
-    const { accessToken } = await this.authService.createToken(user);
+    const { refreshToken } = await this.authService.createSession(user);
 
-    // Transmit accessToken to Frontend
-    res.cookie("listory_access_token", accessToken, {
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-
-      // Must be readable by SPA
-      httpOnly: false,
-    });
+    // Refresh token should not be accessible to frontend to reduce risk
+    // of XSS attacks.
+    res.cookie(COOKIE_REFRESH_TOKEN, refreshToken, { httpOnly: true });
 
     // Redirect User to SPA
     res.redirect("/login/success?source=spotify");
+  }
+
+  @Post("token/refresh")
+  @UseGuards(RefreshTokenAuthGuard)
+  async refreshAccessToken(
+    // With RefreshTokenAuthGuard the session is available instead of user
+    @ReqUser() session: AuthSession
+  ): Promise<RefreshAccessTokenResponseDto> {
+    const { accessToken } = await this.authService.createAccessToken(session);
+
+    return { accessToken };
   }
 }

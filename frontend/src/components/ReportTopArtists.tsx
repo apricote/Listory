@@ -1,14 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { getTopArtists } from "../api/api";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
-import { TopArtistsItem } from "../api/entities/top-artists-item";
-import { useAsync } from "../hooks/use-async";
+import { useTopArtists } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
 import { ReportTimeOptions } from "./ReportTimeOptions";
-
-const INITIAL_REPORT_DATA: TopArtistsItem[] = [];
 
 export const ReportTopArtists: React.FC = () => {
   const { user } = useAuth();
@@ -19,16 +15,16 @@ export const ReportTopArtists: React.FC = () => {
     customTimeEnd: new Date(),
   });
 
-  const fetchData = useMemo(() => () => getTopArtists({ time: timeOptions }), [
-    timeOptions,
-  ]);
-
-  const { value: report, pending: isLoading } = useAsync(
-    fetchData,
-    INITIAL_REPORT_DATA
+  const options = useMemo(
+    () => ({
+      time: timeOptions,
+    }),
+    [timeOptions]
   );
 
-  const reportHasItems = !isLoading && report.length !== 0;
+  const { topArtists, isLoading } = useTopArtists(options);
+
+  const reportHasItems = !isLoading && topArtists.length !== 0;
 
   if (!user) {
     return <Redirect to="/" />;
@@ -56,7 +52,7 @@ export const ReportTopArtists: React.FC = () => {
             </div>
           )}
           {reportHasItems &&
-            report.map(({ artist, count }) => (
+            topArtists.map(({ artist, count }) => (
               <div key={artist.id}>
                 {count} - {artist.name}
               </div>

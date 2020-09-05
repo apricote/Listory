@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { Pagination } from "nestjs-typeorm-paginate";
-import { Auth } from "../auth/decorators/auth.decorator";
+import { AuthAccessToken } from "../auth/decorators/auth-access-token.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
 import { GetListensFilterDto } from "./dto/get-listens.dto";
@@ -12,7 +12,7 @@ export class ListensController {
   constructor(private readonly listensService: ListensService) {}
 
   @Get()
-  @Auth()
+  @AuthAccessToken()
   async getRecentlyPlayed(
     @Query("page") page: number = 1,
     @Query("limit") limit: number = 10,

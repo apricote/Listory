@@ -1,19 +1,25 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { getUsersMe, UnauthenticatedError } from "../api/api";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { getUsersMe, postAuthTokenRefresh } from "../api/auth-api";
 import { User } from "../api/entities/user";
+
+interface AuthContext {
+  isLoaded: boolean;
+  user: User | null;
+  accessToken: string;
+  error: Error | null;
+  refreshAccessToken: () => Promise<string>;
+  loginWithSpotifyProps: () => { href: string };
+}
 
 const authContext = createContext<AuthContext>(
   (undefined as any) as AuthContext
 );
-
-// Provider component that wraps your app and makes auth object ...
-// ... available to any child component that calls useAuth().
-
-interface AuthContext {
-  user: { id: string; displayName: string } | null;
-  isLoaded: boolean;
-  loginWithSpotifyProps: () => { href: string };
-}
 
 export const ProvideAuth: React.FC = ({ children }) => {
   const auth = useProvideAuth();
@@ -28,25 +34,51 @@ export function useAuth() {
 function useProvideAuth(): AuthContext {
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [accessToken, setAccessToken] = useState<string>("");
+  const [error, setError] = useState<Error | null>(null);
 
   const loginWithSpotifyProps = () => ({ href: "/api/v1/auth/spotify" });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const currentUser = await getUsersMe();
-        setUser(currentUser);
-      } catch (err) {
-        if (err instanceof UnauthenticatedError) {
-          // User is not logged in
-        } else {
-          console.error("Error while checking login state:", err);
-        }
-      } finally {
-        setIsLoaded(true);
-      }
-    })();
+  const refreshAccessToken = useCallback(async () => {
+    try {
+      const { accessToken: newAccessToken } = await postAuthTokenRefresh();
+      setAccessToken(newAccessToken);
+      return newAccessToken;
+    } catch (err) {
+      setAccessToken("");
+      setUser(null);
+      setIsLoaded(true);
+      setError(err);
+
+      throw err;
+    }
   }, []);
 
-  return { isLoaded, user, loginWithSpotifyProps };
+  useEffect(() => {
+    refreshAccessToken().catch(() => {
+      console.log("Unable to refresh access token");
+    });
+  }, [refreshAccessToken]);
+
+  useEffect(() => {
+    if (!accessToken) {
+      return;
+    }
+    async function getUser(token: string) {
+      const newUser = await getUsersMe(token);
+      setUser(newUser);
+      setIsLoaded(true);
+    }
+
+    getUser(accessToken);
+  }, [accessToken]);
+
+  return {
+    isLoaded,
+    user,
+    accessToken,
+    error,
+    refreshAccessToken,
+    loginWithSpotifyProps,
+  };
 }

@@ -3,7 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 type UseAsync = <T>(
   asyncFunction: () => Promise<T>,
   initialValue: T
-) => { pending: boolean; value: T; error: Error | null };
+) => {
+  pending: boolean;
+  value: T;
+  error: Error | null;
+  reload: () => Promise<void>;
+};
 
 export const useAsync: UseAsync = <T extends any>(
   asyncFunction: () => Promise<T>,
@@ -34,5 +39,5 @@ export const useAsync: UseAsync = <T extends any>(
     execute();
   }, [execute]);
 
-  return { execute, pending, value, error };
+  return { reload: execute, pending, value, error };
 };

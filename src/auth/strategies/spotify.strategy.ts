@@ -2,10 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-spotify";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../auth.service";
+import { AuthStrategy } from "./strategies.enum";
 
 @Injectable()
-export class SpotifyStrategy extends PassportStrategy(Strategy) {
+export class SpotifyStrategy extends PassportStrategy(
+  Strategy,
+  AuthStrategy.Spotify
+) {
   constructor(
     private readonly authService: AuthService,
     config: ConfigService

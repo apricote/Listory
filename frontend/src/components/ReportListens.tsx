@@ -11,12 +11,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getListensReport } from "../api/api";
 import { ListenReportItem } from "../api/entities/listen-report-item";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
-import { useAsync } from "../hooks/use-async";
+import { useListensReport } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 
@@ -33,12 +32,12 @@ export const ReportListens: React.FC = () => {
     customTimeEnd: new Date(),
   });
 
-  const fetchData = useMemo(
-    () => () => getListensReport({ timeFrame, time: timeOptions }),
-    [timeFrame, timeOptions]
-  );
+  const reportOptions = useMemo(() => ({ timeFrame, time: timeOptions }), [
+    timeFrame,
+    timeOptions,
+  ]);
 
-  const { value: report, pending: isLoading } = useAsync(fetchData, []);
+  const { report, isLoading } = useListensReport(reportOptions);
 
   const reportHasItems = !isLoading && report.length !== 0;
 

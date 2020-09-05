@@ -1,5 +1,5 @@
+import { AxiosInstance } from "axios";
 import { formatISO, parseISO } from "date-fns";
-import { qs } from "../util/queryString";
 import { Listen } from "./entities/listen";
 import { ListenReportItem } from "./entities/listen-report-item";
 import { ListenReportOptions } from "./entities/listen-report-options";
@@ -7,58 +7,18 @@ import { Pagination } from "./entities/pagination";
 import { PaginationOptions } from "./entities/pagination-options";
 import { TopArtistsItem } from "./entities/top-artists-item";
 import { TopArtistsOptions } from "./entities/top-artists-options";
-import { User } from "./entities/user";
 
 export class UnauthenticatedError extends Error {}
 
-const getToken = (): string => {
-  const cookieValue = document.cookie.replace(
-    /(?:(?:^|.*;\s*)listory_access_token\s*=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
-
-  return cookieValue;
-};
-
-const getDefaultHeaders = (): Headers => {
-  const headers = new Headers();
-
-  headers.append("Content-Type", "application/json");
-  headers.append("Authorization", `Bearer ${getToken()}`);
-
-  return headers;
-};
-
-export const getUsersMe = async (): Promise<User> => {
-  const res = await fetch(`/api/v1/users/me`, { headers: getDefaultHeaders() });
-
-  switch (res.status) {
-    case 200: {
-      break;
-    }
-    case 401: {
-      throw new UnauthenticatedError(`No token or token expired`);
-    }
-    default: {
-      throw new Error(`Unable to getUsersMe: ${res.status}`);
-    }
-  }
-
-  const user: User = await res.json();
-  return user;
-};
-
 export const getRecentListens = async (
-  options: PaginationOptions = { page: 1, limit: 10 }
+  options: PaginationOptions = { page: 1, limit: 10 },
+  client: AxiosInstance
 ): Promise<Pagination<Listen>> => {
   const { page, limit } = options;
 
-  const res = await fetch(
-    `/api/v1/listens?${qs({ page: page.toString(), limit: limit.toString() })}`,
-    {
-      headers: getDefaultHeaders(),
-    }
-  );
+  const res = await client.get<Pagination<Listen>>(`/api/v1/listens`, {
+    params: { page, limit },
+  });
 
   switch (res.status) {
     case 200: {
@@ -72,27 +32,27 @@ export const getRecentListens = async (
     }
   }
 
-  const listens: Pagination<Listen> = await res.json();
-  return listens;
+  return res.data;
 };
 
 export const getListensReport = async (
-  options: ListenReportOptions
+  options: ListenReportOptions,
+  client: AxiosInstance
 ): Promise<ListenReportItem[]> => {
   const {
     timeFrame,
     time: { timePreset, customTimeStart, customTimeEnd },
   } = options;
 
-  const res = await fetch(
-    `/api/v1/reports/listens?${qs({
-      timeFrame,
-      timePreset,
-      customTimeStart: formatISO(customTimeStart),
-      customTimeEnd: formatISO(customTimeEnd),
-    })}`,
+  const res = await client.get<{ items: { count: number; date: string }[] }>(
+    `/api/v1/reports/listens`,
     {
-      headers: getDefaultHeaders(),
+      params: {
+        timeFrame,
+        timePreset,
+        customTimeStart: formatISO(customTimeStart),
+        customTimeEnd: formatISO(customTimeEnd),
+      },
     }
   );
 
@@ -108,25 +68,28 @@ export const getListensReport = async (
     }
   }
 
-  const rawItems: { count: number; date: string }[] = (await res.json()).items;
+  const {
+    data: { items: rawItems },
+  } = res;
   return rawItems.map(({ count, date }) => ({ count, date: parseISO(date) }));
 };
 
 export const getTopArtists = async (
-  options: TopArtistsOptions
+  options: TopArtistsOptions,
+  client: AxiosInstance
 ): Promise<TopArtistsItem[]> => {
   const {
     time: { timePreset, customTimeStart, customTimeEnd },
   } = options;
 
-  const res = await fetch(
-    `/api/v1/reports/top-artists?${qs({
-      timePreset,
-      customTimeStart: formatISO(customTimeStart),
-      customTimeEnd: formatISO(customTimeEnd),
-    })}`,
+  const res = await client.get<{ items: TopArtistsItem[] }>(
+    `/api/v1/reports/top-artists`,
     {
-      headers: getDefaultHeaders(),
+      params: {
+        timePreset,
+        customTimeStart: formatISO(customTimeStart),
+        customTimeEnd: formatISO(customTimeEnd),
+      },
     }
   );
 
@@ -142,6 +105,8 @@ export const getTopArtists = async (
     }
   }
 
-  const items: TopArtistsItem[] = (await res.json()).items;
+  const {
+    data: { items },
+  } = res;
   return items;
 };

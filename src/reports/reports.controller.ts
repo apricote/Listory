@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Auth } from "../auth/decorators/auth.decorator";
+import { AuthAccessToken } from "../auth/decorators/auth-access-token.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
 import { ListenReportDto } from "./dto/listen-report.dto";
@@ -13,7 +13,7 @@ export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Get("listens")
-  @Auth()
+  @AuthAccessToken()
   async getListens(
     @Query() time: ReportTimeDto,
     @Query("timeFrame") timeFrame: Timeframe,
@@ -23,7 +23,7 @@ export class ReportsController {
   }
 
   @Get("top-artists")
-  @Auth()
+  @AuthAccessToken()
   async getTopArtists(
     @Query() time: ReportTimeDto,
     @ReqUser() user: User

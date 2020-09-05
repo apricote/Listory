@@ -1,8 +1,8 @@
 import { format, formatDistanceToNow } from "date-fns";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { getRecentListens } from "../api/api";
 import { Listen } from "../api/entities/listen";
+import { useRecentListens } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
 import { ReloadIcon } from "../icons/Reload";
 import { getPaginationItems } from "../util/getPaginationItems";
@@ -14,35 +14,18 @@ export const RecentListens: React.FC = () => {
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [listens, setListens] = useState<Listen[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const loadListensForPage = useMemo(
-    () => async () => {
-      setIsLoading(true);
+  const options = useMemo(() => ({ page, limit: LISTENS_PER_PAGE }), [page]);
 
-      try {
-        const listensFromApi = await getRecentListens({
-          page,
-          limit: LISTENS_PER_PAGE,
-        });
-
-        if (totalPages !== listensFromApi.meta.totalPages) {
-          setTotalPages(listensFromApi.meta.totalPages);
-        }
-        setListens(listensFromApi.items);
-      } catch (err) {
-        console.error("Error while fetching recent listens:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [page, totalPages, setIsLoading, setTotalPages, setListens]
+  const { recentListens, paginationMeta, isLoading, reload } = useRecentListens(
+    options
   );
 
   useEffect(() => {
-    loadListensForPage();
-  }, [loadListensForPage]);
+    if (paginationMeta && totalPages !== paginationMeta.totalPages) {
+      setTotalPages(paginationMeta.totalPages);
+    }
+  }, [totalPages, paginationMeta]);
 
   if (!user) {
     return <Redirect to="/" />;
@@ -55,7 +38,7 @@ export const RecentListens: React.FC = () => {
           <p className="text-2xl font-normal text-gray-700">Recent listens</p>
           <button
             className="flex-shrink-0 mx-2 bg-transparent hover:bg-green-500 text-green-500 hover:text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
-            onClick={loadListensForPage}
+            onClick={reload}
           >
             <ReloadIcon className="w-5 h-5 fill-current" />
           </button>
@@ -66,14 +49,14 @@ export const RecentListens: React.FC = () => {
               <span>Loading Listens</span>
             </div>
           )}
-          {listens.length === 0 && (
+          {recentListens.length === 0 && (
             <div>
               <p>Could not find any listens!</p>
             </div>
           )}
-          {listens.length > 0 && (
+          {recentListens.length > 0 && (
             <div className="table-auto my-2 w-full text-gray-700">
-              {listens.map((listen) => (
+              {recentListens.map((listen) => (
                 <ListenItem listen={listen} key={listen.id} />
               ))}
             </div>

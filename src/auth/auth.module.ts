@@ -1,15 +1,20 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { CookieParserMiddleware } from "../cookie-parser";
 import { UsersModule } from "../users/users.module";
+import { AuthSessionRepository } from "./auth-session.repository";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { JwtStrategy } from "./jwt.strategy";
-import { SpotifyStrategy } from "./spotify.strategy";
+import { AccessTokenStrategy } from "./strategies/access-token.strategy";
+import { RefreshTokenStrategy } from "./strategies/refresh-token.strategy";
+import { SpotifyStrategy } from "./strategies/spotify.strategy";
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([AuthSessionRepository]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
@@ -23,8 +28,17 @@ import { SpotifyStrategy } from "./spotify.strategy";
     }),
     UsersModule,
   ],
-  providers: [AuthService, SpotifyStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    SpotifyStrategy,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+  ],
   exports: [PassportModule],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CookieParserMiddleware).forRoutes("api/v1/auth");
+  }
+}
