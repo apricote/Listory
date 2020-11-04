@@ -59,7 +59,7 @@
     "@types/node": "13.13.16",
     "@types/passport-jwt": "3.0.3",
     "@types/supertest": "2.0.9",
-    "jest": "25.5.4",
+    "jest": "26.6.3",
     "prettier": "2.0.5",
     "supertest": "4.0.2",
     "ts-jest": "26.3.0",
