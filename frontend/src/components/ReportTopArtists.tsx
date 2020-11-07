@@ -57,7 +57,7 @@ export const ReportTopArtists: React.FC = () => {
           )}
           {reportHasItems &&
             report.map(({ artist, count }) => (
-              <div>
+              <div key={artist.id}>
                 {count} - {artist.name}
               </div>
             ))}
