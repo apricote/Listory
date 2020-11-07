@@ -34,13 +34,10 @@ export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
               timePreset: e.target.value as TimePreset,
             })
           }
+          value={timeOptions.timePreset}
         >
           {timePresetOptions.map(({ value, description }) => (
-            <option
-              value={value}
-              key={value}
-              selected={value === timeOptions.timePreset}
-            >
+            <option value={value} key={value}>
               {description}
             </option>
           ))}
