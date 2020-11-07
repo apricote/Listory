@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type UseAsync = <T>(
   asyncFunction: () => Promise<T>,
@@ -25,7 +25,7 @@ export const useAsync: UseAsync = <T extends any>(
       .then((response) => setValue(response))
       .catch((err) => setError(err))
       .finally(() => setPending(false));
-  }, [asyncFunction]);
+  }, [asyncFunction, initialValue]);
 
   // Call execute if we want to fire it right away.
   // Otherwise execute can be called later, such as
