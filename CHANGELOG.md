@@ -1,3 +1,12 @@
+## [1.4.4](https://github.com/apricote/Listory/compare/v1.4.3...v1.4.4) (2020-11-07)
+
+
+### Bug Fixes
+
+* **frontend:** improper usage of select element ([a139f7b](https://github.com/apricote/Listory/commit/a139f7b25b939b74a3a28eed12ba7b43a4ae8a50))
+* **frontend:** missing dependency in useCallback ([1e674d1](https://github.com/apricote/Listory/commit/1e674d18c9fe39ddf0ecc6c493bc0f0ffc87db9d))
+* **frontend:** missing key property in list ([1ae7f08](https://github.com/apricote/Listory/commit/1ae7f08dc430d6fa9088ea19d7c7fb3e89c69000))
+
 ## [1.4.3](https://github.com/apricote/Listory/compare/v1.4.2...v1.4.3) (2020-09-05)
 
 
