@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/apricote/Listory/compare/v1.4.4...v1.5.0) (2020-11-09)
+
+
+### Features
+
+* implement long-lived sessions ([44f7e26](https://github.com/apricote/Listory/commit/44f7e262703a68b147419748050cc72cffac756c))
+
 ## [1.4.4](https://github.com/apricote/Listory/compare/v1.4.3...v1.4.4) (2020-11-07)
 
 
