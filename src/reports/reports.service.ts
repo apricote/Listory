@@ -57,8 +57,6 @@ const timePresetToDays: { [x in TimePreset]: number } = {
   [TimePreset.CUSTOM]: 0, // Not used for this
 };
 
-const PAGINATION_LIMIT_UNLIMITED = 10000000;
-
 @Injectable()
 export class ReportsService {
   constructor(private readonly listensService: ListensService) {}
