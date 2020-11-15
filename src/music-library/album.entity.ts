@@ -20,10 +20,10 @@ export class Album {
 
   @ManyToMany((type) => Artist, (artist) => artist.albums)
   @JoinTable({ name: "album_artists" })
-  artists: Artist[];
+  artists?: Artist[];
 
   @OneToMany((type) => Track, (track) => track.album)
-  tracks: Track[];
+  tracks?: Track[];
 
   @Column((type) => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;

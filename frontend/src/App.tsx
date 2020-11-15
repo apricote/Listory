@@ -5,9 +5,10 @@ import { LoginSuccess } from "./components/LoginSuccess";
 import { NavBar } from "./components/NavBar";
 import { RecentListens } from "./components/RecentListens";
 import { ReportListens } from "./components/ReportListens";
+import { ReportTopAlbums } from "./components/ReportTopAlbums";
+import { ReportTopArtists } from "./components/ReportTopArtists";
 import { useAuth } from "./hooks/use-auth";
 import "./tailwind/generated.css";
-import { ReportTopArtists } from "./components/ReportTopArtists";
 
 export function App() {
   const { isLoaded } = useAuth();
@@ -28,6 +29,7 @@ export function App() {
         <Route path="/listens" exact component={RecentListens} />
         <Route path="/reports/listens" exact component={ReportListens} />
         <Route path="/reports/top-artists" exact component={ReportTopArtists} />
+        <Route path="/reports/top-albums" exact component={ReportTopAlbums} />
       </Switch>
     </div>
   );

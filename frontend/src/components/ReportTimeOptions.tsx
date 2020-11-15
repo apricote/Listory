@@ -23,7 +23,7 @@ export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
   setTimeOptions,
 }) => {
   return (
-    <div className="md:flex">
+    <div className="md:flex mb-4">
       <div className="text-gray-700">
         <label className="text-sm">Timeframe</label>
         <select

@@ -1,5 +1,5 @@
 import { TimeOptions } from "./time-options";
 
-export interface TopArtistsOptions {
+export interface TopAlbumsOptions {
   time: TimeOptions;
 }

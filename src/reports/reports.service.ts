@@ -16,8 +16,10 @@ import {
 } from "date-fns";
 import { ListensService } from "../listens/listens.service";
 import { GetListenReportDto } from "./dto/get-listen-report.dto";
+import { GetTopAlbumsReportDto } from "./dto/get-top-albums-report.dto";
 import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
 import { ListenReportDto } from "./dto/listen-report.dto";
+import { TopAlbumsReportDto } from "./dto/top-albums-report.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
 import { Interval } from "./interval";
 import { Timeframe } from "./timeframe.enum";
@@ -116,6 +118,55 @@ export class ReportsService {
             href: data.spotifyHref,
           },
         },
+      })
+    );
+
+    return {
+      items,
+    };
+  }
+
+  async getTopAlbums(
+    options: GetTopAlbumsReportDto
+  ): Promise<TopAlbumsReportDto> {
+    const { user, time: timePreset } = options;
+
+    const interval = this.getIntervalFromPreset(timePreset);
+
+    const getListensQB = () =>
+      this.listensService
+        .getScopedQueryBuilder()
+        .byUser(user)
+        .duringInterval(interval);
+
+    const [rawAlbumsWithCount, rawAlbumDetails] = await Promise.all([
+      getListensQB()
+        .leftJoin("listen.track", "track")
+        .leftJoinAndSelect("track.album", "album")
+        .groupBy("album.id")
+        .select("album.id")
+        .addSelect("count(*) as listens")
+        .orderBy("listens", "DESC")
+        .getRawMany(),
+
+      // Because of the GROUP BY required to calculate the count we can
+      // not properly join the album relations in one query
+      getListensQB()
+        .leftJoinAndSelect("listen.track", "track")
+        .leftJoinAndSelect("track.album", "album")
+        .leftJoinAndSelect("album.artists", "artists")
+        .distinctOn(["album.id"])
+        .getMany(),
+    ]);
+
+    const albumDetails = rawAlbumDetails
+      .map((listen) => listen.track.album)
+      .filter((album) => album && album.artists); // Make sure entities are set
+
+    const items: TopAlbumsReportDto["items"] = rawAlbumsWithCount.map(
+      (data) => ({
+        count: Number.parseInt(data.listens, 10),
+        album: albumDetails.find((album) => album.id === data.album_id),
       })
     );
 

@@ -1,7 +1,13 @@
-import { useMemo, useState } from "react";
-import { getListensReport, getRecentListens, getTopArtists } from "../api/api";
+import { useMemo } from "react";
+import {
+  getListensReport,
+  getRecentListens,
+  getTopAlbums,
+  getTopArtists,
+} from "../api/api";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
 import { PaginationOptions } from "../api/entities/pagination-options";
+import { TopAlbumsOptions } from "../api/entities/top-albums-options";
 import { TopArtistsOptions } from "../api/entities/top-artists-options";
 import { useApiClient } from "./use-api-client";
 import { useAsync } from "./use-async";
@@ -58,4 +64,20 @@ export const useTopArtists = (options: TopArtistsOptions) => {
   );
 
   return { topArtists, isLoading, error };
+};
+
+export const useTopAlbums = (options: TopAlbumsOptions) => {
+  const { client } = useApiClient();
+
+  const fetchData = useMemo(() => () => getTopAlbums(options, client), [
+    options,
+    client,
+  ]);
+
+  const { value: topAlbums, pending: isLoading, error } = useAsync(
+    fetchData,
+    INITIAL_EMPTY_ARRAY
+  );
+
+  return { topAlbums, isLoading, error };
 };

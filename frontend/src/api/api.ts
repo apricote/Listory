@@ -5,6 +5,8 @@ import { ListenReportItem } from "./entities/listen-report-item";
 import { ListenReportOptions } from "./entities/listen-report-options";
 import { Pagination } from "./entities/pagination";
 import { PaginationOptions } from "./entities/pagination-options";
+import { TopAlbumsItem } from "./entities/top-albums-item";
+import { TopAlbumsOptions } from "./entities/top-albums-options";
 import { TopArtistsItem } from "./entities/top-artists-item";
 import { TopArtistsOptions } from "./entities/top-artists-options";
 
@@ -102,6 +104,43 @@ export const getTopArtists = async (
     }
     default: {
       throw new Error(`Unable to getTopArtists: ${res.status}`);
+    }
+  }
+
+  const {
+    data: { items },
+  } = res;
+  return items;
+};
+
+export const getTopAlbums = async (
+  options: TopAlbumsOptions,
+  client: AxiosInstance
+): Promise<TopAlbumsItem[]> => {
+  const {
+    time: { timePreset, customTimeStart, customTimeEnd },
+  } = options;
+
+  const res = await client.get<{ items: TopAlbumsItem[] }>(
+    `/api/v1/reports/top-albums`,
+    {
+      params: {
+        timePreset,
+        customTimeStart: formatISO(customTimeStart),
+        customTimeEnd: formatISO(customTimeEnd),
+      },
+    }
+  );
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to getTopAlbums: ${res.status}`);
     }
   }
 

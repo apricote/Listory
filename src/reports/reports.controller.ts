@@ -4,6 +4,7 @@ import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
 import { ListenReportDto } from "./dto/listen-report.dto";
 import { ReportTimeDto } from "./dto/report-time.dto";
+import { TopAlbumsReportDto } from "./dto/top-albums-report.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
 import { ReportsService } from "./reports.service";
 import { Timeframe } from "./timeframe.enum";
@@ -29,5 +30,14 @@ export class ReportsController {
     @ReqUser() user: User
   ): Promise<TopArtistsReportDto> {
     return this.reportsService.getTopArtists({ user, time });
+  }
+
+  @Get("top-albums")
+  @AuthAccessToken()
+  async getTopAlbums(
+    @Query() time: ReportTimeDto,
+    @ReqUser() user: User
+  ): Promise<TopAlbumsReportDto> {
+    return this.reportsService.getTopAlbums({ user, time });
   }
 }
