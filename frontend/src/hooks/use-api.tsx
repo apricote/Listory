@@ -31,8 +31,6 @@ export const useRecentListens = (options: PaginationOptions) => {
 export const useListensReport = (options: ListenReportOptions) => {
   const { client } = useApiClient();
 
-  const [initialData] = useState(INITIAL_EMPTY_ARRAY);
-
   const fetchData = useMemo(() => () => getListensReport(options, client), [
     options,
     client,
@@ -40,7 +38,7 @@ export const useListensReport = (options: ListenReportOptions) => {
 
   const { value: report, pending: isLoading, error } = useAsync(
     fetchData,
-    initialData
+    INITIAL_EMPTY_ARRAY
   );
 
   return { report, isLoading, error };
@@ -49,8 +47,6 @@ export const useListensReport = (options: ListenReportOptions) => {
 export const useTopArtists = (options: TopArtistsOptions) => {
   const { client } = useApiClient();
 
-  const [initialData] = useState(INITIAL_EMPTY_ARRAY);
-
   const fetchData = useMemo(() => () => getTopArtists(options, client), [
     options,
     client,
@@ -58,7 +54,7 @@ export const useTopArtists = (options: TopArtistsOptions) => {
 
   const { value: topArtists, pending: isLoading, error } = useAsync(
     fetchData,
-    initialData
+    INITIAL_EMPTY_ARRAY
   );
 
   return { topArtists, isLoading, error };
