@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/apricote/Listory/compare/v1.5.0...v1.6.0) (2020-11-15)
+
+
+### Features
+
+* **frontend:** adopt card-style for recent listens ([6c8ac2b](https://github.com/apricote/Listory/commit/6c8ac2b7a540f0786daa7673190e5d6923ea8176))
+* introduce new report "Top Albums" ([9896ea3](https://github.com/apricote/Listory/commit/9896ea31ff5633e66f54d435db8e832d48ba3ad4))
+* **frontend:** proper styling for "Top Artists" report ([ca4e10e](https://github.com/apricote/Listory/commit/ca4e10e473970774c10e0f4c43f49cf7deb110cf))
+
 # [1.5.0](https://github.com/apricote/Listory/compare/v1.4.4...v1.5.0) (2020-11-09)
 
 
