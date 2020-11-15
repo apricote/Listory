@@ -1,3 +1,19 @@
+## [1.6.1](https://github.com/apricote/Listory/compare/v1.6.0...v1.6.1) (2020-11-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nestjs/passport to v7.1.0 ([ad85dd7](https://github.com/apricote/Listory/commit/ad85dd753df44d848313a32c892a66530567ba91))
+* **deps:** update dependency @nestjs/swagger to v4.7.3 ([ac7ef85](https://github.com/apricote/Listory/commit/ac7ef857af91b37e4b36bad2abf06e74b576f9cb))
+* **deps:** update dependency @nestjs/typeorm to v7.1.4 ([a6f496a](https://github.com/apricote/Listory/commit/a6f496a6d3a04f752b5f68ae98aee3e668fa736e))
+* **deps:** update dependency @testing-library/user-event to v12.2.2 ([57258db](https://github.com/apricote/Listory/commit/57258db330c24da73427f01948d83ce45092f5bd))
+* **deps:** update dependency @types/node to v12.19.4 ([ce4c5e9](https://github.com/apricote/Listory/commit/ce4c5e9fdb09e9e99d7b0e8323ffbeb7174b3a05))
+* **deps:** update dependency postcss-cli to v7.1.2 ([945f192](https://github.com/apricote/Listory/commit/945f192f7e5d75261a8a8e6f738fa5fd7977df94))
+* **deps:** update dependency rxjs to v6.6.3 ([7214b0c](https://github.com/apricote/Listory/commit/7214b0c51ee37b67015e68038672812a1eb71115))
+* **deps:** update dependency tailwindcss to v1.9.6 ([7119457](https://github.com/apricote/Listory/commit/71194577735cd23de1a34d7e711c0da6f0f351fd))
+* **deps:** update dependency typeorm to v0.2.29 ([ff2f1a0](https://github.com/apricote/Listory/commit/ff2f1a0ee79db85b0682c5d216ae4e67f0f40d39))
+* **deps:** update various packages ([52b8d26](https://github.com/apricote/Listory/commit/52b8d26c186b48c12ac5864d36655e322b06e6b0))
+
 # [1.6.0](https://github.com/apricote/Listory/compare/v1.5.0...v1.6.0) (2020-11-15)
 
 
