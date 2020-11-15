@@ -43,7 +43,7 @@ export const RecentListens: React.FC = () => {
             <ReloadIcon className="w-5 h-5 fill-current" />
           </button>
         </div>
-        <div>
+        <div className="shadow-xl bg-gray-100 rounded p-2 m-2">
           {isLoading && (
             <div>
               <span>Loading Listens</span>
@@ -54,15 +54,17 @@ export const RecentListens: React.FC = () => {
               <p>Could not find any listens!</p>
             </div>
           )}
-          {recentListens.length > 0 && (
-            <div className="table-auto my-2 w-full text-gray-700">
-              {recentListens.map((listen) => (
-                <ListenItem listen={listen} key={listen.id} />
-              ))}
-            </div>
-          )}
+          <div>
+            {recentListens.length > 0 && (
+              <div className="table-auto w-full text-gray-700">
+                {recentListens.map((listen) => (
+                  <ListenItem listen={listen} key={listen.id} />
+                ))}
+              </div>
+            )}
+          </div>
+          <Pagination page={page} totalPages={totalPages} setPage={setPage} />
         </div>
-        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </div>
     </div>
   );
@@ -80,7 +82,7 @@ const Pagination: React.FC<{
   const isLastPage = page === totalPages;
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center my-4">
       <button
         className={`${
           isFirstPage ? disabledBtn : "hover:bg-gray-400"
@@ -133,8 +135,8 @@ const ListenItem: React.FC<{ listen: Listen }> = ({ listen }) => {
   });
   const dateTime = format(new Date(listen.playedAt), "PP p");
   return (
-    <div className="hover:bg-gray-100 border-b border-gray-200 md:flex md:justify-around text-gray-700 px-4 py-2">
-      <div className="md:w-1/3 font-bold">{trackName}</div>
+    <div className="hover:bg-gray-100 border-b border-gray-200 md:flex md:justify-around text-gray-700 px-2 py-2">
+      <div className="md:w-1/2 font-bold">{trackName}</div>
       <div className=" md:w-1/3">{artists}</div>
       <div
         className="md:w-1/6 text-gray-500 font-thin text-sm"
