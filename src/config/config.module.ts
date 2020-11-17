@@ -35,6 +35,13 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
+
+        // Sentry (Optional)
+        SENTRY_ENABLED: Joi.boolean().default(false),
+        SENTRY_DSN: Joi.string().when("SENTRY_ENABLED", {
+          is: Joi.valid(true),
+          then: Joi.required(),
+        }),
       }),
     }),
   ],

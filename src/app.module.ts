@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ServeStaticModule } from "@nestjs/serve-static";
+import { RavenModule } from "nest-raven";
 import { join } from "path";
 import { AuthModule } from "./auth/auth.module";
 import { ConfigModule } from "./config/config.module";
@@ -23,6 +24,7 @@ import { UsersModule } from "./users/users.module";
       rootPath: join(__dirname, "..", "static"),
       exclude: ["/api*"],
     }),
+    RavenModule,
     AuthModule,
     UsersModule,
     SourcesModule,

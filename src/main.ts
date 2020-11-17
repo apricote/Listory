@@ -1,8 +1,26 @@
+import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
-import { ValidationPipe } from "@nestjs/common";
+import * as Sentry from "@sentry/node";
+import { RavenInterceptor } from "nest-raven";
+
+function setupSentry(
+  app: NestExpressApplication,
+  configService: ConfigService
+) {
+  Sentry.init({
+    dsn: configService.get<string>("SENTRY_DSN"),
+    integrations: [
+      new Sentry.Integrations.OnUncaughtException(),
+      new Sentry.Integrations.OnUnhandledRejection(),
+    ],
+  });
+
+  app.useGlobalInterceptors(new RavenInterceptor());
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,6 +31,12 @@ async function bootstrap() {
     })
   );
   app.enableShutdownHooks();
+
+  const configService = app.get<ConfigService>(ConfigService);
+
+  if (configService.get<boolean>("SENTRY_ENABLED")) {
+    setupSentry(app, configService);
+  }
 
   // Setup API Docs
   const options = new DocumentBuilder()
@@ -29,4 +53,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();
