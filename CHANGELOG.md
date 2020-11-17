@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/apricote/Listory/compare/v1.6.1...v1.7.0) (2020-11-17)
+
+
+### Features
+
+* **api:** setup optional sentry error reporting ([56db4cd](https://github.com/apricote/Listory/commit/56db4cd2e1cfbbb2edb004c8b32f8bebb4789348))
+
 ## [1.6.1](https://github.com/apricote/Listory/compare/v1.6.0...v1.6.1) (2020-11-15)
 
 
