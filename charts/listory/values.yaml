@@ -78,3 +78,7 @@ spotify:
 
 auth:
   jwtSecret:
+
+sentry:
+  enabled: false
+  dsn: ""
