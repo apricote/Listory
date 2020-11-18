@@ -53,7 +53,17 @@ export class SpotifyService {
           accessToken,
         });
         await this.processUser(user, false);
+      } else {
+        // TODO sent to sentry
+        console.error(
+          "Unexpected error while fetching recently played tracks",
+          err
+        );
       }
+
+      // Makes no sense to keep processing the (inexistant) data but if we throw
+      // the error the fetch loop will not process other users.
+      return;
     }
 
     if (playHistory.length === 0) {
