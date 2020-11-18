@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/apricote/Listory/compare/v1.7.1...v1.7.2) (2020-11-18)
+
+
+### Bug Fixes
+
+* **helm:** environment variable is set as boolean instead of string ([a8063cf](https://github.com/apricote/Listory/commit/a8063cfc32967cf26b7a6de05f1ec2f7494de786))
+
 ## [1.7.1](https://github.com/apricote/Listory/compare/v1.7.0...v1.7.1) (2020-11-17)
 
 
