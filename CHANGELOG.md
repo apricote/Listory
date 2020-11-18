@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/apricote/Listory/compare/v1.7.2...v1.7.3) (2020-11-18)
+
+
+### Bug Fixes
+
+* **api:** exception after refreshing spotify access token ([49b31e8](https://github.com/apricote/Listory/commit/49b31e8e6299148685cb2381cb43cd1c8a62dbb4))
+
 ## [1.7.2](https://github.com/apricote/Listory/compare/v1.7.1...v1.7.2) (2020-11-18)
 
 
