@@ -54,10 +54,13 @@ spec:
             - name: SPOTIFY_USER_FILTER
               value: {{ .Values.spotify.userFilter }}
             
+            {{- if .Values.sentry.enabled }}
             - name: SENTRY_ENABLED
-              value: {{ .Values.sentry.enabled }}
+              value: "true"
             - name: SENTRY_DSN
               value: {{ .Values.sentry.dsn }}
+            {{- end }}
+
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
