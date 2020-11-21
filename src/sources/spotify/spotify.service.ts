@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Interval } from "@nestjs/schedule";
+import { Interval, Timeout } from "@nestjs/schedule";
 import { ListensService } from "../../listens/listens.service";
+import { Logger } from "../../logger/logger.service";
 import { Album } from "../../music-library/album.entity";
 import { Artist } from "../../music-library/artist.entity";
 import { MusicLibraryService } from "../../music-library/music-library.service";
@@ -24,11 +25,15 @@ export class SpotifyService {
     private readonly listensService: ListensService,
     private readonly musicLibraryService: MusicLibraryService,
     private readonly spotifyApi: SpotifyApiService,
-    private readonly spotifyAuth: SpotifyAuthService
-  ) {}
+    private readonly spotifyAuth: SpotifyAuthService,
+    private readonly logger: Logger
+  ) {
+    this.logger.setContext(this.constructor.name);
+  }
 
   @Interval(20 * 1000)
   async getRecentlyPlayedTracks(): Promise<void> {
+    this.logger.debug("Starting Spotify crawler loop");
     const users = await this.usersService.findAll();
 
     for (const user of users) {
@@ -40,6 +45,8 @@ export class SpotifyService {
     user: User,
     retryOnExpiredToken: boolean = true
   ): Promise<void> {
+    this.logger.debug(`Importing recently played track for user "${user.id}"`);
+
     let playHistory: PlayHistoryObject[];
     try {
       playHistory = await this.spotifyApi.getRecentlyPlayedTracks(user.spotify);
@@ -55,9 +62,8 @@ export class SpotifyService {
         await this.processUser(user, false);
       } else {
         // TODO sent to sentry
-        console.error(
-          "Unexpected error while fetching recently played tracks",
-          err
+        this.logger.error(
+          `Unexpected error while fetching recently played tracks: ${err}`
         );
       }
 
@@ -80,8 +86,12 @@ export class SpotifyService {
           playedAt: new Date(history.played_at),
         });
 
-        console.log(
-          `Found Listen!: ${user.displayName} listened to "${track.name}" by "${track.artists}"`
+        this.logger.debug(
+          `New listen found! ${user.id} listened to "${
+            track.name
+          }" by ${track.artists
+            ?.map((artist) => `"${artist.name}"`)
+            .join(", ")}`
         );
       })
     );
@@ -93,10 +103,11 @@ export class SpotifyService {
         .pop()
     );
 
-    console.log("newestPlayTime", {
-      newestPlayTime,
-      times: playHistory.map((history) => history.played_at).sort(),
-    });
+    this.logger.debug(
+      `Updating last refresh time for user ${
+        user.id
+      }, new time: ${newestPlayTime.toISOString()}`
+    );
 
     this.usersService.updateSpotifyConnection(user, {
       ...user.spotify,
@@ -241,22 +252,25 @@ export class SpotifyService {
 
   private async refreshAppAccessToken(): Promise<void> {
     if (!this.appAccessTokenInProgress) {
-      console.log("refreshAppAccessToken");
+      this.logger.debug("refreshing spotify app access token");
       this.appAccessTokenInProgress = new Promise(async (resolve, reject) => {
         try {
           const newAccessToken = await this.spotifyAuth.clientCredentialsGrant();
           this.appAccessToken = newAccessToken;
+
+          this.logger.debug("spotify app access token refreshed");
+
           resolve();
         } catch (err) {
+          this.logger.warn(
+            `Error while refreshing spotify app access token ${err}`
+          );
+
           reject(err);
         } finally {
           this.appAccessTokenInProgress = null;
         }
       });
-    } else {
-      console.log(
-        "refreshAppAccessToken already in progress, awaiting its result"
-      );
     }
 
     return this.appAccessTokenInProgress;
