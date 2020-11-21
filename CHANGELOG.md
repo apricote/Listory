@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/apricote/Listory/compare/v1.7.4...v1.8.0) (2020-11-21)
+
+
+### Features
+
+* **api:** add prometheus metrics ([e2056b4](https://github.com/apricote/Listory/commit/e2056b47340365efc13443010f8bd8106485b77a))
+
 ## [1.7.4](https://github.com/apricote/Listory/compare/v1.7.3...v1.7.4) (2020-11-21)
 
 
