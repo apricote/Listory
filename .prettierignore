@@ -1,0 +1,2 @@
+# Prettier will break the helm templating language (`{{ .Value }}` -> `{ { .Value } }`)
+charts/listory/templates
