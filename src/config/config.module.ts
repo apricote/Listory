@@ -42,6 +42,9 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
           is: Joi.valid(true),
           then: Joi.required(),
         }),
+
+        // Prometheus for Metrics (Optional)
+        PROMETHEUS_ENABLED: Joi.boolean().default(false),
       }),
     }),
   ],

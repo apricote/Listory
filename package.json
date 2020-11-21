@@ -23,6 +23,7 @@
     "test:e2e": "jest --config ./apps/listory/test/jest-e2e.json"
   },
   "dependencies": {
+    "@digikare/nestjs-prom": "^1.0.0",
     "@hapi/joi": "17.1.1",
     "@nestjs/common": "7.5.2",
     "@nestjs/config": "0.5.0",

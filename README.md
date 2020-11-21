@@ -48,6 +48,14 @@ You can use Sentry to automatically detect and report any exceptions thrown.
 - `SENTRY_ENABLED`: **false**, Set to `true` to enable Sentry.
 - `SENTRY_DSN`: _Required_, but only if `SENTRY_ENABLED` is `true`. The [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) for your Sentry project.
 
+#### Prometheus
+
+You can use Prometheus to track various metrics about your Listory deployment.
+
+The metrics will be exposed on the `/api/metrics` endpoint. Make sure that this endpoint is not publicly available in your deployment.
+
+- `PROMETHEUS_ENABLED`: **false**, Set to `true` to enable Prometheus Metrics.
+
 ## Development
 
 ### Configure Spotify API Access

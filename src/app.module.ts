@@ -9,6 +9,7 @@ import { DatabaseModule } from "./database/database.module";
 import { HealthCheckModule } from "./health-check/health-check.module";
 import { ListensModule } from "./listens/listens.module";
 import { LoggerModule } from "./logger/logger.module";
+import { MetricsModule } from "./metrics/metrics.module";
 import { MusicLibraryModule } from "./music-library/music-library.module";
 import { ReportsModule } from "./reports/reports.module";
 import { SourcesModule } from "./sources/sources.module";
@@ -25,6 +26,7 @@ import { UsersModule } from "./users/users.module";
       exclude: ["/api*"],
     }),
     RavenModule,
+    MetricsModule.forRoot(),
     AuthModule,
     UsersModule,
     SourcesModule,
