@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { PostgresErrorCodes } from "../database/error-codes";
 import { Album } from "./album.entity";
 import { AlbumRepository } from "./album.repository";
 import { Artist } from "./artist.entity";
@@ -32,7 +33,20 @@ export class MusicLibraryService {
     artist.name = data.name;
     artist.spotify = data.spotify;
 
-    await this.artistRepository.save(artist);
+    try {
+      await this.artistRepository.save(artist);
+    } catch (err) {
+      if (
+        err.code === PostgresErrorCodes.UNIQUE_VIOLATION &&
+        err.constraint === "IDX_ARTIST_SPOTIFY_ID"
+      ) {
+        // Multiple simultaneous importArtist calls for the same artist were
+        // executed and it is now available in the database for use to retrieve
+        return this.findArtist({ spotify: { id: data.spotify.id } });
+      }
+
+      throw err;
+    }
 
     return artist;
   }
@@ -50,7 +64,18 @@ export class MusicLibraryService {
     album.artists = data.artists;
     album.spotify = data.spotify;
 
-    await this.albumRepository.save(album);
+    try {
+      await this.albumRepository.save(album);
+    } catch (err) {
+      if (
+        err.code === PostgresErrorCodes.UNIQUE_VIOLATION &&
+        err.constraint === "IDX_ALBUM_SPOTIFY_ID"
+      ) {
+        // Multiple simultaneous importAlbum calls for the same album were
+        // executed and it is now available in the database for use to retrieve
+        return this.findAlbum({ spotify: { id: data.spotify.id } });
+      }
+    }
 
     return album;
   }
@@ -69,7 +94,18 @@ export class MusicLibraryService {
     track.album = data.album;
     track.spotify = data.spotify;
 
-    await this.trackRepository.save(track);
+    try {
+      await this.trackRepository.save(track);
+    } catch (err) {
+      if (
+        err.code === PostgresErrorCodes.UNIQUE_VIOLATION &&
+        err.constraint === "IDX_TRACK_SPOTIFY_ID"
+      ) {
+        // Multiple simultaneous findTrack calls for the same track were
+        // executed and it is now available in the database for use to retrieve
+        return this.findTrack({ spotify: { id: data.spotify.id } });
+      }
+    }
 
     return track;
   }
