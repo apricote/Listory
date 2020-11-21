@@ -41,6 +41,13 @@ All configuration must be set as environment variables. Default values are added
 - `DB_PASSWORD`: _Required_, Database password
 - `DB_DATABASE`: _Required_, Database database
 
+#### Sentry
+
+You can use Sentry to automatically detect and report any exceptions thrown.
+
+- `SENTRY_ENABLED`: **false**, Set to `true` to enable Sentry.
+- `SENTRY_DSN`: _Required_, but only if `SENTRY_ENABLED` is `true`. The [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) for your Sentry project.
+
 ## Development
 
 ### Configure Spotify API Access
