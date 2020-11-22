@@ -1,5 +1,11 @@
 version: "3.4"
 
+# Required for promtail scraping
+x-logging: &default-logging
+  driver: "journald"
+  options:
+    tag: "{{.Name}}"
+
 services:
   db:
     image: postgres:13.5
@@ -38,6 +44,7 @@ services:
     networks:
       - web
       - db
+    logging: *default-logging
 
   frontend:
     build:
