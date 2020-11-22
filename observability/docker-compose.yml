@@ -1,0 +1,86 @@
+# Adopted from https://github.com/stefanprodan/dockprom/blob/master/docker-compose.yml
+
+version: "3.4"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.33.4
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    ports:
+      - 9090:9090
+    networks:
+      - observability
+      - api
+
+  loki:
+    image: grafana/loki:2.5.0
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    ports:
+      - "3100" # loki needs to be exposed so it receives logs
+    volumes:
+      - ./loki/loki.yaml:/etc/loki/loki.yaml
+    networks:
+      - observability
+
+  promtail:
+    image: grafana/promtail:2.5.0
+    command: ["-config.file=/etc/promtail.yaml"]
+    volumes:
+      - ./promtail/promtail.yaml:/etc/promtail.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+
+      - /var/log/journal/:/var/log/journal/
+      - /run/log/journal/:/run/log/journal/
+      - /etc/machine-id:/etc/machine-id
+    ports:
+      - "3102"
+    networks:
+      - observability
+    depends_on:
+      - loki
+
+  tempo:
+    image: grafana/tempo:1.3.2
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - tempo_data:/tmp/tempo
+    ports:
+      - "55680" # OpenTelemetry
+      - "3101" # tempo
+    networks:
+      - observability
+      - api
+
+  grafana:
+    image: grafana/grafana-oss:8.4.2
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=listory
+      - GF_SECURITY_ADMIN_PASSWORD=listory
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_HTTP_PORT=2345
+    ports:
+      - 2345:2345
+    networks:
+      - observability
+
+volumes:
+  prometheus_data: {}
+  tempo_data: {}
+
+networks:
+  observability: {}
+  api:
+    external: true
+    name: listory_web
