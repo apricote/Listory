@@ -1,0 +1,44 @@
+# Adopted from https://github.com/stefanprodan/dockprom/blob/master/docker-compose.yml
+
+version: "3.4"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.22.2
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+      - api
+
+  grafana:
+    image: grafana/grafana:7.3.3
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=listory
+      - GF_SECURITY_ADMIN_PASSWORD=listory
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_HTTP_PORT=2345
+    restart: unless-stopped
+    ports:
+      - 2345:2345
+    networks:
+      - monitoring
+
+volumes:
+  prometheus_data: {}
+
+networks:
+  monitoring: {}
+  api:
+    external:
+      name: listory_web
