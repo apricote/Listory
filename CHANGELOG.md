@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/apricote/Listory/compare/v1.8.0...v1.9.0) (2020-11-28)
+
+
+### Bug Fixes
+
+* **api:** missed listens from spotify ([5ca3437](https://github.com/apricote/Listory/commit/5ca3437b5945a9dc2364169d62be5fab8462874f))
+
+
+### Features
+
+* **api:** custom spotify crawler interval ([66fd6ce](https://github.com/apricote/Listory/commit/66fd6ce1b49d7a891e83d3033ff0838098dc77f2))
+
 # [1.8.0](https://github.com/apricote/Listory/compare/v1.7.4...v1.8.0) (2020-11-21)
 
 
