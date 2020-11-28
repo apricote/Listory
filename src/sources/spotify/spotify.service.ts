@@ -32,20 +32,20 @@ export class SpotifyService {
   }
 
   @Interval(20 * 1000)
-  async getRecentlyPlayedTracks(): Promise<void> {
+  async runCrawlerForAllUsers(): Promise<void> {
     this.logger.debug("Starting Spotify crawler loop");
     const users = await this.usersService.findAll();
 
     for (const user of users) {
-      await this.processUser(user);
+      await this.crawlListensForUser(user);
     }
   }
 
-  async processUser(
+  async crawlListensForUser(
     user: User,
     retryOnExpiredToken: boolean = true
   ): Promise<void> {
-    this.logger.debug(`Importing recently played track for user "${user.id}"`);
+    this.logger.debug(`Crawling recently played tracks for user "${user.id}"`);
 
     let playHistory: PlayHistoryObject[];
     try {
@@ -59,7 +59,7 @@ export class SpotifyService {
           ...user.spotify,
           accessToken,
         });
-        await this.processUser(user, false);
+        await this.crawlListensForUser(user, false);
       } else {
         // TODO sent to sentry
         this.logger.error(
