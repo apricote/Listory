@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Interval, Timeout } from "@nestjs/schedule";
+import { Interval } from "@nestjs/schedule";
 import { ListensService } from "../../listens/listens.service";
 import { Logger } from "../../logger/logger.service";
 import { Album } from "../../music-library/album.entity";
@@ -80,19 +80,21 @@ export class SpotifyService {
       playHistory.map(async (history) => {
         const track = await this.importTrack(history.track.id);
 
-        this.listensService.createListen({
+        const { isDuplicate } = await this.listensService.createListen({
           user,
           track,
           playedAt: new Date(history.played_at),
         });
 
-        this.logger.debug(
-          `New listen found! ${user.id} listened to "${
-            track.name
-          }" by ${track.artists
-            ?.map((artist) => `"${artist.name}"`)
-            .join(", ")}`
-        );
+        if (!isDuplicate) {
+          this.logger.debug(
+            `New listen found! ${user.id} listened to "${
+              track.name
+            }" by ${track.artists
+              ?.map((artist) => `"${artist.name}"`)
+              .join(", ")}`
+          );
+        }
       })
     );
 
@@ -103,12 +105,14 @@ export class SpotifyService {
         .pop()
     );
 
-    this.logger.debug(
-      `Updating last refresh time for user ${
-        user.id
-      }, new time: ${newestPlayTime.toISOString()}`
-    );
-
+    /**
+     * lastRefreshTime was previously used to only get new listens from Spotify
+     * but the Spotify WEB Api was sometimes not adding the listens in the right
+     * order, causing us to miss some listens.
+     *
+     * The variable will still be set, in case we want to add the functionality
+     * again.
+     */
     this.usersService.updateSpotifyConnection(user, {
       ...user.spotify,
       lastRefreshTime: newestPlayTime,

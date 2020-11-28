@@ -1,11 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { getTime, parseISO, getUnixTime } from "date-fns";
 import {
   IPaginationOptions,
   paginate,
   Pagination,
 } from "nestjs-typeorm-paginate";
-import { CreateListenDto } from "./dto/create-listen.dto";
+import {
+  CreateListenRequestDto,
+  CreateListenResponseDto,
+} from "./dto/create-listen.dto";
 import { GetListensDto } from "./dto/get-listens.dto";
 import { Listen } from "./listen.entity";
 import { ListenRepository, ListenScopes } from "./listen.repository";
@@ -18,26 +20,14 @@ export class ListensService {
     user,
     track,
     playedAt,
-  }: CreateListenDto): Promise<Listen> {
-    const listen = this.listenRepository.create();
+  }: CreateListenRequestDto): Promise<CreateListenResponseDto> {
+    const response = await this.listenRepository.insertNoConflict({
+      user,
+      track,
+      playedAt,
+    });
 
-    listen.user = user;
-    listen.track = track;
-    listen.playedAt = playedAt;
-
-    try {
-      await this.listenRepository.save(listen);
-    } catch (err) {
-      if (err.code === "23505") {
-        return this.listenRepository.findOne({
-          where: { user, track, playedAt },
-        });
-      }
-
-      throw err;
-    }
-
-    return listen;
+    return response;
   }
 
   async getListens(

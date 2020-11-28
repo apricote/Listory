@@ -18,10 +18,6 @@ export class SpotifyApiService {
       limit: 50,
     };
 
-    if (lastRefreshTime) {
-      parameters.after = lastRefreshTime.getTime();
-    }
-
     const history = await this.httpService
       .get<PagingObject<PlayHistoryObject>>(`v1/me/player/recently-played`, {
         headers: { Authorization: `Bearer ${accessToken}` },
