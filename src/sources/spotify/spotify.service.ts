@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { Interval } from "@nestjs/schedule";
 import { ListensService } from "../../listens/listens.service";
 import { Logger } from "../../logger/logger.service";
 import { Album } from "../../music-library/album.entity";
@@ -31,7 +30,6 @@ export class SpotifyService {
     this.logger.setContext(this.constructor.name);
   }
 
-  @Interval(20 * 1000)
   async runCrawlerForAllUsers(): Promise<void> {
     this.logger.debug("Starting Spotify crawler loop");
     const users = await this.usersService.findAll();

@@ -15,5 +15,6 @@ import { SpotifyService } from "./spotify.service";
     SpotifyAuthModule,
   ],
   providers: [SpotifyService],
+  exports: [SpotifyService],
 })
 export class SpotifyModule {}
