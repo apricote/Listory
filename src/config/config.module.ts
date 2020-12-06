@@ -45,6 +45,21 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
 
         // Prometheus for Metrics (Optional)
         PROMETHEUS_ENABLED: Joi.boolean().default(false),
+        PROMETHEUS_BASIC_AUTH: Joi.boolean().default(false),
+        PROMETHEUS_BASIC_AUTH_USERNAME: Joi.string().when(
+          "PROMETHEUS_BASIC_AUTH",
+          {
+            is: Joi.valid(true),
+            then: Joi.required(),
+          }
+        ),
+        PROMETHEUS_BASIC_AUTH_PASSWORD: Joi.string().when(
+          "PROMETHEUS_BASIC_AUTH",
+          {
+            is: Joi.valid(true),
+            then: Joi.required(),
+          }
+        ),
       }),
     }),
   ],

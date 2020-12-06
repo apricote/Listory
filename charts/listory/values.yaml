@@ -89,3 +89,8 @@ sentry:
 
 prometheus:
   enabled: false
+
+  basicAuth:
+    enabled: false
+    username: ""
+    password: ""

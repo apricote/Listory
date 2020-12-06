@@ -55,6 +55,9 @@ You can use Prometheus to track various metrics about your Listory deployment.
 The metrics will be exposed on the `/api/metrics` endpoint. Make sure that this endpoint is not publicly available in your deployment.
 
 - `PROMETHEUS_ENABLED`: **false**, Set to `true` to enable Prometheus Metrics.
+- `PROMETHEUS_BASIC_AUTH`: **false**, Set to `true` to require basic auth to access the metrics endpoint.
+- `PROMETHEUS_BASIC_AUTH_USERNAME`: _Required_, if `PROMETHEUS_BASIC_AUTH` is `true`.
+- `PROMETHEUS_BASIC_AUTH_PASSWORD`: _Required_, if `PROMETHEUS_BASIC_AUTH` is `true`.
 
 ## Development
 

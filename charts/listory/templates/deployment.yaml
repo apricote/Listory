@@ -64,6 +64,21 @@ spec:
             {{- if .Values.prometheus.enabled }}
             - name: PROMETHEUS_ENABLED
               value: "true"
+
+            {{- if .Values.prometheus.basicAuth.enabled }}
+            - name: PROMETHEUS_BASIC_AUTH
+              value: "true"
+            - name: PROMETHEUS_BASIC_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "listory.fullname" . }}
+                  key: prometheus-basic-auth-username
+            - name: PROMETHEUS_BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "listory.fullname" . }}
+                  key: prometheus-basic-auth-password
+            {{- end }}
             {{- end }}
 
           securityContext:
