@@ -1,3 +1,11 @@
+# [1.10.0](https://github.com/apricote/Listory/compare/v1.9.0...v1.10.0) (2020-12-06)
+
+
+### Features
+
+* add optional basic auth for metrics endpoint ([879c6a6](https://github.com/apricote/Listory/commit/879c6a62e2642b886f3e62b235959de04e766f57))
+* **helm:** add option to enable prometheus metrics ([a609720](https://github.com/apricote/Listory/commit/a6097204c7f66424ebcc5b00912f07b66d8bd2af))
+
 # [1.9.0](https://github.com/apricote/Listory/compare/v1.8.0...v1.9.0) (2020-11-28)
 
 
