@@ -86,3 +86,6 @@ auth:
 sentry:
   enabled: false
   dsn: ""
+
+prometheus:
+  enabled: false

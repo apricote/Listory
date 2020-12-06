@@ -61,6 +61,11 @@ spec:
               value: {{ .Values.sentry.dsn }}
             {{- end }}
 
+            {{- if .Values.prometheus.enabled }}
+            - name: PROMETHEUS_ENABLED
+              value: "true"
+            {{- end }}
+
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
