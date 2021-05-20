@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/apricote/Listory/compare/v1.10.0...v1.10.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **api:** continue crawling when access token refresh fails for one user ([0c2188c](https://github.com/apricote/Listory/commit/0c2188c4d490536cc3609422614fadacf7324100))
+
 # [1.10.0](https://github.com/apricote/Listory/compare/v1.9.0...v1.10.0) (2020-12-06)
 
 
