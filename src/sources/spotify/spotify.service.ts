@@ -50,14 +50,20 @@ export class SpotifyService {
       playHistory = await this.spotifyApi.getRecentlyPlayedTracks(user.spotify);
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
-        const accessToken = await this.spotifyAuth.refreshAccessToken(
-          user.spotify
-        );
-        await this.usersService.updateSpotifyConnection(user, {
-          ...user.spotify,
-          accessToken,
-        });
-        await this.crawlListensForUser(user, false);
+        try {
+          const accessToken = await this.spotifyAuth.refreshAccessToken(
+            user.spotify
+          );
+          await this.usersService.updateSpotifyConnection(user, {
+            ...user.spotify,
+            accessToken,
+          });
+          await this.crawlListensForUser(user, false);
+        } catch (errFromAuth) {
+          this.logger.error(
+            `Refreshing access token failed for user "${user.id}": ${errFromAuth}`
+          );
+        }
       } else {
         // TODO sent to sentry
         this.logger.error(
@@ -65,7 +71,7 @@ export class SpotifyService {
         );
       }
 
-      // Makes no sense to keep processing the (inexistant) data but if we throw
+      // Makes no sense to keep processing the (inexistent) data but if we throw
       // the error the fetch loop will not process other users.
       return;
     }
@@ -111,7 +117,7 @@ export class SpotifyService {
      * The variable will still be set, in case we want to add the functionality
      * again.
      */
-    this.usersService.updateSpotifyConnection(user, {
+    await this.usersService.updateSpotifyConnection(user, {
       ...user.spotify,
       lastRefreshTime: newestPlayTime,
     });
