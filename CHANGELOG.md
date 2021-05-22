@@ -1,3 +1,11 @@
+# [1.11.0](https://github.com/apricote/Listory/compare/v1.10.1...v1.11.0) (2021-05-22)
+
+
+### Features
+
+* **frontend:** add visual indicator to top lists ([8377b2f](https://github.com/apricote/Listory/commit/8377b2f6d0a966a44b5182f16c0a96fd43245efe))
+* add top tracks report ([51fd78f](https://github.com/apricote/Listory/commit/51fd78f6d916eb26581745a0ce4109d9136b8084))
+
 ## [1.10.1](https://github.com/apricote/Listory/compare/v1.10.0...v1.10.1) (2021-05-20)
 
 
