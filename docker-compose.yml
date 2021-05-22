@@ -42,6 +42,7 @@ services:
     command: ["npm", "run", "start"]
     volumes:
       - ./frontend/postcss.config.js:/app/frontend/postcss.config.js:ro
+      - ./frontend/tailwind.config.js:/app/frontend/tailwind.config.js:ro
       - ./frontend/src:/app/frontend/src:ro
       - ./frontend/public:/app/frontend/public:ro
       - tailwind-output:/app/frontend/src/tailwind/

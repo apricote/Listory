@@ -21,7 +21,7 @@ export const DateSelect: React.FC<DateSelectProps> = ({
     <div>
       <label className="text-sm">{label}</label>
       <input
-        className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+        className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
         type="date"
         value={formatDateForDateInput(value)}
         onChange={(e) => onChange(parseDateFromDateInput(e.target.value))}

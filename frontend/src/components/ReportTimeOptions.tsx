@@ -27,7 +27,7 @@ export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
       <div className="text-gray-700">
         <label className="text-sm">Timeframe</label>
         <select
-          className="block appearance-none min-w-full md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+          className="block appearance-none min-w-full md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
           onChange={(e) =>
             setTimeOptions({
               ...timeOptions,

@@ -9,7 +9,7 @@ export const LoginFailure: React.FC = () => {
 
   return (
     <div
-      className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 m-8"
+      className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 m-8"
       role="alert"
     >
       <p className="font-bold">Login Failure</p>

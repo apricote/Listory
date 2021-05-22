@@ -139,7 +139,7 @@ const ListenItem: React.FC<{ listen: Listen }> = ({ listen }) => {
       <div className="md:w-1/2 font-bold">{trackName}</div>
       <div className=" md:w-1/3">{artists}</div>
       <div
-        className="md:w-1/6 text-gray-500 font-thin text-sm"
+        className="md:w-1/6 text-gray-500 font-extra-light text-sm"
         title={dateTime}
       >
         {timeAgo}
