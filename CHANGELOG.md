@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/apricote/Listory/compare/v1.11.0...v1.11.1) (2021-05-22)
+
+
+### Bug Fixes
+
+* **build:** tailwind config was missing from build ([06268c0](https://github.com/apricote/Listory/commit/06268c0cf632283c375424669b44d71731896e0c))
+
 # [1.11.0](https://github.com/apricote/Listory/compare/v1.10.1...v1.11.0) (2021-05-22)
 
 
