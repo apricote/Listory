@@ -5,6 +5,7 @@ import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { useTopAlbums } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
+import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
@@ -27,6 +28,7 @@ export const ReportTopAlbums: React.FC = () => {
   const { topAlbums, isLoading } = useTopAlbums(options);
 
   const reportHasItems = !isLoading && topAlbums.length !== 0;
+  const maxCount = getMaxCount(topAlbums);
 
   if (!user) {
     return <Redirect to="/" />;
@@ -55,7 +57,12 @@ export const ReportTopAlbums: React.FC = () => {
           )}
           {reportHasItems &&
             topAlbums.map(({ album, count }) => (
-              <ReportItem album={album} count={count} />
+              <ReportItem
+                key={album.id}
+                album={album}
+                count={count}
+                maxCount={maxCount}
+              />
             ))}
         </div>
       </div>
@@ -66,7 +73,8 @@ export const ReportTopAlbums: React.FC = () => {
 const ReportItem: React.FC<{
   album: Album;
   count: number;
-}> = ({ album, count }) => {
+  maxCount: number;
+}> = ({ album, count, maxCount }) => {
   const artists = album.artists?.map((artist) => artist.name).join(", ") || "";
 
   return (
@@ -75,6 +83,7 @@ const ReportItem: React.FC<{
       title={album.name}
       subTitle={artists}
       count={count}
+      maxCount={maxCount}
     />
   );
 };

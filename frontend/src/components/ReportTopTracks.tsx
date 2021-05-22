@@ -5,6 +5,7 @@ import { TimePreset } from "../api/entities/time-preset.enum";
 import { Track } from "../api/entities/track";
 import { useTopTracks } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
+import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
@@ -32,6 +33,8 @@ export const ReportTopTracks: React.FC = () => {
     return <Redirect to="/" />;
   }
 
+  const maxCount = getMaxCount(topTracks);
+
   return (
     <div className="md:flex md:justify-center p-4">
       <div className="md:flex-shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
@@ -55,7 +58,7 @@ export const ReportTopTracks: React.FC = () => {
           )}
           {reportHasItems &&
             topTracks.map(({ track, count }) => (
-              <ReportItem track={track} count={count} />
+              <ReportItem track={track} count={count} maxCount={maxCount} />
             ))}
         </div>
       </div>
@@ -66,7 +69,8 @@ export const ReportTopTracks: React.FC = () => {
 const ReportItem: React.FC<{
   track: Track;
   count: number;
-}> = ({ track, count }) => {
+  maxCount: number;
+}> = ({ track, count, maxCount }) => {
   const artists = track.artists?.map((artist) => artist.name).join(", ") || "";
 
   return (
@@ -75,6 +79,7 @@ const ReportItem: React.FC<{
       title={track.name}
       subTitle={artists}
       count={count}
+      maxCount={maxCount}
     />
   );
 };

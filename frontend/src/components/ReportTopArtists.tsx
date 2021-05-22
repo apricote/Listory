@@ -4,6 +4,7 @@ import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { useTopArtists } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
+import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
@@ -26,6 +27,7 @@ export const ReportTopArtists: React.FC = () => {
   const { topArtists, isLoading } = useTopArtists(options);
 
   const reportHasItems = !isLoading && topArtists.length !== 0;
+  const maxCount = getMaxCount(topArtists);
 
   if (!user) {
     return <Redirect to="/" />;
@@ -54,7 +56,12 @@ export const ReportTopArtists: React.FC = () => {
           )}
           {reportHasItems &&
             topArtists.map(({ artist, count }) => (
-              <TopListItem key={artist.id} title={artist.name} count={count} />
+              <TopListItem
+                key={artist.id}
+                title={artist.name}
+                count={count}
+                maxCount={maxCount}
+              />
             ))}
         </div>
       </div>
