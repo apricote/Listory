@@ -38,6 +38,7 @@ WORKDIR /app/frontend
 RUN npm ci
 
 COPY frontend/postcss.config.js /app/frontend/postcss.config.js
+COPY frontend/tailwind.config.js /app/frontend/tailwind.config.js
 COPY frontend/src/ /app/frontend/src/
 COPY frontend/public/ /app/frontend/public/
 RUN NODE_ENV=production npm run build
