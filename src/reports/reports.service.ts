@@ -18,9 +18,11 @@ import { ListensService } from "../listens/listens.service";
 import { GetListenReportDto } from "./dto/get-listen-report.dto";
 import { GetTopAlbumsReportDto } from "./dto/get-top-albums-report.dto";
 import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
+import { GetTopTracksReportDto } from "./dto/get-top-tracks-report.dto";
 import { ListenReportDto } from "./dto/listen-report.dto";
 import { TopAlbumsReportDto } from "./dto/top-albums-report.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
+import { TopTracksReportDto } from "./dto/top-tracks-report.dto";
 import { Interval } from "./interval";
 import { Timeframe } from "./timeframe.enum";
 import { TimePreset } from "./timePreset.enum";
@@ -167,6 +169,53 @@ export class ReportsService {
       (data) => ({
         count: Number.parseInt(data.listens, 10),
         album: albumDetails.find((album) => album.id === data.album_id),
+      })
+    );
+
+    return {
+      items,
+    };
+  }
+
+  async getTopTracks(
+    options: GetTopTracksReportDto
+  ): Promise<TopTracksReportDto> {
+    const { user, time: timePreset } = options;
+
+    const interval = this.getIntervalFromPreset(timePreset);
+
+    const getListensQB = () =>
+      this.listensService
+        .getScopedQueryBuilder()
+        .byUser(user)
+        .duringInterval(interval);
+
+    const [rawTracksWithCount, rawTrackDetails] = await Promise.all([
+      getListensQB()
+        .leftJoin("listen.track", "track")
+        .groupBy("track.id")
+        .select("track.*")
+        .addSelect("count(*) as listens")
+        .orderBy("listens", "DESC")
+        .getRawMany(),
+
+      // Because of the GROUP BY required to calculate the count we can
+      // not properly join the artist relations in one query
+      getListensQB()
+        .leftJoinAndSelect("listen.track", "track")
+        .leftJoinAndSelect("track.artists", "artists")
+        .distinctOn(["track.id"])
+        .getMany(),
+    ]);
+
+    const trackDetails = rawTrackDetails
+      .map((listen) => listen.track)
+      .filter((track) => track); // Make sure entities are set
+
+    const items: TopTracksReportDto["items"] = rawTracksWithCount.map(
+      (data) => ({
+        count: Number.parseInt(data.listens, 10),
+        track: trackDetails.find((track) => track.id === data.id),
       })
     );
 

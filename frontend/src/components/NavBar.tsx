@@ -31,6 +31,9 @@ export const NavBar: React.FC = () => {
               <Link to="/reports/top-albums">
                 <NavItem>Top Albums</NavItem>
               </Link>
+              <Link to="/reports/top-tracks">
+                <NavItem>Top Tracks</NavItem>
+              </Link>
             </>
           )}
         </div>

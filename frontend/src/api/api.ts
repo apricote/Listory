@@ -9,6 +9,8 @@ import { TopAlbumsItem } from "./entities/top-albums-item";
 import { TopAlbumsOptions } from "./entities/top-albums-options";
 import { TopArtistsItem } from "./entities/top-artists-item";
 import { TopArtistsOptions } from "./entities/top-artists-options";
+import { TopTracksItem } from "./entities/top-tracks-item";
+import { TopTracksOptions } from "./entities/top-tracks-options";
 
 export class UnauthenticatedError extends Error {}
 
@@ -141,6 +143,43 @@ export const getTopAlbums = async (
     }
     default: {
       throw new Error(`Unable to getTopAlbums: ${res.status}`);
+    }
+  }
+
+  const {
+    data: { items },
+  } = res;
+  return items;
+};
+
+export const getTopTracks = async (
+  options: TopTracksOptions,
+  client: AxiosInstance
+): Promise<TopTracksItem[]> => {
+  const {
+    time: { timePreset, customTimeStart, customTimeEnd },
+  } = options;
+
+  const res = await client.get<{ items: TopTracksItem[] }>(
+    `/api/v1/reports/top-tracks`,
+    {
+      params: {
+        timePreset,
+        customTimeStart: formatISO(customTimeStart),
+        customTimeEnd: formatISO(customTimeEnd),
+      },
+    }
+  );
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to getTopTracks: ${res.status}`);
     }
   }
 

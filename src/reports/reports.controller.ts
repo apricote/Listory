@@ -6,6 +6,7 @@ import { ListenReportDto } from "./dto/listen-report.dto";
 import { ReportTimeDto } from "./dto/report-time.dto";
 import { TopAlbumsReportDto } from "./dto/top-albums-report.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
+import { TopTracksReportDto } from "./dto/top-tracks-report.dto";
 import { ReportsService } from "./reports.service";
 import { Timeframe } from "./timeframe.enum";
 
@@ -39,5 +40,14 @@ export class ReportsController {
     @ReqUser() user: User
   ): Promise<TopAlbumsReportDto> {
     return this.reportsService.getTopAlbums({ user, time });
+  }
+
+  @Get("top-tracks")
+  @AuthAccessToken()
+  async getTopTracks(
+    @Query() time: ReportTimeDto,
+    @ReqUser() user: User
+  ): Promise<TopTracksReportDto> {
+    return this.reportsService.getTopTracks({ user, time });
   }
 }
