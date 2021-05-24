@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/apricote/Listory/compare/v1.11.1...v1.12.0) (2021-05-24)
+
+
+### Bug Fixes
+
+* **deps:** pin dependency @digikare/nestjs-prom to 1.0.0 ([3dee999](https://github.com/apricote/Listory/commit/3dee999df6997787448fd8229b83f601bd24917b))
+
+
+### Features
+
+* **frontend:** add footer with version number ([2aaf582](https://github.com/apricote/Listory/commit/2aaf582245c97f7627fd88f59073105bbf275f59))
+
 ## [1.11.1](https://github.com/apricote/Listory/compare/v1.11.0...v1.11.1) (2021-05-22)
 
 
