@@ -104,7 +104,7 @@ const ReportGraph: React.FC<{
     date: getTime(date),
   }));
 
-  const ReportTooltip: React.FC<TooltipProps> = ({
+  const ReportTooltip: React.FC<TooltipProps<number, string>> = ({
     active,
     payload,
     label,
