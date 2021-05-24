@@ -1,7 +1,7 @@
 ##################
 ## common
 ##################
-FROM node:14-alpine as common
+FROM node:16-alpine as common
 
 ARG VERSION=unknown
 ARG GIT_COMMIT=unknown
