@@ -3,3 +3,5 @@ dist/
 
 frontend/node_modules/
 frontend/src/tailwind/tailwind.generated.css
+
+charts/

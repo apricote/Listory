@@ -33,6 +33,8 @@ RUN NODE_ENV=production npm run build
 FROM common as build-frontend
 LABEL stage="build-frontend"
 
+ARG VERSION=unknown
+
 WORKDIR /app/frontend
 
 RUN npm ci
@@ -41,6 +43,7 @@ COPY frontend/postcss.config.js /app/frontend/postcss.config.js
 COPY frontend/tailwind.config.js /app/frontend/tailwind.config.js
 COPY frontend/src/ /app/frontend/src/
 COPY frontend/public/ /app/frontend/public/
+COPY frontend/.env.production /app/frontend/.env.production
 RUN NODE_ENV=production npm run build
 
 ##################
