@@ -46,9 +46,7 @@ export class AuthService {
     return user;
   }
 
-  async createSession(
-    user: User
-  ): Promise<{
+  async createSession(user: User): Promise<{
     session: AuthSession;
     refreshToken: string;
   }> {

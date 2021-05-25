@@ -22,9 +22,8 @@ import { ReportTimeOptions } from "./ReportTimeOptions";
 export const ReportListens: React.FC = () => {
   const { user } = useAuth();
 
-  const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
-    "day"
-  );
+  const [timeFrame, setTimeFrame] =
+    useState<"day" | "week" | "month" | "year">("day");
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_7_DAYS,
@@ -32,10 +31,10 @@ export const ReportListens: React.FC = () => {
     customTimeEnd: new Date(),
   });
 
-  const reportOptions = useMemo(() => ({ timeFrame, time: timeOptions }), [
-    timeFrame,
-    timeOptions,
-  ]);
+  const reportOptions = useMemo(
+    () => ({ timeFrame, time: timeOptions }),
+    [timeFrame, timeOptions]
+  );
 
   const { report, isLoading } = useListensReport(reportOptions);
 

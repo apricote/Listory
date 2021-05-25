@@ -20,15 +20,17 @@ Object.freeze(INITIAL_EMPTY_ARRAY);
 export const useRecentListens = (options: PaginationOptions) => {
   const { client } = useApiClient();
 
-  const fetchData = useMemo(() => () => getRecentListens(options, client), [
-    options,
-    client,
-  ]);
-
-  const { value, pending: isLoading, error, reload } = useAsync(
-    fetchData,
-    undefined
+  const fetchData = useMemo(
+    () => () => getRecentListens(options, client),
+    [options, client]
   );
+
+  const {
+    value,
+    pending: isLoading,
+    error,
+    reload,
+  } = useAsync(fetchData, undefined);
 
   const recentListens = value ? value.items : [];
   const paginationMeta = value ? value.meta : undefined;
@@ -39,15 +41,16 @@ export const useRecentListens = (options: PaginationOptions) => {
 export const useListensReport = (options: ListenReportOptions) => {
   const { client } = useApiClient();
 
-  const fetchData = useMemo(() => () => getListensReport(options, client), [
-    options,
-    client,
-  ]);
-
-  const { value: report, pending: isLoading, error } = useAsync(
-    fetchData,
-    INITIAL_EMPTY_ARRAY
+  const fetchData = useMemo(
+    () => () => getListensReport(options, client),
+    [options, client]
   );
+
+  const {
+    value: report,
+    pending: isLoading,
+    error,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { report, isLoading, error };
 };
@@ -55,15 +58,16 @@ export const useListensReport = (options: ListenReportOptions) => {
 export const useTopArtists = (options: TopArtistsOptions) => {
   const { client } = useApiClient();
 
-  const fetchData = useMemo(() => () => getTopArtists(options, client), [
-    options,
-    client,
-  ]);
-
-  const { value: topArtists, pending: isLoading, error } = useAsync(
-    fetchData,
-    INITIAL_EMPTY_ARRAY
+  const fetchData = useMemo(
+    () => () => getTopArtists(options, client),
+    [options, client]
   );
+
+  const {
+    value: topArtists,
+    pending: isLoading,
+    error,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { topArtists, isLoading, error };
 };
@@ -71,15 +75,16 @@ export const useTopArtists = (options: TopArtistsOptions) => {
 export const useTopAlbums = (options: TopAlbumsOptions) => {
   const { client } = useApiClient();
 
-  const fetchData = useMemo(() => () => getTopAlbums(options, client), [
-    options,
-    client,
-  ]);
-
-  const { value: topAlbums, pending: isLoading, error } = useAsync(
-    fetchData,
-    INITIAL_EMPTY_ARRAY
+  const fetchData = useMemo(
+    () => () => getTopAlbums(options, client),
+    [options, client]
   );
+
+  const {
+    value: topAlbums,
+    pending: isLoading,
+    error,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { topAlbums, isLoading, error };
 };
@@ -87,15 +92,16 @@ export const useTopAlbums = (options: TopAlbumsOptions) => {
 export const useTopTracks = (options: TopTracksOptions) => {
   const { client } = useApiClient();
 
-  const fetchData = useMemo(() => () => getTopTracks(options, client), [
-    options,
-    client,
-  ]);
-
-  const { value: topTracks, pending: isLoading, error } = useAsync(
-    fetchData,
-    INITIAL_EMPTY_ARRAY
+  const fetchData = useMemo(
+    () => () => getTopTracks(options, client),
+    [options, client]
   );
+
+  const {
+    value: topTracks,
+    pending: isLoading,
+    error,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { topTracks, isLoading, error };
 };

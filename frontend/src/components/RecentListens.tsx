@@ -17,9 +17,8 @@ export const RecentListens: React.FC = () => {
 
   const options = useMemo(() => ({ page, limit: LISTENS_PER_PAGE }), [page]);
 
-  const { recentListens, paginationMeta, isLoading, reload } = useRecentListens(
-    options
-  );
+  const { recentListens, paginationMeta, isLoading, reload } =
+    useRecentListens(options);
 
   useEffect(() => {
     if (paginationMeta && totalPages !== paginationMeta.totalPages) {

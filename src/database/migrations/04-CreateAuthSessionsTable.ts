@@ -16,7 +16,8 @@ const primaryUUIDColumn: TableColumnOptions = {
 };
 
 export class CreateAuthSessionsTable0000000000004
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({

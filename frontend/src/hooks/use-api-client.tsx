@@ -13,7 +13,7 @@ interface ApiClientContext {
 }
 
 const apiClientContext = createContext<ApiClientContext>(
-  (undefined as any) as ApiClientContext
+  undefined as any as ApiClientContext
 );
 
 export const ProvideApiClient: React.FC = ({ children }) => {

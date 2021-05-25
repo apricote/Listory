@@ -263,7 +263,8 @@ export class SpotifyService {
       this.logger.debug("refreshing spotify app access token");
       this.appAccessTokenInProgress = new Promise(async (resolve, reject) => {
         try {
-          const newAccessToken = await this.spotifyAuth.clientCredentialsGrant();
+          const newAccessToken =
+            await this.spotifyAuth.clientCredentialsGrant();
           this.appAccessToken = newAccessToken;
 
           this.logger.debug("spotify app access token refreshed");

@@ -17,9 +17,7 @@ interface AuthContext {
   loginWithSpotifyProps: () => { href: string };
 }
 
-const authContext = createContext<AuthContext>(
-  (undefined as any) as AuthContext
-);
+const authContext = createContext<AuthContext>(undefined as any as AuthContext);
 
 export const ProvideAuth: React.FC = ({ children }) => {
   const auth = useProvideAuth();

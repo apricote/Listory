@@ -79,8 +79,9 @@ export class ReportsService {
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
 
     const reportItems = eachOfInterval(interval).map((date) => {
-      const count = listens.filter((listen) => isSame(date, listen.playedAt))
-        .length;
+      const count = listens.filter((listen) =>
+        isSame(date, listen.playedAt)
+      ).length;
       return { date: formatISO(date), count };
     });
 
