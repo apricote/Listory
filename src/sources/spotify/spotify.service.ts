@@ -3,6 +3,7 @@ import { ListensService } from "../../listens/listens.service";
 import { Logger } from "../../logger/logger.service";
 import { Album } from "../../music-library/album.entity";
 import { Artist } from "../../music-library/artist.entity";
+import { Genre } from "../../music-library/genre.entity";
 import { MusicLibraryService } from "../../music-library/music-library.service";
 import { Track } from "../../music-library/track.entity";
 import { User } from "../../users/user.entity";
@@ -209,9 +210,14 @@ export class SpotifyService {
       )
     );
 
+    const genres = await Promise.all(
+      spotifyAlbum.genres.map((genreName) => this.importGenre(genreName))
+    );
+
     return this.musicLibraryService.createAlbum({
       name: spotifyAlbum.name,
       artists,
+      genres,
       spotify: {
         id: spotifyAlbum.id,
         uri: spotifyAlbum.uri,
@@ -249,14 +255,32 @@ export class SpotifyService {
       throw err;
     }
 
+    const genres = await Promise.all(
+      spotifyArtist.genres.map((genreName) => this.importGenre(genreName))
+    );
+
     return this.musicLibraryService.createArtist({
       name: spotifyArtist.name,
+      genres,
       spotify: {
         id: spotifyArtist.id,
         uri: spotifyArtist.uri,
         type: spotifyArtist.type,
         href: spotifyArtist.href,
       },
+    });
+  }
+
+  async importGenre(name: string): Promise<Genre> {
+    const genre = await this.musicLibraryService.findGenre({
+      name,
+    });
+    if (genre) {
+      return genre;
+    }
+
+    return this.musicLibraryService.createGenre({
+      name,
     });
   }
 

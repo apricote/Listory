@@ -6,10 +6,14 @@ import { Artist } from "./artist.entity";
 import { ArtistRepository } from "./artist.repository";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 import { CreateArtistDto } from "./dto/create-artist.dto";
+import { CreateGenreDto } from "./dto/create-genre.dto";
 import { CreateTrackDto } from "./dto/create-track.dto";
 import { FindAlbumDto } from "./dto/find-album.dto";
 import { FindArtistDto } from "./dto/find-artist.dto";
+import { FindGenreDto } from "./dto/find-genre.dto";
 import { FindTrackDto } from "./dto/find-track.dto";
+import { Genre } from "./genre.entity";
+import { GenreRepository } from "./genre.repository";
 import { Track } from "./track.entity";
 import { TrackRepository } from "./track.repository";
 
@@ -18,6 +22,7 @@ export class MusicLibraryService {
   constructor(
     private readonly albumRepository: AlbumRepository,
     private readonly artistRepository: ArtistRepository,
+    private readonly genreRepository: GenreRepository,
     private readonly trackRepository: TrackRepository
   ) {}
 
@@ -78,6 +83,35 @@ export class MusicLibraryService {
     }
 
     return album;
+  }
+
+  async findGenre(query: FindGenreDto): Promise<Genre | undefined> {
+    return this.genreRepository.findOne({
+      where: { name: query.name },
+    });
+  }
+
+  async createGenre(data: CreateGenreDto): Promise<Genre> {
+    const genre = this.genreRepository.create();
+
+    genre.name = data.name;
+
+    try {
+      await this.genreRepository.save(genre);
+    } catch (err) {
+      if (
+        err.code === PostgresErrorCodes.UNIQUE_VIOLATION &&
+        err.constraint === "IDX_GENRE_NAME"
+      ) {
+        // Multiple simultaneous importGenre calls for the same genre were
+        // executed and it is now available in the database for use to retrieve
+        return this.findGenre({ name: data.name });
+      }
+
+      throw err;
+    }
+
+    return genre;
   }
 
   async findTrack(query: FindTrackDto): Promise<Track | undefined> {

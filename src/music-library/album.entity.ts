@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Artist } from "./artist.entity";
+import { Genre } from "./genre.entity";
 import { Track } from "./track.entity";
 
 @Entity()
@@ -24,6 +25,9 @@ export class Album {
 
   @OneToMany(() => Track, (track) => track.album)
   tracks?: Track[];
+
+  @ManyToMany(() => Genre)
+  genres?: Genre[];
 
   @Column(() => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;
