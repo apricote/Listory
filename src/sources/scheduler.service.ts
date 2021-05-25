@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  OnApplicationBootstrap,
-  OnModuleInit,
-} from "@nestjs/common";
+import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { captureException } from "@sentry/node";

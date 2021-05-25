@@ -19,8 +19,13 @@ export class ListensController {
     @Query("filter") filter: GetListensFilterDto,
     @ReqUser() user: User
   ): Promise<Pagination<Listen>> {
-    limit = limit > 100 ? 100 : limit;
+    const clampedLimit = limit > 100 ? 100 : limit;
 
-    return this.listensService.getListens({ page, limit, user, filter });
+    return this.listensService.getListens({
+      page,
+      limit: clampedLimit,
+      user,
+      filter,
+    });
   }
 }

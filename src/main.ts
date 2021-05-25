@@ -3,9 +3,9 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { AppModule } from "./app.module";
 import * as Sentry from "@sentry/node";
 import { RavenInterceptor } from "nest-raven";
+import { AppModule } from "./app.module";
 
 function setupSentry(
   app: NestExpressApplication,

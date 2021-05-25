@@ -264,6 +264,13 @@ export class ReportsService {
 
         break;
       }
+
+      default: {
+        interval = this.getIntervalFromPreset({
+          timePreset: TimePreset.LAST_7_DAYS,
+        });
+        break;
+      }
     }
 
     return interval;

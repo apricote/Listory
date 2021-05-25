@@ -14,10 +14,10 @@ export class Listen {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne((type) => Track)
+  @ManyToOne(() => Track)
   track: Track;
 
-  @ManyToOne((type) => User)
+  @ManyToOne(() => User)
   user: User;
 
   @Column({ type: "timestamp" })

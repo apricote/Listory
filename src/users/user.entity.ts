@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { SpotifyConnection } from "../sources/spotify/spotify-connection.entity";
 
 @Entity()
@@ -12,6 +12,6 @@ export class User {
   @Column({ nullable: true })
   photo?: string;
 
-  @Column((type) => SpotifyConnection)
+  @Column(() => SpotifyConnection)
   spotify: SpotifyConnection;
 }

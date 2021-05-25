@@ -49,6 +49,7 @@ export class UsersService {
     user: User,
     spotify: SpotifyConnection
   ): Promise<void> {
+    // eslint-disable-next-line no-param-reassign
     user.spotify = spotify;
     await this.userRepository.save(user);
   }

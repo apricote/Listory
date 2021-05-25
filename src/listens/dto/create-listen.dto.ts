@@ -1,8 +1,7 @@
+/* eslint-disable max-classes-per-file */
 import { Track } from "../../music-library/track.entity";
 import { User } from "../../users/user.entity";
 import { Listen } from "../listen.entity";
-
-// tslint:disable max-classes-per-file
 
 export class CreateListenRequestDto {
   track: Track;

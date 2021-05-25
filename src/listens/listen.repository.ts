@@ -1,4 +1,4 @@
-// tslint:disable: max-classes-per-file
+/* eslint-disable max-classes-per-file */
 import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
 import { Interval } from "../reports/interval";
 import { User } from "../users/user.entity";

@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   ForbiddenException,
 } from "@nestjs/common";
-import { Response } from "express";
+import type { Response } from "express";
 import { Logger } from "../logger/logger.service";
 
 @Catch()

@@ -12,7 +12,7 @@ export class AuthSession {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne((type) => User, { eager: true })
+  @ManyToOne(() => User, { eager: true })
   user: User;
 
   @CreateDateColumn()

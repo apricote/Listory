@@ -12,7 +12,6 @@ export class SpotifyApiService {
 
   async getRecentlyPlayedTracks({
     accessToken,
-    lastRefreshTime,
   }: SpotifyConnection): Promise<PlayHistoryObject[]> {
     const parameters: { limit: number; after?: number } = {
       limit: 50,

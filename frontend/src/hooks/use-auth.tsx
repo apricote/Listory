@@ -54,6 +54,7 @@ function useProvideAuth(): AuthContext {
 
   useEffect(() => {
     refreshAccessToken().catch(() => {
+      // eslint-disable-next-line no-console
       console.log("Unable to refresh access token");
     });
   }, [refreshAccessToken]);

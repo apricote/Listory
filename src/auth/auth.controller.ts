@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Response } from "express";
+import type { Response } from "express";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
 import { AuthService } from "./auth.service";

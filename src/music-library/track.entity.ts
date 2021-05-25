@@ -18,13 +18,13 @@ export class Track {
   @Column()
   name: string;
 
-  @ManyToOne((type) => Album, (album) => album.tracks)
+  @ManyToOne(() => Album, (album) => album.tracks)
   album?: Album;
 
-  @ManyToMany((type) => Artist)
+  @ManyToMany(() => Artist)
   @JoinTable({ name: "track_artists" })
   artists?: Artist[];
 
-  @Column((type) => SpotifyLibraryDetails)
+  @Column(() => SpotifyLibraryDetails)
   spotify?: SpotifyLibraryDetails;
 }

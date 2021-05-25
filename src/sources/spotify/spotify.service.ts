@@ -35,6 +35,8 @@ export class SpotifyService {
     const users = await this.usersService.findAll();
 
     for (const user of users) {
+      // We want to run this sequentially to avoid rate limits
+      // eslint-disable-next-line no-await-in-loop
       await this.crawlListensForUser(user);
     }
   }
@@ -142,7 +144,7 @@ export class SpotifyService {
         spotifyID
       );
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
         await this.refreshAppAccessToken();
 
         return this.importTrack(spotifyID, false);
@@ -192,7 +194,7 @@ export class SpotifyService {
         spotifyID
       );
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
         await this.refreshAppAccessToken();
 
         return this.importAlbum(spotifyID, false);
@@ -238,7 +240,7 @@ export class SpotifyService {
         spotifyID
       );
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
         await this.refreshAppAccessToken();
 
         return this.importArtist(spotifyID, false);
@@ -261,6 +263,8 @@ export class SpotifyService {
   private async refreshAppAccessToken(): Promise<void> {
     if (!this.appAccessTokenInProgress) {
       this.logger.debug("refreshing spotify app access token");
+      /* eslint-disable no-async-promise-executor */
+
       this.appAccessTokenInProgress = new Promise(async (resolve, reject) => {
         try {
           const newAccessToken =
