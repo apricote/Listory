@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/apricote/Listory/compare/v1.12.0...v1.13.0) (2021-05-25)
+
+
+### Features
+
+* **server:** save genres for artists and albums ([3c6f328](https://github.com/apricote/Listory/commit/3c6f3289f1606865d9d869528c924c15321cc9a0))
+
 # [1.12.0](https://github.com/apricote/Listory/compare/v1.11.1...v1.12.0) (2021-05-24)
 
 
