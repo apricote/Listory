@@ -80,6 +80,8 @@ export class MusicLibraryService {
         // executed and it is now available in the database for use to retrieve
         return this.findAlbum({ spotify: { id: data.spotify.id } });
       }
+
+      throw err;
     }
 
     return album;
@@ -139,6 +141,8 @@ export class MusicLibraryService {
         // executed and it is now available in the database for use to retrieve
         return this.findTrack({ spotify: { id: data.spotify.id } });
       }
+
+      throw err;
     }
 
     return track;

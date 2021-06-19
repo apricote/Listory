@@ -6,7 +6,6 @@ import {
   UseFilters,
   UseGuards,
 } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import type { Response } from "express";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
@@ -22,10 +21,7 @@ import { SpotifyAuthFilter } from "./spotify.filter";
 
 @Controller("api/v1/auth")
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly config: ConfigService
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get("spotify")
   @UseGuards(SpotifyAuthGuard)
