@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import {
-  DNSHealthIndicator,
+  HttpHealthIndicator,
   HealthCheck,
   HealthCheckResult,
   HealthCheckService,
@@ -12,7 +12,7 @@ import {
 export class HealthCheckController {
   constructor(
     private readonly health: HealthCheckService,
-    private readonly dns: DNSHealthIndicator,
+    private readonly http: HttpHealthIndicator,
     private readonly typeorm: TypeOrmHealthIndicator,
     private readonly config: ConfigService
   ) {}
@@ -22,12 +22,12 @@ export class HealthCheckController {
   check(): Promise<HealthCheckResult> {
     return this.health.check([
       () =>
-        this.dns.pingCheck(
+        this.http.pingCheck(
           "spotify-web",
           this.config.get<string>("SPOTIFY_WEB_API_URL")
         ),
       () =>
-        this.dns.pingCheck(
+        this.http.pingCheck(
           "spotify-auth",
           this.config.get<string>("SPOTIFY_AUTH_API_URL")
         ),
