@@ -23,7 +23,7 @@ export class SpotifyAuthFilter implements ExceptionFilter {
       reason = "oauth2";
     } else if (
       exception instanceof ForbiddenException &&
-      exception.message === "UserNotWhitelisted"
+      exception.message === "UserNotInUserFilter"
     ) {
       // User ID is not in the whitelist
       reason = "whitelist";

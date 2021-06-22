@@ -30,7 +30,7 @@ export class AuthService {
     profile,
   }: LoginDto): Promise<User> {
     if (!this.allowedByUserFilter(profile.id)) {
-      throw new ForbiddenException("UserNotWhitelisted");
+      throw new ForbiddenException("UserNotInUserFilter");
     }
 
     const user = await this.usersService.createOrUpdate({
@@ -55,10 +55,7 @@ export class AuthService {
     session.user = user;
     await this.authSessionRepository.save(session);
 
-    const [{ refreshToken }] = await Promise.all([
-      this.createRefreshToken(session),
-      this.createAccessToken(session),
-    ]);
+    const { refreshToken } = await this.createRefreshToken(session);
 
     return { session, refreshToken };
   }
@@ -93,23 +90,6 @@ export class AuthService {
       sub: session.user.id,
       name: session.user.displayName,
       picture: session.user.photo,
-    };
-
-    const token = await this.jwtService.signAsync(payload);
-
-    return { accessToken: token };
-  }
-
-  /**
-   * Switch to createAccessToken
-   * @deprecated
-   * @param user
-   */
-  async createToken(user: User): Promise<{ accessToken }> {
-    const payload = {
-      sub: user.id,
-      name: user.displayName,
-      picture: user.photo,
     };
 
     const token = await this.jwtService.signAsync(payload);
