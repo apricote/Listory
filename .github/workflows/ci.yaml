@@ -31,13 +31,6 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           flags: unittests,api
-          verbose: true # optional (default = false)
-
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: coverage
 
   frontend:
     runs-on: ubuntu-latest
