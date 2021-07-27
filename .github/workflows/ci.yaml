@@ -27,6 +27,12 @@ jobs:
       - run: npm run lint:api
       - run: npm run test:cov
 
+      - name: Upload coverage results to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          flags: unittests,api
+          verbose: true # optional (default = false)
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
