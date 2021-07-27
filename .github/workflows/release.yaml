@@ -22,7 +22,7 @@ jobs:
           helm-version: "v3.2.1"
 
       - name: Install semantic-release
-        run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec semantic-release-docker
+        run: npm install -g --legacy-peer-deps semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec semantic-release-docker
 
       - name: Release
         env:
