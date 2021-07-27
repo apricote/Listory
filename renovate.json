@@ -1,7 +1,7 @@
 {
   "extends": [
     "config:base",
-    ":semanticCommit",
+    ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
     ":automergeMinor",
     ":automergeBranch",
