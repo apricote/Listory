@@ -1,4 +1,12 @@
 {
-  "semanticCommits": true,
-  "extends": ["config:base", "schedule:weekly"]
+  "extends": [
+    "config:base",
+    ":semanticCommit",
+    ":semanticCommitTypeAll(chore)",
+    ":automergeMinor",
+    ":automergeBranch",
+    ":automergeLinters",
+    ":automergeTesters",
+    ":automergeTypes"
+  ]
 }
