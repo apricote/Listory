@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "4.0.3",
-    "@testing-library/jest-dom": "5.12.0",
+    "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "11.2.7",
     "@testing-library/user-event": "13.1.9",
     "@types/jest": "26.0.24",
