@@ -38,7 +38,7 @@
     "@nestjs/swagger": "4.8.2",
     "@nestjs/terminus": "7.2.0",
     "@nestjs/typeorm": "7.1.5",
-    "@sentry/node": "6.4.1",
+    "@sentry/node": "6.10.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "cookie-parser": "1.4.5",
