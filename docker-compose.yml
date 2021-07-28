@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   db:
-    image: postgres:12.5
+    image: postgres:12.7
     environment:
       POSTGRES_PASSWORD: listory
       POSTGRES_USER: listory
