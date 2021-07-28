@@ -11,7 +11,7 @@
     "@fullhuman/postcss-purgecss": "4.0.3",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "11.2.7",
-    "@testing-library/user-event": "13.1.9",
+    "@testing-library/user-event": "13.2.1",
     "@types/jest": "26.0.24",
     "@types/node": "15.6.0",
     "@types/react": "17.0.15",
