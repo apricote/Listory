@@ -1,6 +1,6 @@
-import { Logger } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { ListensService } from "../../listens/listens.service";
+import { Logger } from "../../logger/logger.service";
 import { MusicLibraryService } from "../../music-library/music-library.service";
 import { UsersService } from "../../users/users.service";
 import { SpotifyApiService } from "./spotify-api/spotify-api.service";

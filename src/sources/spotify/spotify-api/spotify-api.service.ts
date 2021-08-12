@@ -1,4 +1,5 @@
-import { HttpService, Injectable } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { Injectable } from "@nestjs/common";
 import { SpotifyConnection } from "../spotify-connection.entity";
 import { AlbumObject } from "./entities/album-object";
 import { ArtistObject } from "./entities/artist-object";
