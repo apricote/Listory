@@ -37,7 +37,7 @@
     "@nestjs/serve-static": "2.2.2",
     "@nestjs/swagger": "4.8.2",
     "@nestjs/terminus": "7.2.0",
-    "@nestjs/typeorm": "7.1.5",
+    "@nestjs/typeorm": "8.0.2",
     "@sentry/node": "6.11.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
