@@ -4,6 +4,6 @@ export class LoginDto {
   profile: {
     id: string;
     displayName: string;
-    photos: string[];
+    photos: { value: string }[];
   };
 }

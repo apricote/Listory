@@ -35,7 +35,7 @@ export class AuthService {
 
     const user = await this.usersService.createOrUpdate({
       displayName: profile.displayName,
-      photo: profile.photos.length > 0 ? profile.photos[0] : null,
+      photo: profile.photos.length > 0 ? profile.photos[0].value : null,
       spotify: {
         id: profile.id,
         accessToken,

@@ -58,7 +58,7 @@ describe("AuthService", () => {
         profile: {
           id: "FOOBAR",
           displayName: "Max Mustermann",
-          photos: ["https://example.com/profile.jpeg"],
+          photos: [{ value: "https://example.com/profile.jpeg" }],
         },
       };
 
