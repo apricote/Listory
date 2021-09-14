@@ -17,7 +17,7 @@
     "@types/react": "17.0.20",
     "@types/react-dom": "17.0.9",
     "@types/react-router-dom": "5.1.8",
-    "@types/recharts": "1.8.19",
+    "@types/recharts": "1.8.20",
     "autoprefixer": "10.3.4",
     "axios": "0.21.4",
     "date-fns": "2.23.0",
