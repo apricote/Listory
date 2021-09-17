@@ -43,7 +43,7 @@
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "cookie-parser": "1.4.5",
-    "date-fns": "2.23.0",
+    "date-fns": "2.24.0",
     "nest-raven": "8.0.0",
     "nestjs-typeorm-paginate": "2.6.2",
     "passport": "0.4.1",
