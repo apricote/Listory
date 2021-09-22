@@ -45,7 +45,7 @@
     "cookie-parser": "1.4.5",
     "date-fns": "2.24.0",
     "nest-raven": "8.0.0",
-    "nestjs-typeorm-paginate": "2.6.2",
+    "nestjs-typeorm-paginate": "2.6.3",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "passport-spotify": "2.0.0",
