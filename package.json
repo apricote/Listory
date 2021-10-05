@@ -46,7 +46,7 @@
     "date-fns": "2.24.0",
     "nest-raven": "8.0.0",
     "nestjs-typeorm-paginate": "2.6.3",
-    "passport": "0.4.1",
+    "passport": "0.5.0",
     "passport-jwt": "4.0.0",
     "passport-spotify": "2.0.0",
     "pg": "8.7.1",
