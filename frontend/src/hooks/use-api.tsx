@@ -4,12 +4,14 @@ import {
   getRecentListens,
   getTopAlbums,
   getTopArtists,
+  getTopGenres,
   getTopTracks,
 } from "../api/api";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
 import { PaginationOptions } from "../api/entities/pagination-options";
 import { TopAlbumsOptions } from "../api/entities/top-albums-options";
 import { TopArtistsOptions } from "../api/entities/top-artists-options";
+import { TopGenresOptions } from "../api/entities/top-genres-options";
 import { TopTracksOptions } from "../api/entities/top-tracks-options";
 import { useApiClient } from "./use-api-client";
 import { useAsync } from "./use-async";
@@ -104,4 +106,21 @@ export const useTopTracks = (options: TopTracksOptions) => {
   } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { topTracks, isLoading, error };
+};
+
+export const useTopGenres = (options: TopGenresOptions) => {
+  const { client } = useApiClient();
+
+  const fetchData = useMemo(
+    () => () => getTopGenres(options, client),
+    [options, client]
+  );
+
+  const {
+    value: topGenres,
+    pending: isLoading,
+    error,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
+
+  return { topGenres, isLoading, error };
 };

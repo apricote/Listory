@@ -6,13 +6,6 @@ import { SimplifiedArtistObject } from "./simplified-artist-object";
 
 export class AlbumObject {
   /**
-   * A list of the genres used to classify the album.
-   * For example: "Prog Rock" , "Post-Grunge".
-   * (If not yet classified, the array is empty.)
-   */
-  genres: string[];
-
-  /**
    * The artists of the album.
    * Each artist object includes a link in href to more detailed information about the artist.
    */

@@ -8,6 +8,7 @@ import { RecentListens } from "./components/RecentListens";
 import { ReportListens } from "./components/ReportListens";
 import { ReportTopAlbums } from "./components/ReportTopAlbums";
 import { ReportTopArtists } from "./components/ReportTopArtists";
+import { ReportTopGenres } from "./components/ReportTopGenres";
 import { ReportTopTracks } from "./components/ReportTopTracks";
 import { useAuth } from "./hooks/use-auth";
 import "./tailwind/generated.css";
@@ -38,6 +39,7 @@ export function App() {
           />
           <Route path="/reports/top-albums" exact component={ReportTopAlbums} />
           <Route path="/reports/top-tracks" exact component={ReportTopTracks} />
+          <Route path="/reports/top-genres" exact component={ReportTopGenres} />
         </Switch>
       </main>
       <footer>

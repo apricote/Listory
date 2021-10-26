@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Album } from "./album.entity";
 import { Genre } from "./genre.entity";
@@ -15,6 +21,7 @@ export class Artist {
   albums?: Album[];
 
   @ManyToMany(() => Genre)
+  @JoinTable({ name: "artist_genres" })
   genres?: Genre[];
 
   @Column(() => SpotifyLibraryDetails)

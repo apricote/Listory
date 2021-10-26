@@ -210,14 +210,9 @@ export class SpotifyService {
       )
     );
 
-    const genres = await Promise.all(
-      spotifyAlbum.genres.map((genreName) => this.importGenre(genreName))
-    );
-
     return this.musicLibraryService.createAlbum({
       name: spotifyAlbum.name,
       artists,
-      genres,
       spotify: {
         id: spotifyAlbum.id,
         uri: spotifyAlbum.uri,

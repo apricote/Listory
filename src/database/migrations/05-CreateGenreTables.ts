@@ -79,53 +79,9 @@ export class CreateGenreTables0000000000005 implements MigrationInterface {
       }),
       true
     );
-
-    await queryRunner.createTable(
-      new Table({
-        name: "artist_genres",
-        columns: [
-          {
-            name: "artistId",
-            type: "uuid",
-            isPrimary: true,
-          },
-          {
-            name: "genreId",
-            type: "uuid",
-            isPrimary: true,
-          },
-        ],
-        indices: [
-          new TableIndex({
-            name: "IDX_ARTIST_GENRES_ARTIST_ID",
-            columnNames: ["artistId"],
-          }),
-          new TableIndex({
-            name: "IDX_ARTIST_GENRES_GENRE_ID",
-            columnNames: ["genreId"],
-          }),
-        ],
-        foreignKeys: [
-          new TableForeignKey({
-            name: "FK_ARTIST_ID",
-            columnNames: ["artistId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "artist",
-          }),
-          new TableForeignKey({
-            name: "FK_GENRE_ID",
-            columnNames: ["genreId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "genre",
-          }),
-        ],
-      }),
-      true
-    );
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("album_genres");
     await queryRunner.dropTable("artist_genres");
     await queryRunner.dropTable("genre");
   }

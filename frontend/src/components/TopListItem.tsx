@@ -3,7 +3,7 @@ import React from "react";
 export interface TopListItemProps {
   key: string;
   title: string;
-  subTitle?: string;
+  subTitle?: string | React.ReactNode;
   count: number;
 
   /**

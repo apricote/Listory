@@ -36,6 +36,7 @@ export class MusicLibraryService {
     const artist = this.artistRepository.create();
 
     artist.name = data.name;
+    artist.genres = data.genres;
     artist.spotify = data.spotify;
 
     try {

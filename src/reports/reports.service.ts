@@ -15,13 +15,17 @@ import {
   sub,
 } from "date-fns";
 import { ListensService } from "../listens/listens.service";
+import { User } from "../users/user.entity";
 import { GetListenReportDto } from "./dto/get-listen-report.dto";
 import { GetTopAlbumsReportDto } from "./dto/get-top-albums-report.dto";
 import { GetTopArtistsReportDto } from "./dto/get-top-artists-report.dto";
+import { GetTopGenresReportDto } from "./dto/get-top-genres-report.dto";
 import { GetTopTracksReportDto } from "./dto/get-top-tracks-report.dto";
 import { ListenReportDto } from "./dto/listen-report.dto";
+import { ReportTimeDto } from "./dto/report-time.dto";
 import { TopAlbumsReportDto } from "./dto/top-albums-report.dto";
 import { TopArtistsReportDto } from "./dto/top-artists-report.dto";
+import { TopGenresReportDto as TopGenresReportDto } from "./dto/top-genres-report.dto";
 import { TopTracksReportDto } from "./dto/top-tracks-report.dto";
 import { Interval } from "./interval";
 import { Timeframe } from "./timeframe.enum";
@@ -66,16 +70,11 @@ export class ReportsService {
   constructor(private readonly listensService: ListensService) {}
 
   async getListens(options: GetListenReportDto): Promise<ListenReportDto> {
-    const { user, timeFrame, time: timePreset } = options;
+    const { timeFrame, time: timePreset } = options;
+
+    const listens = await this.getListensQueryFromOptions(options).getMany();
 
     const interval = this.getIntervalFromPreset(timePreset);
-
-    const listens = await this.listensService
-      .getScopedQueryBuilder()
-      .byUser(user)
-      .duringInterval(interval)
-      .getMany();
-
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
 
     const reportItems = eachOfInterval(interval).map((date) => {
@@ -91,14 +90,7 @@ export class ReportsService {
   async getTopArtists(
     options: GetTopArtistsReportDto
   ): Promise<TopArtistsReportDto> {
-    const { user, time: timePreset } = options;
-
-    const interval = this.getIntervalFromPreset(timePreset);
-
-    const getArtistsWithCountQB = this.listensService
-      .getScopedQueryBuilder()
-      .byUser(user)
-      .duringInterval(interval)
+    const getArtistsWithCountQB = this.getListensQueryFromOptions(options)
       .leftJoin("listen.track", "track")
       .leftJoinAndSelect("track.artists", "artists")
       .groupBy("artists.id")
@@ -132,18 +124,8 @@ export class ReportsService {
   async getTopAlbums(
     options: GetTopAlbumsReportDto
   ): Promise<TopAlbumsReportDto> {
-    const { user, time: timePreset } = options;
-
-    const interval = this.getIntervalFromPreset(timePreset);
-
-    const getListensQB = () =>
-      this.listensService
-        .getScopedQueryBuilder()
-        .byUser(user)
-        .duringInterval(interval);
-
     const [rawAlbumsWithCount, rawAlbumDetails] = await Promise.all([
-      getListensQB()
+      this.getListensQueryFromOptions(options)
         .leftJoin("listen.track", "track")
         .leftJoinAndSelect("track.album", "album")
         .groupBy("album.id")
@@ -154,7 +136,7 @@ export class ReportsService {
 
       // Because of the GROUP BY required to calculate the count we can
       // not properly join the album relations in one query
-      getListensQB()
+      this.getListensQueryFromOptions(options)
         .leftJoinAndSelect("listen.track", "track")
         .leftJoinAndSelect("track.album", "album")
         .leftJoinAndSelect("album.artists", "artists")
@@ -181,18 +163,8 @@ export class ReportsService {
   async getTopTracks(
     options: GetTopTracksReportDto
   ): Promise<TopTracksReportDto> {
-    const { user, time: timePreset } = options;
-
-    const interval = this.getIntervalFromPreset(timePreset);
-
-    const getListensQB = () =>
-      this.listensService
-        .getScopedQueryBuilder()
-        .byUser(user)
-        .duringInterval(interval);
-
     const [rawTracksWithCount, rawTrackDetails] = await Promise.all([
-      getListensQB()
+      this.getListensQueryFromOptions(options)
         .leftJoin("listen.track", "track")
         .groupBy("track.id")
         .select("track.*")
@@ -202,7 +174,7 @@ export class ReportsService {
 
       // Because of the GROUP BY required to calculate the count we can
       // not properly join the artist relations in one query
-      getListensQB()
+      this.getListensQueryFromOptions(options)
         .leftJoinAndSelect("listen.track", "track")
         .leftJoinAndSelect("track.artists", "artists")
         .distinctOn(["track.id"])
@@ -223,6 +195,77 @@ export class ReportsService {
     return {
       items,
     };
+  }
+
+  async getTopGenres(
+    options: GetTopGenresReportDto
+  ): Promise<TopGenresReportDto> {
+    const [rawGenresWithCount, rawGenresWithArtistsCount] = await Promise.all([
+      this.getListensQueryFromOptions(options)
+        .leftJoin("listen.track", "track")
+        .leftJoin("track.artists", "artists")
+        .leftJoin("artists.genres", "genres")
+        .groupBy("genres.id")
+        .select("genres.*")
+        .addSelect("count(*) as listens")
+        .orderBy("listens", "DESC")
+        .getRawMany(),
+      this.getListensQueryFromOptions(options)
+        .leftJoin("listen.track", "track")
+        .leftJoin("track.artists", "artists")
+        .leftJoin("artists.genres", "genres")
+        .groupBy("genres.id")
+        .addGroupBy("artists.id")
+        .select("genres.id", "genreID")
+        .addSelect("artists.*")
+        .addSelect("count(*) as listens")
+        .orderBy("listens", "DESC")
+        .getRawMany(),
+    ]);
+
+    const items: TopGenresReportDto["items"] = rawGenresWithCount
+      .filter((rawGenre) => rawGenre.id) // Make sure that listen has related genre
+      .map((data) => ({
+        count: Number.parseInt(data.listens, 10),
+        genre: {
+          id: data.id,
+          name: data.name,
+        },
+        artists: rawGenresWithArtistsCount
+          .filter(({ genreID }) => genreID === data.id)
+          .map((artistsData) => ({
+            count: Number.parseInt(artistsData.listens, 10),
+            artist: {
+              id: artistsData.id,
+              name: artistsData.name,
+              spotify: {
+                id: artistsData.spotifyId,
+                uri: artistsData.spotifyUri,
+                type: artistsData.spotifyType,
+                href: artistsData.spotifyHref,
+              },
+            },
+          }))
+          .filter((_, i) => i < 5),
+      }));
+
+    return {
+      items,
+    };
+  }
+
+  private getListensQueryFromOptions(options: {
+    user: User;
+    time: ReportTimeDto;
+  }) {
+    const { user, time: timePreset } = options;
+
+    const interval = this.getIntervalFromPreset(timePreset);
+
+    return this.listensService
+      .getScopedQueryBuilder()
+      .byUser(user)
+      .duringInterval(interval);
   }
 
   private getIntervalFromPreset(options: {

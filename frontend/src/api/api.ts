@@ -9,6 +9,8 @@ import { TopAlbumsItem } from "./entities/top-albums-item";
 import { TopAlbumsOptions } from "./entities/top-albums-options";
 import { TopArtistsItem } from "./entities/top-artists-item";
 import { TopArtistsOptions } from "./entities/top-artists-options";
+import { TopGenresItem } from "./entities/top-genres-item";
+import { TopGenresOptions } from "./entities/top-genres-options";
 import { TopTracksItem } from "./entities/top-tracks-item";
 import { TopTracksOptions } from "./entities/top-tracks-options";
 
@@ -180,6 +182,43 @@ export const getTopTracks = async (
     }
     default: {
       throw new Error(`Unable to getTopTracks: ${res.status}`);
+    }
+  }
+
+  const {
+    data: { items },
+  } = res;
+  return items;
+};
+
+export const getTopGenres = async (
+  options: TopGenresOptions,
+  client: AxiosInstance
+): Promise<TopGenresItem[]> => {
+  const {
+    time: { timePreset, customTimeStart, customTimeEnd },
+  } = options;
+
+  const res = await client.get<{ items: TopGenresItem[] }>(
+    `/api/v1/reports/top-Genres`,
+    {
+      params: {
+        timePreset,
+        customTimeStart: formatISO(customTimeStart),
+        customTimeEnd: formatISO(customTimeEnd),
+      },
+    }
+  );
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to getTopGenres: ${res.status}`);
     }
   }
 
