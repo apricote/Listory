@@ -36,7 +36,7 @@
     "@nestjs/platform-express": "8.1.2",
     "@nestjs/schedule": "1.0.2",
     "@nestjs/serve-static": "2.2.2",
-    "@nestjs/swagger": "5.1.4",
+    "@nestjs/swagger": "5.1.5",
     "@nestjs/terminus": "8.0.1",
     "@nestjs/typeorm": "8.0.2",
     "@sentry/node": "6.15.0",
