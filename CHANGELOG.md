@@ -1,3 +1,18 @@
+# [1.14.0](https://github.com/apricote/Listory/compare/v1.13.0...v1.14.0) (2021-11-21)
+
+
+### Bug Fixes
+
+* **ci:** also provide GITHUB_TOKEN ([c033af7](https://github.com/apricote/Listory/commit/c033af7013bcd0a92de3eae486445719435af092))
+* **ci:** provide PAT as GH_TOKEN ([7f6af16](https://github.com/apricote/Listory/commit/7f6af16d5508b3f55fd09907190f18795bb5503f))
+* **ci:** use PAT for pushing changelog ([29fc348](https://github.com/apricote/Listory/commit/29fc3488cf333aaab8f13c7cbbc9baebeb6e22fb))
+
+
+### Features
+
+* **api:** update existing artists in MusicLibrary ([a0ffe10](https://github.com/apricote/Listory/commit/a0ffe108e152731d57dfda2a5b39edc2e7f2da5d))
+* top genres report ([a0c28e2](https://github.com/apricote/Listory/commit/a0c28e2324ddd1e2726d419a2d144fbd3f03abd6))
+
 # [1.13.0](https://github.com/apricote/Listory/compare/v1.12.0...v1.13.0) (2021-05-25)
 
 
