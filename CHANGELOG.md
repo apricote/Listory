@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/apricote/Listory/compare/v1.14.0...v1.14.1) (2021-11-21)
+
+
+### Bug Fixes
+
+* **deps:** incompatible class-transformer release ([72be403](https://github.com/apricote/Listory/commit/72be403fcf347e664a56701ef315550445b7069e))
+
 # [1.14.0](https://github.com/apricote/Listory/compare/v1.13.0...v1.14.0) (2021-11-21)
 
 
