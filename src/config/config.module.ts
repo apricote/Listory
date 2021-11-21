@@ -24,6 +24,7 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
         SPOTIFY_CLIENT_ID: Joi.string().required(),
         SPOTIFY_CLIENT_SECRET: Joi.string().required(),
         SPOTIFY_FETCH_INTERVAL_SEC: Joi.number().default(60),
+        SPOTIFY_UPDATE_INTERVAL_SEC: Joi.number().default(60),
         SPOTIFY_WEB_API_URL: Joi.string().default("https://api.spotify.com/"),
         SPOTIFY_AUTH_API_URL: Joi.string().default(
           "https://accounts.spotify.com/"

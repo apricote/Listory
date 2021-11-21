@@ -46,7 +46,7 @@ function useProvideAuth(): AuthContext {
       setAccessToken("");
       setUser(null);
       setIsLoaded(true);
-      setError(err);
+      setError(err as Error);
 
       throw err;
     }

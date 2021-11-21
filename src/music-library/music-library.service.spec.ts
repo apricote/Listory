@@ -8,6 +8,7 @@ import { CreateAlbumDto } from "./dto/create-album.dto";
 import { CreateArtistDto } from "./dto/create-artist.dto";
 import { CreateGenreDto } from "./dto/create-genre.dto";
 import { CreateTrackDto } from "./dto/create-track.dto";
+import { UpdateArtistDto } from "./dto/update-artist.dto";
 import { Genre } from "./genre.entity";
 import { GenreRepository } from "./genre.repository";
 import { MusicLibraryService } from "./music-library.service";
@@ -129,6 +130,59 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.createArtist(createArtistDto)).rejects.toThrow(
+          "Generic Error"
+        );
+      });
+    });
+
+    describe("updateArtist", () => {
+      let updateArtistDto: UpdateArtistDto;
+      let artist: Artist;
+
+      beforeEach(() => {
+        artist = {
+          id: "ARTIST",
+          name: "Foo",
+          genres: [{ id: "GENRE_POP", name: "Baz Pop" }],
+          spotify: {
+            id: "SPOTIFY_ID",
+          },
+        } as Artist;
+
+        updateArtistDto = {
+          artist,
+          updatedFields: {
+            name: "Bar",
+            genres: [
+              { id: "GENRE_METAL", name: "Foo Metal" },
+              { id: "GENRE_ROCK", name: "Bar Rock" },
+            ],
+          },
+        } as UpdateArtistDto;
+
+        artistRepository.save = jest
+          .fn()
+          .mockImplementation(async (_artist) => _artist);
+      });
+
+      it("updates the entity", async () => {
+        await expect(service.updateArtist(updateArtistDto)).resolves.toEqual(
+          artist
+        );
+
+        expect(artistRepository.save).toHaveBeenCalledTimes(1);
+        expect(artistRepository.save).toHaveBeenCalledWith(artist);
+
+        expect(artist).toHaveProperty("name", "Bar");
+        expect(artist).toHaveProperty("genres", expect.arrayContaining([]));
+      });
+
+      it("throws on generic errors", async () => {
+        artistRepository.save = jest
+          .fn()
+          .mockRejectedValue(new Error("Generic Error"));
+
+        await expect(service.updateArtist(updateArtistDto)).rejects.toThrow(
           "Generic Error"
         );
       });

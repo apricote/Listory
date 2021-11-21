@@ -126,6 +126,17 @@ export class SpotifyService {
     });
   }
 
+  async runUpdaterForAllEntities(): Promise<void> {
+    this.logger.debug("Starting Spotify updater loop");
+
+    const oldestArtist =
+      await this.musicLibraryService.getArtistWithOldestUpdate();
+
+    if (oldestArtist) {
+      await this.updateArtist(oldestArtist.spotify.id);
+    }
+  }
+
   async importTrack(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -264,6 +275,44 @@ export class SpotifyService {
         href: spotifyArtist.href,
       },
     });
+  }
+
+  async updateArtist(
+    spotifyID: string,
+    retryOnExpiredToken: boolean = true
+  ): Promise<Artist> {
+    const artist = await this.importArtist(spotifyID, retryOnExpiredToken);
+
+    let spotifyArtist: ArtistObject;
+
+    try {
+      spotifyArtist = await this.spotifyApi.getArtist(
+        this.appAccessToken,
+        spotifyID
+      );
+    } catch (err) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
+        await this.refreshAppAccessToken();
+
+        return this.updateArtist(spotifyID, false);
+      }
+
+      throw err;
+    }
+
+    const genres = await Promise.all(
+      spotifyArtist.genres.map((genreName) => this.importGenre(genreName))
+    );
+
+    this.musicLibraryService.updateArtist({
+      artist,
+      updatedFields: {
+        name: spotifyArtist.name,
+        genres,
+      },
+    });
+
+    return artist;
   }
 
   async importGenre(name: string): Promise<Genre> {

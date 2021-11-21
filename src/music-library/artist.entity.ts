@@ -4,6 +4,7 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { SpotifyLibraryDetails } from "../sources/spotify/spotify-library-details.entity";
 import { Album } from "./album.entity";
@@ -26,4 +27,7 @@ export class Artist {
 
   @Column(() => SpotifyLibraryDetails)
   spotify: SpotifyLibraryDetails;
+
+  @UpdateDateColumn({ type: "timestamp" })
+  updatedAt: Date;
 }

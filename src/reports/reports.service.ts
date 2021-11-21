@@ -106,6 +106,7 @@ export class ReportsService {
         artist: {
           id: data.id,
           name: data.name,
+          updatedAt: data.updatedAt,
           spotify: {
             id: data.spotifyId,
             uri: data.spotifyUri,
@@ -238,6 +239,7 @@ export class ReportsService {
             artist: {
               id: artistsData.id,
               name: artistsData.name,
+              updatedAt: artistsData.updatedAt,
               spotify: {
                 id: artistsData.spotifyId,
                 uri: artistsData.spotifyUri,

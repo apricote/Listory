@@ -12,6 +12,7 @@ import { FindAlbumDto } from "./dto/find-album.dto";
 import { FindArtistDto } from "./dto/find-artist.dto";
 import { FindGenreDto } from "./dto/find-genre.dto";
 import { FindTrackDto } from "./dto/find-track.dto";
+import { UpdateArtistDto } from "./dto/update-artist.dto";
 import { Genre } from "./genre.entity";
 import { GenreRepository } from "./genre.repository";
 import { Track } from "./track.entity";
@@ -30,6 +31,17 @@ export class MusicLibraryService {
     return this.artistRepository.findOne({
       where: { spotify: { id: query.spotify.id } },
     });
+  }
+
+  async getArtistWithOldestUpdate(): Promise<Artist | undefined> {
+    const [oldestArtist] = await this.artistRepository.find({
+      take: 1,
+      order: {
+        updatedAt: "ASC",
+      },
+    });
+
+    return oldestArtist;
   }
 
   async createArtist(data: CreateArtistDto): Promise<Artist> {
@@ -55,6 +67,17 @@ export class MusicLibraryService {
     }
 
     return artist;
+  }
+
+  async updateArtist({
+    artist,
+    updatedFields,
+  }: UpdateArtistDto): Promise<Artist> {
+    artist.name = updatedFields.name;
+    artist.genres = updatedFields.genres;
+    artist.updatedAt = new Date();
+
+    return this.artistRepository.save(artist);
   }
 
   async findAlbum(query: FindAlbumDto): Promise<Album | undefined> {

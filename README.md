@@ -30,6 +30,7 @@ All configuration must be set as environment variables. Default values are added
 - `SPOTIFY_CLIENT_ID`: _Required_, Spotify App Client ID
 - `SPOTIFY_CLIENT_SECRET`: _Required_, Spotify App Client Secret
 - `SPOTIFY_FETCH_INTERVAL_SEC`: **60**: Interval for fetching recently listened tracks from Spotify.
+- `SPOTIFY_UPDATE_INTERVAL_SEC`: **60**: Interval for updating previously imported music library entities (artist, album, track). Raise this number if you often hit the Spotify API Ratelimit.
 - `SPOTIFY_WEB_API_URL`: **https://api.spotify.com/**: Spotify WEB API Endpoint.
 - `SPOTIFY_AUTH_API_URL`: **https://accounts.spotify.com/**: Spotify Authentication API Endpoint.
 - `SPOTIFY_USER_FILTER`: **""**: If set, only allow Spotify users with these ids to access the app. If empty, allow all users to access the app. Seperate ids with `,` eg.: `231421323123,other_id`.

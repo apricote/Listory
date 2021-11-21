@@ -18,6 +18,7 @@ export class SchedulerService implements OnApplicationBootstrap {
 
   onApplicationBootstrap() {
     this.setupSpotifyCrawler();
+    this.setupSpotifyMusicLibraryUpdater();
   }
 
   private setupSpotifyCrawler() {
@@ -32,5 +33,17 @@ export class SchedulerService implements OnApplicationBootstrap {
     const interval = setInterval(callback, timeoutMs);
 
     this.registry.addInterval("crawler_spotify", interval);
+  }
+
+  private setupSpotifyMusicLibraryUpdater() {
+    const callback = () => {
+      this.spotifyService.runUpdaterForAllEntities();
+    };
+    const timeoutMs =
+      this.config.get<number>("SPOTIFY_UPDATE_INTERVAL_SEC") * 1000;
+
+    const interval = setInterval(callback, timeoutMs);
+
+    this.registry.addInterval("updater_spotify", interval);
   }
 }
