@@ -22,11 +22,15 @@ services:
       DB_DATABASE: listory
       JWT_SECRET: listory
       APP_URL: "http://localhost:3000"
+      NODE_ENV: local # pretty logs
+
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:55681/v1/traces
     env_file: .env
     volumes:
       - ./src:/app/src
     ports:
-      - 3000
+      - 3000 # API
+      - "9464:9464" # Metrics
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.http.routers.api.rule=PathPrefix(`/api`)"

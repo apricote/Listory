@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
+import { Span } from "nestjs-otel";
 import { ListensService } from "../../listens/listens.service";
-import { Logger } from "../../logger/logger.service";
 import { Album } from "../../music-library/album.entity";
 import { Artist } from "../../music-library/artist.entity";
 import { Genre } from "../../music-library/genre.entity";
@@ -17,6 +17,8 @@ import { SpotifyAuthService } from "./spotify-auth/spotify-auth.service";
 
 @Injectable()
 export class SpotifyService {
+  private readonly logger = new Logger(this.constructor.name);
+
   private appAccessToken: string | null;
   private appAccessTokenInProgress: Promise<void> | null;
 
@@ -25,12 +27,10 @@ export class SpotifyService {
     private readonly listensService: ListensService,
     private readonly musicLibraryService: MusicLibraryService,
     private readonly spotifyApi: SpotifyApiService,
-    private readonly spotifyAuth: SpotifyAuthService,
-    private readonly logger: Logger
-  ) {
-    this.logger.setContext(this.constructor.name);
-  }
+    private readonly spotifyAuth: SpotifyAuthService
+  ) {}
 
+  @Span()
   async runCrawlerForAllUsers(): Promise<void> {
     this.logger.debug("Starting Spotify crawler loop");
     const users = await this.usersService.findAll();
@@ -42,11 +42,12 @@ export class SpotifyService {
     }
   }
 
+  @Span()
   async crawlListensForUser(
     user: User,
     retryOnExpiredToken: boolean = true
   ): Promise<void> {
-    this.logger.debug(`Crawling recently played tracks for user "${user.id}"`);
+    this.logger.debug({ userId: user.id }, `Crawling recently played tracks`);
 
     let playHistory: PlayHistoryObject[];
     try {
@@ -64,6 +65,7 @@ export class SpotifyService {
           await this.crawlListensForUser(user, false);
         } catch (errFromAuth) {
           this.logger.error(
+            { userId: user.id },
             `Refreshing access token failed for user "${user.id}": ${errFromAuth}`
           );
         }
@@ -95,6 +97,7 @@ export class SpotifyService {
 
         if (!isDuplicate) {
           this.logger.debug(
+            { userId: user.id },
             `New listen found! ${user.id} listened to "${
               track.name
             }" by ${track.artists
@@ -126,6 +129,7 @@ export class SpotifyService {
     });
   }
 
+  @Span()
   async runUpdaterForAllEntities(): Promise<void> {
     this.logger.debug("Starting Spotify updater loop");
 
@@ -137,6 +141,7 @@ export class SpotifyService {
     }
   }
 
+  @Span()
   async importTrack(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -187,6 +192,7 @@ export class SpotifyService {
     });
   }
 
+  @Span()
   async importAlbum(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -233,6 +239,7 @@ export class SpotifyService {
     });
   }
 
+  @Span()
   async importArtist(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -277,6 +284,7 @@ export class SpotifyService {
     });
   }
 
+  @Span()
   async updateArtist(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -315,6 +323,7 @@ export class SpotifyService {
     return artist;
   }
 
+  @Span()
   async importGenre(name: string): Promise<Genre> {
     const genre = await this.musicLibraryService.findGenre({
       name,
@@ -328,6 +337,7 @@ export class SpotifyService {
     });
   }
 
+  @Span()
   private async refreshAppAccessToken(): Promise<void> {
     if (!this.appAccessTokenInProgress) {
       this.logger.debug("refreshing spotify app access token");

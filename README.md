@@ -50,16 +50,20 @@ You can use Sentry to automatically detect and report any exceptions thrown.
 - `SENTRY_ENABLED`: **false**, Set to `true` to enable Sentry.
 - `SENTRY_DSN`: _Required_, but only if `SENTRY_ENABLED` is `true`. The [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) for your Sentry project.
 
-#### Prometheus
+#### OpenTelemetry
 
-You can use Prometheus to track various metrics about your Listory deployment.
+We use OpenTelemetry to provide observability into Listory API.
 
-The metrics will be exposed on the `/api/metrics` endpoint. Make sure that this endpoint is not publicly available in your deployment.
+The metrics will be exposed on a seperate port at `:9464/metrics`. Make sure that this endpoint is not publicly available in your deployment.
 
-- `PROMETHEUS_ENABLED`: **false**, Set to `true` to enable Prometheus Metrics.
-- `PROMETHEUS_BASIC_AUTH`: **false**, Set to `true` to require basic auth to access the metrics endpoint.
-- `PROMETHEUS_BASIC_AUTH_USERNAME`: _Required_, if `PROMETHEUS_BASIC_AUTH` is `true`.
-- `PROMETHEUS_BASIC_AUTH_PASSWORD`: _Required_, if `PROMETHEUS_BASIC_AUTH` is `true`.
+Traces will be sent to the specified endpoint.
+
+To use observability tools locally, check out `docker-compose` setup in `observability/`.
+
+- `OTEL_METRICS_ENABLED`: **false**, Set to `true` to activate metrics.
+- `OTEL_TRACES_ENABLED`: **false**, Set to `true` to activate traces.
+- `OTEL_EXPORTER_OTLP_ENDPOINT`: _Required_, but only if `OTEL_TRACES_ENABLED` is `true`. The endpoint that traces are sent to, see [OpenTelemetry docs](https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/exporter-trace-otlp-http#configuration-options-as-environment-variables)
+- `OTEL_EXPORTER_PROMETHEUS_PORT`: **9464**, Set to configure non-standard port for Prometheus metrics
 
 ## Development
 

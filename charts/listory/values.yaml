@@ -90,10 +90,10 @@ sentry:
   enabled: false
   dsn: ""
 
-prometheus:
-  enabled: false
-
-  basicAuth:
+opentelemetry:
+  metrics:
     enabled: false
-    username: ""
-    password: ""
+    port: 9464
+  traces:
+    enabled: false
+    otlpEndpoint: ""

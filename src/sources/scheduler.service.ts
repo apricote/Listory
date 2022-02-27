@@ -1,20 +1,18 @@
-import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
+import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { captureException } from "@sentry/node";
-import { Logger } from "../logger/logger.service";
 import { SpotifyService } from "./spotify/spotify.service";
 
 @Injectable()
 export class SchedulerService implements OnApplicationBootstrap {
+  private readonly logger = new Logger(this.constructor.name);
+
   constructor(
     private readonly config: ConfigService,
     private readonly registry: SchedulerRegistry,
-    private readonly spotifyService: SpotifyService,
-    private readonly logger: Logger
-  ) {
-    this.logger.setContext(this.constructor.name);
-  }
+    private readonly spotifyService: SpotifyService
+  ) {}
 
   onApplicationBootstrap() {
     this.setupSpotifyCrawler();

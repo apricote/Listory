@@ -3,15 +3,13 @@ import {
   Catch,
   ExceptionFilter,
   ForbiddenException,
+  Logger,
 } from "@nestjs/common";
 import type { Response } from "express";
-import { Logger } from "../logger/logger.service";
 
 @Catch()
 export class SpotifyAuthFilter implements ExceptionFilter {
-  constructor(private readonly logger: Logger) {
-    this.logger.setContext(this.constructor.name);
-  }
+  private readonly logger = new Logger(this.constructor.name);
 
   catch(exception: Error, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse<Response>();

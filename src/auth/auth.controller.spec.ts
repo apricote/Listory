@@ -1,6 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import type { Response } from "express";
-import { Logger } from "../logger/logger.service";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
 import { AuthController } from "./auth.controller";
@@ -14,10 +13,7 @@ describe("AuthController", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [
-        { provide: AuthService, useFactory: () => ({}) },
-        { provide: Logger, useClass: Logger },
-      ],
+      providers: [{ provide: AuthService, useFactory: () => ({}) }],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

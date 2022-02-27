@@ -1,11 +1,31 @@
+import { otelSDK } from "./open-telemetry/sdk"; // needs to be loaded first - always -
 import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { context, trace } from "@opentelemetry/api";
 import * as Sentry from "@sentry/node";
 import { RavenInterceptor } from "nest-raven";
+import Pino from "pino";
 import { AppModule } from "./app.module";
+import { Logger } from "nestjs-pino";
+
+const logger = Pino({
+  formatters: {
+    log(object) {
+      const span = trace.getSpan(context.active());
+      if (!span) return { ...object };
+      const { spanId, traceId } = trace
+        .getSpan(context.active())
+        ?.spanContext();
+      return { ...object, spanId, traceId };
+    },
+  },
+});
+
+// @ts-expect-error
+logger.log = logger.info;
 
 function setupSentry(
   app: NestExpressApplication,
@@ -23,7 +43,12 @@ function setupSentry(
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  await otelSDK.start();
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
+  app.useLogger(app.get(Logger));
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
