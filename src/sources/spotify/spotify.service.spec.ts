@@ -1,6 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ListensService } from "../../listens/listens.service";
-import { Logger } from "../../logger/logger.service";
 import { MusicLibraryService } from "../../music-library/music-library.service";
 import { UsersService } from "../../users/users.service";
 import { SpotifyApiService } from "./spotify-api/spotify-api.service";
@@ -14,7 +13,6 @@ describe("SpotifyService", () => {
   let musicLibraryService: MusicLibraryService;
   let spotifyApi: SpotifyApiService;
   let spotifyAuth: SpotifyAuthService;
-  let logger: Logger;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,7 +23,6 @@ describe("SpotifyService", () => {
         { provide: MusicLibraryService, useFactory: () => ({}) },
         { provide: SpotifyApiService, useFactory: () => ({}) },
         { provide: SpotifyAuthService, useFactory: () => ({}) },
-        { provide: Logger, useValue: new Logger() },
       ],
     }).compile();
 
@@ -35,7 +32,6 @@ describe("SpotifyService", () => {
     musicLibraryService = module.get<MusicLibraryService>(MusicLibraryService);
     spotifyApi = module.get<SpotifyApiService>(SpotifyApiService);
     spotifyAuth = module.get<SpotifyAuthService>(SpotifyAuthService);
-    logger = module.get<Logger>(Logger);
   });
 
   it("should be defined", () => {
@@ -45,6 +41,5 @@ describe("SpotifyService", () => {
     expect(musicLibraryService).toBeDefined();
     expect(spotifyApi).toBeDefined();
     expect(spotifyAuth).toBeDefined();
-    expect(logger).toBeDefined();
   });
 });

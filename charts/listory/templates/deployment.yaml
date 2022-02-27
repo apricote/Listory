@@ -63,32 +63,30 @@ spec:
               value: {{ .Values.sentry.dsn }}
             {{- end }}
 
-            {{- if .Values.prometheus.enabled }}
-            - name: PROMETHEUS_ENABLED
+            {{- if .Values.opentelemetry.metrics.enabled }}
+            - name: OTEL_METRICS_ENABLED
               value: "true"
-
-            {{- if .Values.prometheus.basicAuth.enabled }}
-            - name: PROMETHEUS_BASIC_AUTH
-              value: "true"
-            - name: PROMETHEUS_BASIC_AUTH_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "listory.fullname" . }}
-                  key: prometheus-basic-auth-username
-            - name: PROMETHEUS_BASIC_AUTH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "listory.fullname" . }}
-                  key: prometheus-basic-auth-password
-            {{- end }}
+            - name: OTEL_EXPORTER_PROMETHEUS_PORT
+              value: "{{ .Values.opentelemetry.metrics.port }}"
             {{- end }}
 
+            {{- if .Values.opentelemetry.traces.enabled }}
+            - name: OTEL_TRACES_ENABLED
+              value: "true"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "{{ .Values.opentelemetry.traces.otlpEndpoint }}"
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
             - name: http
               containerPort: 3000
               protocol: TCP
+            {{- if .Values.opentelemetry.metrics.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.opentelemetry.metrics.port }}
+              protocol: TCP
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /api/v1/health

@@ -11,5 +11,11 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.opentelemetry.metrics.enabled }}
+    - port: {{ .Values.opentelemetry.metrics.port }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+    {{- end }}
   selector:
     {{- include "listory.selectorLabels" . | nindent 4 }}
