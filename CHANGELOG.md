@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/apricote/Listory/compare/v1.14.1...v1.14.2) (2022-06-11)
+
+
+### Bug Fixes
+
+* **health:** send healthcheck result to sentry to improve debugging ([dbf4374](https://github.com/apricote/Listory/commit/dbf4374aeba767ba6221ad2787922c905a35e989))
+
 ## [1.14.1](https://github.com/apricote/Listory/compare/v1.14.0...v1.14.1) (2021-11-21)
 
 
