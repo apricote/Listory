@@ -1,3 +1,16 @@
+## [1.15.1](https://github.com/apricote/Listory/compare/v1.15.0...v1.15.1) (2022-06-11)
+
+
+### Bug Fixes
+
+* **api:** broken tests after linting fix ([a2ea89f](https://github.com/apricote/Listory/commit/a2ea89ff96a595680fdc46cb01de8e10e4bbd526))
+
+
+### Reverts
+
+* Revert "chore(deps): update dependency @types/node to v16" ([e2169c9](https://github.com/apricote/Listory/commit/e2169c9c18210fd0e74359ab016792f7c209fa1b))
+* Revert "chore(deps): update nest monorepo" ([9260078](https://github.com/apricote/Listory/commit/92600782f6c0af0dff8850900cc74a3dc7c9627a))
+
 # [1.15.0](https://github.com/apricote/Listory/compare/v1.14.2...v1.15.0) (2022-06-11)
 
 
