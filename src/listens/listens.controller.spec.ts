@@ -41,7 +41,7 @@ describe("Listens Controller", () => {
 
     it("returns the listens", async () => {
       await expect(
-        controller.getRecentlyPlayed(1, 10, filter, user)
+        controller.getRecentlyPlayed(filter, user, 1, 10)
       ).resolves.toEqual(listens);
 
       expect(listensService.getListens).toHaveBeenCalledTimes(1);
@@ -54,7 +54,7 @@ describe("Listens Controller", () => {
     });
 
     it("clamps the limit to 100", async () => {
-      await controller.getRecentlyPlayed(1, 1000, filter, user);
+      await controller.getRecentlyPlayed(filter, user, 1, 1000);
 
       expect(listensService.getListens).toHaveBeenCalledWith(
         expect.objectContaining({ limit: 100 })
