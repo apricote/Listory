@@ -27,11 +27,6 @@ export class HealthCheckController {
           "spotify-web",
           this.config.get<string>("SPOTIFY_WEB_API_URL")
         ),
-      () =>
-        this.http.pingCheck(
-          "spotify-auth",
-          this.config.get<string>("SPOTIFY_AUTH_API_URL")
-        ),
       () => this.typeorm.pingCheck("db"),
     ]);
 
