@@ -1,12 +1,13 @@
 import { Controller, Get } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import {
-  HttpHealthIndicator,
   HealthCheck,
   HealthCheckResult,
   HealthCheckService,
+  HttpHealthIndicator,
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
+import { configureScope, Scope } from "@sentry/node";
 
 @Controller("api/v1/health")
 export class HealthCheckController {
@@ -19,8 +20,8 @@ export class HealthCheckController {
 
   @Get()
   @HealthCheck()
-  check(): Promise<HealthCheckResult> {
-    return this.health.check([
+  async check(): Promise<HealthCheckResult> {
+    const health = await this.health.check([
       () =>
         this.http.pingCheck(
           "spotify-web",
@@ -33,5 +34,11 @@ export class HealthCheckController {
         ),
       () => this.typeorm.pingCheck("db"),
     ]);
+
+    configureScope((scope: Scope) => {
+      scope.setExtra("health", health);
+    });
+
+    return health;
   }
 }
