@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 16
 
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run build
       - run: npm run lint:api
       - run: npm run test:cov
@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: 16
 
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
 
       - run: npm ci
         working-directory: frontend
