@@ -14,10 +14,10 @@ export class ListensController {
   @Get()
   @AuthAccessToken()
   async getRecentlyPlayed(
-    @Query("page") page: number = 1,
-    @Query("limit") limit: number = 10,
     @Query("filter") filter: GetListensFilterDto,
-    @ReqUser() user: User
+    @ReqUser() user: User,
+    @Query("page") page: number = 1,
+    @Query("limit") limit: number = 10
   ): Promise<Pagination<Listen>> {
     const clampedLimit = limit > 100 ? 100 : limit;
 
