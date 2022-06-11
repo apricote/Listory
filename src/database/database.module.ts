@@ -20,6 +20,11 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     migrationsRun: true,
     migrations: [join(__dirname, "migrations", "*.{ts,js}")],
 
+    // PG Driver Options
+    extra: {
+      max: config.get<number>("DB_POOL_MAX"),
+    },
+
     // Debug/Development Options
     //
     // logging: true,

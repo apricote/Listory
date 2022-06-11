@@ -37,6 +37,8 @@ spec:
                   key: postgres-password
             - name: DB_DATABASE
               value: {{ .Values.externalDatabase.database }}
+            - name: DB_POOL_MAX
+              value: "{{ .Values.database.poolMax }}"
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:

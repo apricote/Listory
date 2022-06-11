@@ -36,6 +36,7 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
+        DB_POOL_MAX: Joi.number().default(50),
 
         // Sentry (Optional)
         SENTRY_ENABLED: Joi.boolean().default(false),

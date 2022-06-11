@@ -41,6 +41,7 @@ All configuration must be set as environment variables. Default values are added
 - `DB_USERNAME`: _Required_, Database username
 - `DB_PASSWORD`: _Required_, Database password
 - `DB_DATABASE`: _Required_, Database database
+- `DB_POOL_MAX`: **50**, max concurrent database connections
 
 #### Sentry
 

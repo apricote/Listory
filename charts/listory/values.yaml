@@ -75,6 +75,9 @@ externalDatabase:
   password:
   database:
 
+database:
+  poolMax: 50
+
 spotify:
   clientId:
   clientSecret:
