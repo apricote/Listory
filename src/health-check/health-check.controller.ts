@@ -36,7 +36,11 @@ export class HealthCheckController {
     ]);
 
     configureScope((scope: Scope) => {
-      scope.setExtra("health", health);
+      scope.setContext("health", {
+        status: health.status,
+        info: health.info,
+        error: health.error,
+      });
     });
 
     return health;
