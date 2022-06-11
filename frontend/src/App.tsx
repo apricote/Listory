@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { LoginFailure } from "./components/LoginFailure";
 import { LoginSuccess } from "./components/LoginSuccess";
@@ -26,21 +26,17 @@ export function App() {
         <NavBar />
       </header>
       <main className="mb-auto" /* mb-auto is for sticky footer */>
-        <Switch>
-          <Route path="/" exact />
-          <Route path="/login/success" exact component={LoginSuccess} />
-          <Route path="/login/failure" exact component={LoginFailure} />
-          <Route path="/listens" exact component={RecentListens} />
-          <Route path="/reports/listens" exact component={ReportListens} />
-          <Route
-            path="/reports/top-artists"
-            exact
-            component={ReportTopArtists}
-          />
-          <Route path="/reports/top-albums" exact component={ReportTopAlbums} />
-          <Route path="/reports/top-tracks" exact component={ReportTopTracks} />
-          <Route path="/reports/top-genres" exact component={ReportTopGenres} />
-        </Switch>
+        <Routes>
+          <Route path="/" />
+          <Route path="/login/success" element={<LoginSuccess />} />
+          <Route path="/login/failure" element={<LoginFailure />} />
+          <Route path="/listens" element={<RecentListens />} />
+          <Route path="/reports/listens" element={<ReportListens />} />
+          <Route path="/reports/top-artists" element={<ReportTopArtists />} />
+          <Route path="/reports/top-albums" element={<ReportTopAlbums />} />
+          <Route path="/reports/top-tracks" element={<ReportTopTracks />} />
+          <Route path="/reports/top-genres" element={<ReportTopGenres />} />
+        </Routes>
       </main>
       <footer>
         <Footer />

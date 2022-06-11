@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { Track } from "../api/entities/track";
@@ -30,7 +30,7 @@ export const ReportTopTracks: React.FC = () => {
   const reportHasItems = !isLoading && topTracks.length !== 0;
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   const maxCount = getMaxCount(topTracks);

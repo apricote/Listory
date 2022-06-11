@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Album } from "../api/entities/album";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
@@ -31,7 +31,7 @@ export const ReportTopAlbums: React.FC = () => {
   const maxCount = getMaxCount(topAlbums);
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   return (

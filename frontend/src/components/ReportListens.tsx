@@ -1,6 +1,6 @@
 import { format, getTime } from "date-fns";
 import React, { useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
   Area,
   AreaChart,
@@ -22,8 +22,9 @@ import { ReportTimeOptions } from "./ReportTimeOptions";
 export const ReportListens: React.FC = () => {
   const { user } = useAuth();
 
-  const [timeFrame, setTimeFrame] =
-    useState<"day" | "week" | "month" | "year">("day");
+  const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
+    "day"
+  );
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_7_DAYS,
@@ -41,7 +42,7 @@ export const ReportListens: React.FC = () => {
   const reportHasItems = !isLoading && report.length !== 0;
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   return (

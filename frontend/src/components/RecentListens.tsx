@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from "date-fns";
 import React, { useEffect, useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Listen } from "../api/entities/listen";
 import { useRecentListens } from "../hooks/use-api";
 import { useAuth } from "../hooks/use-auth";
@@ -27,7 +27,7 @@ export const RecentListens: React.FC = () => {
   }, [totalPages, paginationMeta]);
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   return (

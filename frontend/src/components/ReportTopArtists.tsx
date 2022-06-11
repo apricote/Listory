@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { useTopArtists } from "../hooks/use-api";
@@ -30,7 +30,7 @@ export const ReportTopArtists: React.FC = () => {
   const maxCount = getMaxCount(topArtists);
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   return (

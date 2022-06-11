@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Artist } from "../api/entities/artist";
 import { Genre } from "../api/entities/genre";
 import { TimeOptions } from "../api/entities/time-options";
@@ -33,7 +33,7 @@ export const ReportTopGenres: React.FC = () => {
   const reportHasItems = !isLoading && topGenres.length !== 0;
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   const maxCount = getMaxCount(topGenres);
