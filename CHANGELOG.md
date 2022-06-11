@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/apricote/Listory/compare/v1.14.2...v1.15.0) (2022-06-11)
+
+
+### Bug Fixes
+
+* **ci:** ignore failing peer resolution ([5409b98](https://github.com/apricote/Listory/commit/5409b98da1018f08e8a1196e2203dd86079982f7))
+* **health:** remove faulty health check to spotify-auth ([7de5e14](https://github.com/apricote/Listory/commit/7de5e14d4ecb8000481d98f8a4b0f2ee03e39a5b))
+* **health:** use not-deprecated sentry context ([f06b93e](https://github.com/apricote/Listory/commit/f06b93efbecfb29d36012c5694f23fc8ae53f22e))
+
+
+### Features
+
+* **api:** configurable max pool connections ([ee5bd41](https://github.com/apricote/Listory/commit/ee5bd41a372d32fb0fa53a394ad7343123aec382))
+
 ## [1.14.2](https://github.com/apricote/Listory/compare/v1.14.1...v1.14.2) (2022-06-11)
 
 
