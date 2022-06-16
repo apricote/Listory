@@ -22,7 +22,7 @@ COPY frontend/*.json /app/frontend/
 FROM common as build-api
 LABEL stage="build-api"
 
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 
 COPY src/ /app/src/
 RUN NODE_ENV=production npm run build
@@ -52,7 +52,7 @@ RUN NODE_ENV=production npm run build
 FROM common as app
 LABEL stage="app"
 
-RUN npm ci --omit=dev --legacy-peer-deps
+RUN npm ci --omit=dev
 COPY --from=build-api /app/dist/ /app/dist/
 COPY --from=build-frontend /app/frontend/build /app/static/
 
