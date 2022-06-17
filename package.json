@@ -57,7 +57,7 @@
     "typeorm": "0.2.41"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.1.4",
+    "@nestjs/cli": "8.1.7",
     "@nestjs/schematics": "8.0.5",
     "@nestjs/testing": "8.1.2",
     "@types/cookie-parser": "1.4.2",
