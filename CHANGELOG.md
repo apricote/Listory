@@ -1,3 +1,16 @@
+# [1.16.0](https://github.com/apricote/Listory/compare/v1.15.1...v1.16.0) (2022-06-18)
+
+
+### Bug Fixes
+
+* **ci:** respect peer deps again ([9b7a01a](https://github.com/apricote/Listory/commit/9b7a01ab1cd9178b3ea9cb443003313ace5e7ec9))
+
+
+### Features
+
+* **observability:** add local grafana+prom stack for metrics insights ([d0a9b0a](https://github.com/apricote/Listory/commit/d0a9b0a07c3ceb49b879b87e98266bd43c9a46c6))
+* **observability:** Replace Prometheus package with OpenTelemetry ([6b1640b](https://github.com/apricote/Listory/commit/6b1640b75349bd82650a045c9e05f34769692f85))
+
 ## [1.15.1](https://github.com/apricote/Listory/compare/v1.15.0...v1.15.1) (2022-06-11)
 
 
