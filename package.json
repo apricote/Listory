@@ -81,7 +81,7 @@
     "@nestjs/testing": "8.4.7",
     "@types/cookie-parser": "1.4.3",
     "@types/express": "4.17.13",
-    "@types/hapi__joi": "17.1.7",
+    "@types/hapi__joi": "17.1.8",
     "@types/jest": "27.0.3",
     "@types/long": "4.0.2",
     "@types/node": "15.6.0",
