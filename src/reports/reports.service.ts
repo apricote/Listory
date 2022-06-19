@@ -10,6 +10,7 @@ import {
   isSameMonth,
   isSameWeek,
   isSameYear,
+  min,
   parseJSON,
   startOfDay,
   sub,
@@ -77,6 +78,16 @@ export class ReportsService {
     const interval = this.getIntervalFromPreset(timePreset);
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
 
+    // Optimize performance for ALL_TIME by skipping eachOfInterval for time
+    // between 1970 and first listen
+    if (timePreset.timePreset === TimePreset.ALL_TIME) {
+      let firstListen = min(listens.map(({ playedAt }) => playedAt));
+      interval.start = startOfDay(firstListen);
+    }
+
+    // TODO: This code blocks the eventloop for multiple seconds if running for
+    //       a large interval and with many listens. Refactor to make this more
+    //       efficient or make pauses for event loop.
     const reportItems = eachOfInterval(interval).map((date) => {
       const count = listens.filter((listen) =>
         isSame(date, listen.playedAt)
