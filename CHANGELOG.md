@@ -1,3 +1,11 @@
+## [1.16.3](https://github.com/apricote/Listory/compare/v1.16.2...v1.16.3) (2022-06-19)
+
+
+### Bug Fixes
+
+* **api:** improve performance of all time listens report ([99a4593](https://github.com/apricote/Listory/commit/99a4593774b648ac3b76389c51523ceadf0898aa))
+* **api:** missing await ([fd3fc6b](https://github.com/apricote/Listory/commit/fd3fc6b159343a7a8ec1d832786efe3a980a01eb))
+
 ## [1.16.2](https://github.com/apricote/Listory/compare/v1.16.1...v1.16.2) (2022-06-19)
 
 
