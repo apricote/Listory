@@ -312,7 +312,7 @@ export class SpotifyService {
       spotifyArtist.genres.map((genreName) => this.importGenre(genreName))
     );
 
-    this.musicLibraryService.updateArtist({
+    await this.musicLibraryService.updateArtist({
       artist,
       updatedFields: {
         name: spotifyArtist.name,
