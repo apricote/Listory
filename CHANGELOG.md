@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/apricote/Listory/compare/v1.16.1...v1.16.2) (2022-06-19)
+
+
+### Bug Fixes
+
+* **chart:** add support for Ingress v1 ([b2d704b](https://github.com/apricote/Listory/commit/b2d704bb3ec5c767c4b8c9f63c17b8f8685ba280))
+
 ## [1.16.1](https://github.com/apricote/Listory/compare/v1.16.0...v1.16.1) (2022-06-19)
 
 
