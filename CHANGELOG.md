@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/apricote/Listory/compare/v1.16.0...v1.16.1) (2022-06-19)
+
+
+### Bug Fixes
+
+* **chart:** template references removed value ([99068c0](https://github.com/apricote/Listory/commit/99068c09bcee7f6084ba9769f2f2d1be7fc6c8ce))
+
 # [1.16.0](https://github.com/apricote/Listory/compare/v1.15.1...v1.16.0) (2022-06-18)
 
 
