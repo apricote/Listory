@@ -63,7 +63,7 @@
     "nestjs-otel": "3.0.4",
     "nestjs-pino": "2.6.0",
     "nestjs-typeorm-paginate": "2.6.3",
-    "passport": "0.5.0",
+    "passport": "0.6.0",
     "passport-jwt": "4.0.0",
     "passport-spotify": "2.0.0",
     "pg": "8.7.3",
