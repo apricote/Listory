@@ -58,7 +58,7 @@
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
     "cookie-parser": "1.4.6",
-    "date-fns": "2.27.0",
+    "date-fns": "2.28.0",
     "nest-raven": "8.1.0",
     "nestjs-otel": "3.0.4",
     "nestjs-pino": "2.6.0",
