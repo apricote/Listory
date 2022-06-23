@@ -10,15 +10,14 @@ import { RavenInterceptor } from "nest-raven";
 import Pino from "pino";
 import { AppModule } from "./app.module";
 import { Logger } from "nestjs-pino";
+import { Scope } from "@sentry/node";
 
 const logger = Pino({
   formatters: {
     log(object) {
       const span = trace.getSpan(context.active());
       if (!span) return { ...object };
-      const { spanId, traceId } = trace
-        .getSpan(context.active())
-        ?.spanContext();
+      const { spanId, traceId } = span.spanContext();
       return { ...object, spanId, traceId };
     },
   },
@@ -39,7 +38,19 @@ function setupSentry(
     ],
   });
 
-  app.useGlobalInterceptors(new RavenInterceptor());
+  app.useGlobalInterceptors(
+    new RavenInterceptor({
+      transformers: [
+        (scope: Scope) => {
+          const span = trace.getSpan(context.active());
+          if (span) {
+            const { spanId, traceId } = span.spanContext();
+            scope.setContext("trace", { span_id: spanId, trace_id: traceId });
+          }
+        },
+      ],
+    })
+  );
 }
 
 async function bootstrap() {
