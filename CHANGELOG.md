@@ -1,3 +1,10 @@
+## [1.16.4](https://github.com/apricote/Listory/compare/v1.16.3...v1.16.4) (2022-06-23)
+
+
+### Bug Fixes
+
+* **api:** send trace context to sentry ([8d9e990](https://github.com/apricote/Listory/commit/8d9e99039c40d8b447315701f4d04a229db254b2))
+
 ## [1.16.3](https://github.com/apricote/Listory/compare/v1.16.2...v1.16.3) (2022-06-19)
 
 
