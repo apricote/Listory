@@ -5,6 +5,7 @@ import { useRecentListens } from "../hooks/use-api";
 import { useAuthProtection } from "../hooks/use-auth-protection";
 import { ReloadIcon } from "../icons/Reload";
 import { getPaginationItems } from "../util/getPaginationItems";
+import { Spinner } from "./Spinner";
 
 const LISTENS_PER_PAGE = 15;
 
@@ -40,11 +41,7 @@ export const RecentListens: React.FC = () => {
           </button>
         </div>
         <div className="shadow-xl bg-gray-100 rounded p-2 m-2">
-          {isLoading && (
-            <div>
-              <span>Loading Listens</span>
-            </div>
-          )}
+          {isLoading && <Spinner className="m-8" />}
           {recentListens.length === 0 && (
             <div>
               <p>Could not find any listens!</p>

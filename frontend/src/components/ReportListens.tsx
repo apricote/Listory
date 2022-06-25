@@ -17,6 +17,7 @@ import { TimePreset } from "../api/entities/time-preset.enum";
 import { useListensReport } from "../hooks/use-api";
 import { useAuthProtection } from "../hooks/use-auth-protection";
 import { ReportTimeOptions } from "./ReportTimeOptions";
+import { Spinner } from "./Spinner";
 
 export const ReportListens: React.FC = () => {
   const { requireUser } = useAuthProtection();
@@ -71,11 +72,7 @@ export const ReportListens: React.FC = () => {
               setTimeOptions={setTimeOptions}
             />
           </div>
-          {isLoading && (
-            <div>
-              <div className="loader rounded-full border-8 h-64 w-64"></div>
-            </div>
-          )}
+          {isLoading && <Spinner className="m-8" />}
           {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>

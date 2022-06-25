@@ -5,6 +5,7 @@ import { useTopArtists } from "../hooks/use-api";
 import { useAuthProtection } from "../hooks/use-auth-protection";
 import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
+import { Spinner } from "./Spinner";
 import { TopListItem } from "./TopListItem";
 
 export const ReportTopArtists: React.FC = () => {
@@ -41,11 +42,8 @@ export const ReportTopArtists: React.FC = () => {
             timeOptions={timeOptions}
             setTimeOptions={setTimeOptions}
           />
-          {isLoading && (
-            <div>
-              <div className="loader rounded-full border-8 h-64 w-64"></div>
-            </div>
-          )}
+          {isLoading && <Spinner className="m-8" />}
+
           {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>
