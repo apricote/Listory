@@ -59,6 +59,7 @@ export const ReportTopGenres: React.FC = () => {
           {reportHasItems &&
             topGenres.map(({ genre, artists, count }) => (
               <ReportItem
+                key={genre.id}
                 genre={genre}
                 count={count}
                 artists={artists}
@@ -79,14 +80,13 @@ const ReportItem: React.FC<{
 }> = ({ genre, artists, count, maxCount }) => {
   const artistList = artists
     .map(({ artist, count: artistCount }) => (
-      <ArtistItem artist={artist} count={artistCount} />
+      <ArtistItem key={artist.id} artist={artist} count={artistCount} />
     ))
     // @ts-expect-error
     .reduce((acc, curr) => (acc === null ? [curr] : [acc, ", ", curr]), null);
 
   return (
     <TopListItem
-      key={genre.id}
       title={capitalizeString(genre.name)}
       subTitle={artistList}
       count={count}

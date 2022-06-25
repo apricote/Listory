@@ -1,7 +1,6 @@
 import React from "react";
 
 export interface TopListItemProps {
-  key: string;
   title: string;
   subTitle?: string | React.ReactNode;
   count: number;
@@ -13,17 +12,13 @@ export interface TopListItemProps {
 }
 
 export const TopListItem: React.FC<TopListItemProps> = ({
-  key,
   title,
   subTitle,
   count,
   maxCount,
 }) => {
   return (
-    <div
-      key={key}
-      className="group hover:bg-gray-200 bg-gray-100 border-b border-gray-200 md:justify-around text-gray-700 md:px-2"
-    >
+    <div className="group hover:bg-gray-200 bg-gray-100 border-b border-gray-200 md:justify-around text-gray-700 md:px-2">
       <div className="flex pt-2">
         <div className="md:flex w-11/12">
           <div className={`${subTitle ? "md:w-1/2" : "md:w-full"} font-bold`}>

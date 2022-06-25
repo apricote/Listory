@@ -55,7 +55,12 @@ export const ReportTopTracks: React.FC = () => {
           )}
           {reportHasItems &&
             topTracks.map(({ track, count }) => (
-              <ReportItem track={track} count={count} maxCount={maxCount} />
+              <ReportItem
+                key={track.id}
+                track={track}
+                count={count}
+                maxCount={maxCount}
+              />
             ))}
         </div>
       </div>
@@ -72,7 +77,6 @@ const ReportItem: React.FC<{
 
   return (
     <TopListItem
-      key={track.id}
       title={track.name}
       subTitle={artists}
       count={count}
