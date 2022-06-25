@@ -1,3 +1,20 @@
+# [1.17.0](https://github.com/apricote/Listory/compare/v1.16.4...v1.17.0) (2022-06-25)
+
+
+### Bug Fixes
+
+* **api:** some listens pages are not full ([be38c38](https://github.com/apricote/Listory/commit/be38c383ef3ea556bcb8b3136c15a75480328665))
+* **frontend:** invalid react list keys ([fa2d1f4](https://github.com/apricote/Listory/commit/fa2d1f426f2c522187e7ce84812535a6a72bdefd))
+* **frontend:** show empty report only when not loading ([79b375c](https://github.com/apricote/Listory/commit/79b375ca08ff80fbcab9bb9eff65568abfecfa2c))
+* **frontend:** use sensible default values for custom time selector ([4758338](https://github.com/apricote/Listory/commit/4758338e99d204593bb61719637eef5509a12eee))
+
+
+### Features
+
+* **frontend:** nice login loading screen ([a443b3d](https://github.com/apricote/Listory/commit/a443b3ddbc82dd63c05edc0b08b82082f82d1d76))
+* **frontend:** use nice looking spinner ([01ed0c5](https://github.com/apricote/Listory/commit/01ed0c54912fd6a801f6e11a802c95d4e2692c4a))
+* **frontend:** use transition for showing new data ([0c4de5d](https://github.com/apricote/Listory/commit/0c4de5d56a3ae89196fc27893470822cc60f9d42))
+
 ## [1.16.4](https://github.com/apricote/Listory/compare/v1.16.3...v1.16.4) (2022-06-23)
 
 
