@@ -8,5 +8,11 @@
     ":automergeLinters",
     ":automergeTesters",
     ":automergeTypes"
+  ],
+  "packageRules": [
+    {
+      "groupName": "pino",
+      "matchPackageNames": ["pino", "pino-http", "pino-pretty", "nestjs-pino"]
+    }
   ]
 }
