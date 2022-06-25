@@ -1,16 +1,15 @@
 import { format, formatDistanceToNow } from "date-fns";
 import React, { useEffect, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { Listen } from "../api/entities/listen";
 import { useRecentListens } from "../hooks/use-api";
-import { useAuth } from "../hooks/use-auth";
+import { useAuthProtection } from "../hooks/use-auth-protection";
 import { ReloadIcon } from "../icons/Reload";
 import { getPaginationItems } from "../util/getPaginationItems";
 
 const LISTENS_PER_PAGE = 15;
 
 export const RecentListens: React.FC = () => {
-  const { user } = useAuth();
+  const { requireUser } = useAuthProtection();
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -26,9 +25,7 @@ export const RecentListens: React.FC = () => {
     }
   }, [totalPages, paginationMeta]);
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  requireUser();
 
   return (
     <div className="md:flex md:justify-center p-4">

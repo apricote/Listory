@@ -1,19 +1,18 @@
 import React, { useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { Artist } from "../api/entities/artist";
 import { Genre } from "../api/entities/genre";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { TopArtistsItem } from "../api/entities/top-artists-item";
 import { useTopGenres } from "../hooks/use-api";
-import { useAuth } from "../hooks/use-auth";
+import { useAuthProtection } from "../hooks/use-auth-protection";
 import { capitalizeString } from "../util/capitalizeString";
 import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
 export const ReportTopGenres: React.FC = () => {
-  const { user } = useAuth();
+  const { requireUser } = useAuthProtection();
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_90_DAYS,
@@ -32,9 +31,7 @@ export const ReportTopGenres: React.FC = () => {
 
   const reportHasItems = !isLoading && topGenres.length !== 0;
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  requireUser();
 
   const maxCount = getMaxCount(topGenres);
 

@@ -1,16 +1,15 @@
 import React, { useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { Album } from "../api/entities/album";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { useTopAlbums } from "../hooks/use-api";
-import { useAuth } from "../hooks/use-auth";
+import { useAuthProtection } from "../hooks/use-auth-protection";
 import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
 export const ReportTopAlbums: React.FC = () => {
-  const { user } = useAuth();
+  const { requireUser } = useAuthProtection();
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_90_DAYS,
@@ -30,9 +29,7 @@ export const ReportTopAlbums: React.FC = () => {
   const reportHasItems = !isLoading && topAlbums.length !== 0;
   const maxCount = getMaxCount(topAlbums);
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  requireUser();
 
   return (
     <div className="md:flex md:justify-center p-4">

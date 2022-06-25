@@ -1,16 +1,15 @@
 import React, { useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { Track } from "../api/entities/track";
 import { useTopTracks } from "../hooks/use-api";
-import { useAuth } from "../hooks/use-auth";
+import { useAuthProtection } from "../hooks/use-auth-protection";
 import { getMaxCount } from "../util/getMaxCount";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 import { TopListItem } from "./TopListItem";
 
 export const ReportTopTracks: React.FC = () => {
-  const { user } = useAuth();
+  const { requireUser } = useAuthProtection();
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_90_DAYS,
@@ -29,9 +28,7 @@ export const ReportTopTracks: React.FC = () => {
 
   const reportHasItems = !isLoading && topTracks.length !== 0;
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  requireUser();
 
   const maxCount = getMaxCount(topTracks);
 

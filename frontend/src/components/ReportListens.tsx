@@ -1,6 +1,5 @@
 import { format, getTime } from "date-fns";
 import React, { useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
 import {
   Area,
   AreaChart,
@@ -16,11 +15,11 @@ import { ListenReportOptions } from "../api/entities/listen-report-options";
 import { TimeOptions } from "../api/entities/time-options";
 import { TimePreset } from "../api/entities/time-preset.enum";
 import { useListensReport } from "../hooks/use-api";
-import { useAuth } from "../hooks/use-auth";
+import { useAuthProtection } from "../hooks/use-auth-protection";
 import { ReportTimeOptions } from "./ReportTimeOptions";
 
 export const ReportListens: React.FC = () => {
-  const { user } = useAuth();
+  const { requireUser } = useAuthProtection();
 
   const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
     "day"
@@ -41,9 +40,7 @@ export const ReportListens: React.FC = () => {
 
   const reportHasItems = !isLoading && report.length !== 0;
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  requireUser();
 
   return (
     <div className="md:flex md:justify-center p-4">
