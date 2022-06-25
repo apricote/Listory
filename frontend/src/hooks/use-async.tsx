@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 
 type UseAsync = <T>(
   asyncFunction: () => Promise<T>,
@@ -17,19 +17,23 @@ export const useAsync: UseAsync = <T extends any>(
   const [pending, setPending] = useState(false);
   const [value, setValue] = useState<T>(initialValue);
   const [error, setError] = useState(null);
+  const [, startTransition] = useTransition();
 
   // The execute function wraps asyncFunction and
   // handles setting state for pending, value, and error.
   // useCallback ensures the below useEffect is not called
   // on every render, but only if asyncFunction changes.
   const execute = useCallback(() => {
-    setPending(true);
-    setValue(initialValue);
-    setError(null);
+    startTransition(() => {
+      setPending(true);
+      setValue(initialValue);
+      setError(null);
+    });
+
     return asyncFunction()
-      .then((response) => setValue(response))
-      .catch((err) => setError(err))
-      .finally(() => setPending(false));
+      .then((response) => startTransition(() => setValue(response)))
+      .catch((err) => startTransition(() => setError(err)))
+      .finally(() => startTransition(() => setPending(false)));
   }, [asyncFunction, initialValue]);
 
   // Call execute if we want to fire it right away.
