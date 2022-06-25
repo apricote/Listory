@@ -13,6 +13,14 @@
     {
       "groupName": "pino",
       "matchPackageNames": ["pino", "pino-http", "pino-pretty", "nestjs-pino"]
+    },
+    {
+      "groupName": "typeorm",
+      "matchPackageNames": [
+        "typeorm",
+        "@nestjs/typeorm",
+        "nestjs-typeorm-paginate"
+      ]
     }
   ]
 }
