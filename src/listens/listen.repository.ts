@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
+import { Repository, SelectQueryBuilder } from "typeorm";
+import { EntityRepository } from "../database/entity-repository";
 import { Interval } from "../reports/interval";
 import { User } from "../users/user.entity";
 import {
@@ -57,13 +58,13 @@ export class ListenRepository extends Repository<Listen> {
     if (!insertedRowIdentifier) {
       // We did not insert a new listen, it already existed
       return {
-        listen: await this.findOne({ where: { user, track, playedAt } }),
+        listen: await this.findOneBy({ user, track, playedAt }),
         isDuplicate: true,
       };
     }
 
     return {
-      listen: await this.findOne(insertedRowIdentifier.id),
+      listen: await this.findOneBy({ id: insertedRowIdentifier.id }),
       isDuplicate: false,
     };
   }

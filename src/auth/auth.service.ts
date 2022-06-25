@@ -98,7 +98,7 @@ export class AuthService {
   }
 
   async findSession(id: string): Promise<AuthSession> {
-    return this.authSessionRepository.findOne(id);
+    return this.authSessionRepository.findOneBy({ id });
   }
 
   async findUser(id: string): Promise<User> {

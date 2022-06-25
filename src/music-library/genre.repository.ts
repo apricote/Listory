@@ -1,4 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { EntityRepository } from "../database/entity-repository";
 import { Genre } from "./genre.entity";
 
 @EntityRepository(Genre)

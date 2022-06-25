@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
+import { Repository, SelectQueryBuilder } from "typeorm";
+import { EntityRepository } from "../database/entity-repository";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
 

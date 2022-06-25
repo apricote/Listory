@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmRepositoryModule } from "../database/entity-repository/typeorm-repository.module";
 import { AlbumRepository } from "./album.repository";
 import { ArtistRepository } from "./artist.repository";
 import { GenreRepository } from "./genre.repository";
@@ -8,7 +8,7 @@ import { TrackRepository } from "./track.repository";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
+    TypeOrmRepositoryModule.for([
       AlbumRepository,
       ArtistRepository,
       GenreRepository,

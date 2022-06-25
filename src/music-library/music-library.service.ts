@@ -28,8 +28,8 @@ export class MusicLibraryService {
   ) {}
 
   async findArtist(query: FindArtistDto): Promise<Artist | undefined> {
-    return this.artistRepository.findOne({
-      where: { spotify: { id: query.spotify.id } },
+    return this.artistRepository.findOneBy({
+      spotify: { id: query.spotify.id },
     });
   }
 
@@ -81,8 +81,8 @@ export class MusicLibraryService {
   }
 
   async findAlbum(query: FindAlbumDto): Promise<Album | undefined> {
-    return this.albumRepository.findOne({
-      where: { spotify: { id: query.spotify.id } },
+    return this.albumRepository.findOneBy({
+      spotify: { id: query.spotify.id },
     });
   }
 
@@ -112,8 +112,8 @@ export class MusicLibraryService {
   }
 
   async findGenre(query: FindGenreDto): Promise<Genre | undefined> {
-    return this.genreRepository.findOne({
-      where: { name: query.name },
+    return this.genreRepository.findOneBy({
+      name: query.name,
     });
   }
 
@@ -141,8 +141,8 @@ export class MusicLibraryService {
   }
 
   async findTrack(query: FindTrackDto): Promise<Track | undefined> {
-    return this.trackRepository.findOne({
-      where: { spotify: { id: query.spotify.id } },
+    return this.trackRepository.findOneBy({
+      spotify: { id: query.spotify.id },
     });
   }
 

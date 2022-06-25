@@ -9,7 +9,7 @@ export class UsersService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
       throw new NotFoundException("UserNotFound");
@@ -23,8 +23,8 @@ export class UsersService {
   }
 
   async createOrUpdate(data: CreateOrUpdateDto): Promise<User> {
-    let user = await this.userRepository.findOne({
-      where: { spotify: { id: data.spotify.id } },
+    let user = await this.userRepository.findOneBy({
+      spotify: { id: data.spotify.id },
     });
 
     if (!user) {

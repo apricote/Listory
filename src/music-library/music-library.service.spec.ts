@@ -54,15 +54,15 @@ describe("MusicLibraryService", () => {
         const artist = {
           id: "ARTIST",
         };
-        artistRepository.findOne = jest.fn().mockResolvedValue(artist);
+        artistRepository.findOneBy = jest.fn().mockResolvedValue(artist);
 
         await expect(
           service.findArtist({ spotify: { id: "spotify_artist" } })
         ).resolves.toEqual(artist);
 
-        expect(artistRepository.findOne).toHaveBeenCalledTimes(1);
-        expect(artistRepository.findOne).toHaveBeenCalledWith({
-          where: { spotify: { id: "spotify_artist" } },
+        expect(artistRepository.findOneBy).toHaveBeenCalledTimes(1);
+        expect(artistRepository.findOneBy).toHaveBeenCalledWith({
+          spotify: { id: "spotify_artist" },
         });
       });
     });
@@ -195,15 +195,15 @@ describe("MusicLibraryService", () => {
         const album = {
           id: "ALBUM",
         };
-        albumRepository.findOne = jest.fn().mockResolvedValue(album);
+        albumRepository.findOneBy = jest.fn().mockResolvedValue(album);
 
         await expect(
           service.findAlbum({ spotify: { id: "spotify_album" } })
         ).resolves.toEqual(album);
 
-        expect(albumRepository.findOne).toHaveBeenCalledTimes(1);
-        expect(albumRepository.findOne).toHaveBeenCalledWith({
-          where: { spotify: { id: "spotify_album" } },
+        expect(albumRepository.findOneBy).toHaveBeenCalledTimes(1);
+        expect(albumRepository.findOneBy).toHaveBeenCalledWith({
+          spotify: { id: "spotify_album" },
         });
       });
     });
@@ -284,15 +284,15 @@ describe("MusicLibraryService", () => {
           id: "GENRE",
           name: "Foo",
         };
-        genreRepository.findOne = jest.fn().mockResolvedValue(genre);
+        genreRepository.findOneBy = jest.fn().mockResolvedValue(genre);
 
         await expect(service.findGenre({ name: "Foo" })).resolves.toEqual(
           genre
         );
 
-        expect(genreRepository.findOne).toHaveBeenCalledTimes(1);
-        expect(genreRepository.findOne).toHaveBeenCalledWith({
-          where: { name: "Foo" },
+        expect(genreRepository.findOneBy).toHaveBeenCalledTimes(1);
+        expect(genreRepository.findOneBy).toHaveBeenCalledWith({
+          name: "Foo",
         });
       });
     });
@@ -369,15 +369,15 @@ describe("MusicLibraryService", () => {
         const track = {
           id: "TRACK",
         };
-        trackRepository.findOne = jest.fn().mockResolvedValue(track);
+        trackRepository.findOneBy = jest.fn().mockResolvedValue(track);
 
         await expect(
           service.findTrack({ spotify: { id: "spotify_track" } })
         ).resolves.toEqual(track);
 
-        expect(trackRepository.findOne).toHaveBeenCalledTimes(1);
-        expect(trackRepository.findOne).toHaveBeenCalledWith({
-          where: { spotify: { id: "spotify_track" } },
+        expect(trackRepository.findOneBy).toHaveBeenCalledTimes(1);
+        expect(trackRepository.findOneBy).toHaveBeenCalledWith({
+          spotify: { id: "spotify_track" },
         });
       });
     });

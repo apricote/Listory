@@ -248,7 +248,7 @@ describe("AuthService", () => {
     beforeEach(() => {
       session = { id: "AUTH_SESSION" } as AuthSession;
 
-      authSessionRepository.findOne = jest.fn().mockResolvedValue(session);
+      authSessionRepository.findOneBy = jest.fn().mockResolvedValue(session);
     });
 
     it("returns the session", async () => {
@@ -256,10 +256,10 @@ describe("AuthService", () => {
         session
       );
 
-      expect(authSessionRepository.findOne).toHaveBeenCalledTimes(1);
-      expect(authSessionRepository.findOne).toHaveBeenLastCalledWith(
-        "AUTH_SESSION"
-      );
+      expect(authSessionRepository.findOneBy).toHaveBeenCalledTimes(1);
+      expect(authSessionRepository.findOneBy).toHaveBeenLastCalledWith({
+        id: "AUTH_SESSION",
+      });
     });
   });
 
