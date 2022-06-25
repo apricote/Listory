@@ -11,7 +11,6 @@ import { ReportTopArtists } from "./components/ReportTopArtists";
 import { ReportTopGenres } from "./components/ReportTopGenres";
 import { ReportTopTracks } from "./components/ReportTopTracks";
 import { useAuth } from "./hooks/use-auth";
-import "./tailwind/generated.css";
 
 export function App() {
   const { isLoaded } = useAuth();

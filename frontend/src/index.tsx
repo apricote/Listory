@@ -5,6 +5,7 @@ import { App } from "./App";
 import { ProvideApiClient } from "./hooks/use-api-client";
 import { ProvideAuth } from "./hooks/use-auth";
 import * as serviceWorker from "./serviceWorker";
+import "./index.css";
 
 const root = createRoot(document.getElementById("root")!);
 

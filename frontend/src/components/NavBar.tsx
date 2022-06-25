@@ -9,11 +9,11 @@ export const NavBar: React.FC = () => {
 
   return (
     <div className="flex items-center justify-between flex-wrap bg-green-500 p-6">
-      <div className="flex items-center flex-shrink-0 text-white mr-6">
+      <div className="flex items-center shrink-0 text-white mr-6">
         <span className="font-semibold text-xl tracking-tight">Listory</span>
       </div>
-      <nav className="w-full block flex-grow lg:flex lg:items-center lg:w-auto ">
-        <div className="text-sm lg:flex-grow">
+      <nav className="w-full block grow lg:flex lg:items-center lg:w-auto ">
+        <div className="text-sm lg:grow">
           {user && (
             <>
               <Link to="/">

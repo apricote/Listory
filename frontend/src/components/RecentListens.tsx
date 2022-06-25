@@ -32,11 +32,11 @@ export const RecentListens: React.FC = () => {
 
   return (
     <div className="md:flex md:justify-center p-4">
-      <div className="md:flex-shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
+      <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
         <div className="flex justify-between">
           <p className="text-2xl font-normal text-gray-700">Recent listens</p>
           <button
-            className="flex-shrink-0 mx-2 bg-transparent hover:bg-green-500 text-green-500 hover:text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
+            className="shrink-0 mx-2 bg-transparent hover:bg-green-500 text-green-500 hover:text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
             onClick={reload}
           >
             <ReloadIcon className="w-5 h-5 fill-current" />
@@ -107,7 +107,7 @@ const Pagination: React.FC<{
         ) : (
           <div
             key={i}
-            className="opacity-50 cursor-default bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-l"
+            className="cursor-default bg-gray-300/50 text-gray-700/50 font-bold py-2 px-4 rounded-l"
           >
             ...
           </div>

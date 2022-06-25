@@ -40,7 +40,7 @@ export const ReportTopGenres: React.FC = () => {
 
   return (
     <div className="md:flex md:justify-center p-4">
-      <div className="md:flex-shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
+      <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
         <div className="flex justify-between">
           <p className="text-2xl font-normal text-gray-700">Top Genres</p>
         </div>
