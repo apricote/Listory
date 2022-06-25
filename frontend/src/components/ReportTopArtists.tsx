@@ -12,7 +12,7 @@ export const ReportTopArtists: React.FC = () => {
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
     timePreset: TimePreset.LAST_90_DAYS,
-    customTimeStart: new Date(0),
+    customTimeStart: new Date("2020"),
     customTimeEnd: new Date(),
   });
 
