@@ -58,6 +58,9 @@ jobs:
 
       - run: npm run lint:frontend
 
+      - run: npm run build
+        working-directory: frontend
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
