@@ -71,7 +71,7 @@ const NavUserInfo: React.FC<{ user: User }> = ({ user }) => {
   );
 };
 
-const NavItem: React.FC = ({ children }) => {
+const NavItem: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <span className="block mt-4 lg:inline-block lg:mt-0 text-green-200 hover:text-white mr-4">
       {children}

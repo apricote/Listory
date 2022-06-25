@@ -16,7 +16,9 @@ const apiClientContext = createContext<ApiClientContext>(
   undefined as any as ApiClientContext
 );
 
-export const ProvideApiClient: React.FC = ({ children }) => {
+export const ProvideApiClient: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const auth = useProvideApiClient();
 
   return (

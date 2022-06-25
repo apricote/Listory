@@ -19,7 +19,9 @@ interface AuthContext {
 
 const authContext = createContext<AuthContext>(undefined as any as AuthContext);
 
-export const ProvideAuth: React.FC = ({ children }) => {
+export const ProvideAuth: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const auth = useProvideAuth();
 
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
