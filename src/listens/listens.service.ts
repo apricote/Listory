@@ -3,6 +3,7 @@ import {
   IPaginationOptions,
   paginate,
   Pagination,
+  PaginationTypeEnum,
 } from "nestjs-typeorm-paginate";
 import {
   CreateListenRequestDto,
@@ -52,6 +53,7 @@ export class ListensService {
     return paginate<Listen>(queryBuilder, {
       page,
       limit,
+      paginationType: PaginationTypeEnum.TAKE_AND_SKIP,
     });
   }
 

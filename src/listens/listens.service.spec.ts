@@ -1,5 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { IPaginationOptions, paginate } from "nestjs-typeorm-paginate";
+import {
+  IPaginationOptions,
+  paginate,
+  PaginationTypeEnum,
+} from "nestjs-typeorm-paginate";
 import { Track } from "../music-library/track.entity";
 import { User } from "../users/user.entity";
 import { CreateListenResponseDto } from "./dto/create-listen.dto";
@@ -107,6 +111,7 @@ describe("ListensService", () => {
       expect(paginate).toHaveBeenCalledWith(scopes, {
         page: options.page,
         limit: options.limit,
+        paginationType: PaginationTypeEnum.TAKE_AND_SKIP,
       });
     });
 
