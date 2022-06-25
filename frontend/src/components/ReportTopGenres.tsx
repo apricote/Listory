@@ -29,7 +29,7 @@ export const ReportTopGenres: React.FC = () => {
 
   const { topGenres, isLoading } = useTopGenres(options);
 
-  const reportHasItems = !isLoading && topGenres.length !== 0;
+  const reportHasItems = topGenres.length !== 0;
 
   requireUser();
 
@@ -51,7 +51,7 @@ export const ReportTopGenres: React.FC = () => {
               <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
-          {!reportHasItems && (
+          {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>
             </div>

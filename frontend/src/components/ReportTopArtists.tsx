@@ -25,7 +25,7 @@ export const ReportTopArtists: React.FC = () => {
 
   const { topArtists, isLoading } = useTopArtists(options);
 
-  const reportHasItems = !isLoading && topArtists.length !== 0;
+  const reportHasItems = topArtists.length !== 0;
   const maxCount = getMaxCount(topArtists);
 
   requireUser();
@@ -46,7 +46,7 @@ export const ReportTopArtists: React.FC = () => {
               <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
-          {!reportHasItems && (
+          {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>
             </div>

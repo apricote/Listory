@@ -26,7 +26,7 @@ export const ReportTopAlbums: React.FC = () => {
 
   const { topAlbums, isLoading } = useTopAlbums(options);
 
-  const reportHasItems = !isLoading && topAlbums.length !== 0;
+  const reportHasItems = topAlbums.length !== 0;
   const maxCount = getMaxCount(topAlbums);
 
   requireUser();
@@ -47,7 +47,7 @@ export const ReportTopAlbums: React.FC = () => {
               <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
-          {!reportHasItems && (
+          {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>
             </div>

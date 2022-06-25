@@ -26,7 +26,7 @@ export const ReportTopTracks: React.FC = () => {
 
   const { topTracks, isLoading } = useTopTracks(options);
 
-  const reportHasItems = !isLoading && topTracks.length !== 0;
+  const reportHasItems = topTracks.length !== 0;
 
   requireUser();
 
@@ -48,7 +48,7 @@ export const ReportTopTracks: React.FC = () => {
               <div className="loader rounded-full border-8 h-64 w-64"></div>
             </div>
           )}
-          {!reportHasItems && (
+          {!reportHasItems && !isLoading && (
             <div>
               <p>Report is emtpy! :(</p>
             </div>
