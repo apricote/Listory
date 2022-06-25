@@ -1,7 +1,7 @@
 import React from "react";
 
 const REPO_URL = "https://github.com/apricote/Listory";
-const CHANGELOG_URL = `${REPO_URL}/blob/master/CHANGELOG.md`;
+const CHANGELOG_URL = `${REPO_URL}/blob/main/CHANGELOG.md`;
 
 const VERSION = process.env.REACT_APP_VERSION || "Unknown";
 
