@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { LoginFailure } from "./components/LoginFailure";
+import { LoginLoading } from "./components/LoginLoading";
 import { LoginSuccess } from "./components/LoginSuccess";
 import { NavBar } from "./components/NavBar";
 import { RecentListens } from "./components/RecentListens";
@@ -16,7 +17,7 @@ export function App() {
   const { isLoaded } = useAuth();
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <LoginLoading />;
   }
 
   return (
