@@ -56,8 +56,6 @@ services:
       - ./frontend/tailwind.config.js:/app/frontend/tailwind.config.js:ro
       - ./frontend/src:/app/frontend/src:ro
       - ./frontend/public:/app/frontend/public:ro
-    # Workaround for https://github.com/facebook/create-react-app/issues/8688
-    stdin_open: true
     ports:
       - 3000
     labels:
