@@ -1,10 +1,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  purge: {
-    // css is purged via postcss-purgecss
-    enabled: false,
-  },
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     colors: {
       transparent: "transparent",
