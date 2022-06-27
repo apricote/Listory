@@ -1,5 +1,6 @@
 import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
+import { firstValueFrom } from "rxjs";
 import { SpotifyConnection } from "../spotify-connection.entity";
 import { AlbumObject } from "./entities/album-object";
 import { ArtistObject } from "./entities/artist-object";
@@ -18,12 +19,15 @@ export class SpotifyApiService {
       limit: 50,
     };
 
-    const history = await this.httpService
-      .get<PagingObject<PlayHistoryObject>>(`v1/me/player/recently-played`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-        params: parameters,
-      })
-      .toPromise();
+    const history = await firstValueFrom(
+      this.httpService.get<PagingObject<PlayHistoryObject>>(
+        `v1/me/player/recently-played`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          params: parameters,
+        }
+      )
+    );
 
     return history.data.items;
   }
@@ -32,31 +36,30 @@ export class SpotifyApiService {
     accessToken: string,
     spotifyID: string
   ): Promise<ArtistObject> {
-    const artist = await this.httpService
-      .get<ArtistObject>(`v1/artists/${spotifyID}`, {
+    const artist = await firstValueFrom(
+      this.httpService.get<ArtistObject>(`v1/artists/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .toPromise();
+    );
 
     return artist.data;
   }
 
   async getAlbum(accessToken: string, spotifyID: string): Promise<AlbumObject> {
-    const album = await this.httpService
-      .get<AlbumObject>(`v1/albums/${spotifyID}`, {
+    const album = await firstValueFrom(
+      this.httpService.get<AlbumObject>(`v1/albums/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .toPromise();
-
+    );
     return album.data;
   }
 
   async getTrack(accessToken: string, spotifyID: string): Promise<TrackObject> {
-    const track = await this.httpService
-      .get<TrackObject>(`v1/tracks/${spotifyID}`, {
+    const track = await firstValueFrom(
+      this.httpService.get<TrackObject>(`v1/tracks/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .toPromise();
+    );
 
     return track.data;
   }

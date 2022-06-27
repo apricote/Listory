@@ -1,6 +1,7 @@
 import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { firstValueFrom } from "rxjs";
 import { SpotifyConnection } from "../spotify-connection.entity";
 
 @Injectable()
@@ -17,8 +18,8 @@ export class SpotifyAuthService {
   }
 
   async clientCredentialsGrant(): Promise<string> {
-    const response = await this.httpService
-      .post<{ access_token: string }>(
+    const response = await firstValueFrom(
+      this.httpService.post<{ access_token: string }>(
         `api/token`,
         "grant_type=client_credentials",
         {
@@ -28,14 +29,14 @@ export class SpotifyAuthService {
           },
         }
       )
-      .toPromise();
+    );
 
     return response.data.access_token;
   }
 
   async refreshAccessToken(connection: SpotifyConnection): Promise<string> {
-    const response = await this.httpService
-      .post<any>(
+    const response = await firstValueFrom(
+      this.httpService.post<any>(
         `api/token`,
         `grant_type=refresh_token&refresh_token=${connection.refreshToken}`,
         {
@@ -45,7 +46,7 @@ export class SpotifyAuthService {
           },
         }
       )
-      .toPromise();
+    );
 
     return response.data.access_token;
   }
