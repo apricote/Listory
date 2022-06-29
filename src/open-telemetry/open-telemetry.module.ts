@@ -1,6 +1,7 @@
-import { Module, OnApplicationShutdown } from "@nestjs/common";
+import { Global, Module, OnApplicationShutdown } from "@nestjs/common";
 import { OpenTelemetryModule as UpstreamModule } from "nestjs-otel";
 import { otelSDK } from "./sdk";
+import { UrlValueParserService } from "./url-value-parser.service";
 
 @Module({
   imports: [
@@ -16,8 +17,10 @@ import { otelSDK } from "./sdk";
       },
     }),
   ],
-  exports: [UpstreamModule],
+  providers: [UrlValueParserService],
+  exports: [UpstreamModule, UrlValueParserService],
 })
+@Global()
 export class OpenTelemetryModule implements OnApplicationShutdown {
   async onApplicationShutdown(): Promise<void> {
     await otelSDK.shutdown();

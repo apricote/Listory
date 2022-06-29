@@ -1,6 +1,7 @@
 import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { MetricsInterceptor } from "./metrics.axios-interceptor";
 import { SpotifyApiService } from "./spotify-api.service";
 
 @Module({
@@ -13,7 +14,7 @@ import { SpotifyApiService } from "./spotify-api.service";
       inject: [ConfigService],
     }),
   ],
-  providers: [SpotifyApiService],
+  providers: [SpotifyApiService, MetricsInterceptor],
   exports: [SpotifyApiService],
 })
 export class SpotifyApiModule {}
