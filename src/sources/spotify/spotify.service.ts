@@ -8,6 +8,11 @@ import { MusicLibraryService } from "../../music-library/music-library.service";
 import { Track } from "../../music-library/track.entity";
 import { User } from "../../users/user.entity";
 import { UsersService } from "../../users/users.service";
+import {
+  IImportSpotifyJob,
+  ImportSpotifyJob,
+  UpdateSpotifyLibraryJob,
+} from "../jobs";
 import { AlbumObject } from "./spotify-api/entities/album-object";
 import { ArtistObject } from "./spotify-api/entities/artist-object";
 import { PlayHistoryObject } from "./spotify-api/entities/play-history-object";
@@ -31,15 +36,19 @@ export class SpotifyService {
   ) {}
 
   @Span()
-  async runCrawlerForAllUsers(): Promise<void> {
-    this.logger.debug("Starting Spotify crawler loop");
-    const users = await this.usersService.findAll();
+  async getCrawlableUserInfo(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 
-    for (const user of users) {
-      // We want to run this sequentially to avoid rate limits
-      // eslint-disable-next-line no-await-in-loop
-      await this.crawlListensForUser(user);
+  @ImportSpotifyJob.Handle()
+  async importSpotifyJobHandler({ userID }: IImportSpotifyJob): Promise<void> {
+    const user = await this.usersService.findById(userID);
+    if (!user) {
+      this.logger.warn("User for import job not found", { userID });
+      return;
     }
+
+    await this.crawlListensForUser(user);
   }
 
   @Span()
@@ -130,6 +139,7 @@ export class SpotifyService {
   }
 
   @Span()
+  @UpdateSpotifyLibraryJob.Handle()
   async runUpdaterForAllEntities(): Promise<void> {
     this.logger.debug("Starting Spotify updater loop");
 
