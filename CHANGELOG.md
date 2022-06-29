@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/apricote/Listory/compare/v1.17.0...v1.18.0) (2022-06-29)
+
+
+### Features
+
+* **api:** metrics for Spotify API http requests ([41dfae3](https://github.com/apricote/Listory/commit/41dfae3c508e71f3c74f75dceba4de6bd68b6070))
+
 # [1.17.0](https://github.com/apricote/Listory/compare/v1.16.4...v1.17.0) (2022-06-25)
 
 
