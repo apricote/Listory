@@ -1,8 +1,15 @@
 import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { SchedulerRegistry } from "@nestjs/schedule";
-import { captureException } from "@sentry/node";
 import { SpotifyService } from "./spotify/spotify.service";
+import {
+  CrawlerSupervisorJob,
+  ICrawlerSupervisorJob,
+  IImportSpotifyJob,
+  ImportSpotifyJob,
+  IUpdateSpotifyLibraryJob,
+  UpdateSpotifyLibraryJob,
+} from "./jobs";
+import { JobService } from "@apricote/nest-pg-boss";
 
 @Injectable()
 export class SchedulerService implements OnApplicationBootstrap {
@@ -10,38 +17,42 @@ export class SchedulerService implements OnApplicationBootstrap {
 
   constructor(
     private readonly config: ConfigService,
-    private readonly registry: SchedulerRegistry,
-    private readonly spotifyService: SpotifyService
+    private readonly spotifyService: SpotifyService,
+    @CrawlerSupervisorJob.Inject()
+    private readonly superviseImportJobsJobService: JobService<ICrawlerSupervisorJob>,
+    @ImportSpotifyJob.Inject()
+    private readonly importSpotifyJobService: JobService<IImportSpotifyJob>,
+    @UpdateSpotifyLibraryJob.Inject()
+    private readonly updateSpotifyLibraryJobService: JobService<IUpdateSpotifyLibraryJob>
   ) {}
 
-  onApplicationBootstrap() {
-    this.setupSpotifyCrawler();
-    this.setupSpotifyMusicLibraryUpdater();
+  async onApplicationBootstrap() {
+    await this.setupSpotifyCrawlerSupervisor();
+    await this.setupSpotifyMusicLibraryUpdater();
   }
 
-  private setupSpotifyCrawler() {
-    const callback = () =>
-      this.spotifyService.runCrawlerForAllUsers().catch((err) => {
-        captureException(err);
-        this.logger.error(`Spotify crawler loop crashed! ${err.stack}`);
-      });
-    const timeoutMs =
-      this.config.get<number>("SPOTIFY_FETCH_INTERVAL_SEC") * 1000;
-
-    const interval = setInterval(callback, timeoutMs);
-
-    this.registry.addInterval("crawler_spotify", interval);
+  private async setupSpotifyCrawlerSupervisor(): Promise<void> {
+    await this.superviseImportJobsJobService.schedule("*/1 * * * *", {}, {});
   }
 
-  private setupSpotifyMusicLibraryUpdater() {
-    const callback = () => {
-      this.spotifyService.runUpdaterForAllEntities();
-    };
-    const timeoutMs =
-      this.config.get<number>("SPOTIFY_UPDATE_INTERVAL_SEC") * 1000;
+  @CrawlerSupervisorJob.Handle()
+  async superviseImportJobs(): Promise<void> {
+    this.logger.log("Starting crawler jobs");
+    const users = await this.spotifyService.getCrawlableUserInfo();
 
-    const interval = setInterval(callback, timeoutMs);
+    await Promise.all(
+      users.map((user) =>
+        this.importSpotifyJobService.sendOnce({ userID: user.id }, {}, user.id)
+      )
+    );
+  }
 
-    this.registry.addInterval("updater_spotify", interval);
+  private async setupSpotifyMusicLibraryUpdater() {
+    await this.updateSpotifyLibraryJobService.schedule("*/1 * * * *", {}, {});
+  }
+
+  @UpdateSpotifyLibraryJob.Handle()
+  async updateSpotifyLibrary() {
+    this.spotifyService.runUpdaterForAllEntities();
   }
 }

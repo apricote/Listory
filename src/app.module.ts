@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { ScheduleModule } from "@nestjs/schedule";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { RavenModule } from "nest-raven";
 import { join } from "path";
@@ -14,13 +13,14 @@ import { ReportsModule } from "./reports/reports.module";
 import { SourcesModule } from "./sources/sources.module";
 import { UsersModule } from "./users/users.module";
 import { OpenTelemetryModule } from "./open-telemetry/open-telemetry.module";
+import { JobQueueModule } from "./job-queue/job-queue.module";
 
 @Module({
   imports: [
     LoggerModule,
     ConfigModule,
     DatabaseModule,
-    ScheduleModule.forRoot(),
+    JobQueueModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "static"),
       exclude: ["/api*"],

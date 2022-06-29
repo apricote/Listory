@@ -26,6 +26,7 @@
     "test:e2e": "jest --config ./apps/listory/test/jest-e2e.json"
   },
   "dependencies": {
+    "@apricote/nest-pg-boss": "1.0.0",
     "@hapi/joi": "17.1.1",
     "@narando/nest-axios-interceptor": "2.2.0",
     "@nestjs/axios": "0.1.0",
@@ -35,7 +36,6 @@
     "@nestjs/jwt": "10.0.2",
     "@nestjs/passport": "9.0.3",
     "@nestjs/platform-express": "9.3.9",
-    "@nestjs/schedule": "2.2.0",
     "@nestjs/serve-static": "3.0.1",
     "@nestjs/swagger": "6.2.1",
     "@nestjs/terminus": "9.2.1",
