@@ -21,6 +21,13 @@
         "@nestjs/typeorm",
         "nestjs-typeorm-paginate"
       ]
+    },
+    {
+      "groupName": "sentry",
+      "matchPackageNames": [
+        "@sentry/node",
+        "nest-raven"
+      ]
     }
   ]
 }
