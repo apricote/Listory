@@ -1,14 +1,43 @@
-<p align="center">
-  <h2 href="http://nestjs.com/" target="blank" align="center">Listory</h2>
+<p>
+  <h1 align="center">
+      Listory
+    <img src="assets/logo.svg" width="32px" align="top" />
+  </h1>
 </p>
   
 <p align="center">
-  Login with Spotify and Listory will save all tracks you listen to.
+  <h4 align="center">Login with Spotify and Listory will save all tracks you listen to.</h4>
 </p>
+
+<p align="center">
+  <img alt="Latest Release" src="https://img.shields.io/github/v/release/apricote/listory?style=flat-square" />
+  <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/apricote/listory/main?style=flat-square">
+  <img alt="Codecov" src="https://img.shields.io/codecov/c/github/apricote/listory?style=flat-square">
+  <img alt="GitHub" src="https://img.shields.io/github/license/apricote/listory?style=flat-square">
+</p>
+
+<table align="center">
+  <tr>
+      <td colspan="2" align="center">
+      <img src="docs/listens-report.png" />
+      <em>The listens report shows how many songs you have listened to during the last month (and all months prior to that).</em>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/recent-listens.png"/>
+      <em>Want to know which song you heard on your drive to work last tuesday? Now you can!</em>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/top-genres.png" />
+      <em>Find out what genres (or artists, albums, songs) you listen to the most!</em>
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
-End-user Installation of Listory is not yet fully supported and the docs in this section are not complete.
+End-user Installation of Listory is not yet fully supported and the docs in this section are not complete. Please open an issue if you want to install this yourself, and I can help you through the process.
 
 ### Configuration
 
