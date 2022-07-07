@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/apricote/Listory/compare/v1.18.0...v1.18.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* **api:** remove unwanted debug log messages ([2c8e8ef](https://github.com/apricote/Listory/commit/2c8e8ef23c45c7bdd40c66ad9d053be0257b84c4))
+
 # [1.18.0](https://github.com/apricote/Listory/compare/v1.17.0...v1.18.0) (2022-06-29)
 
 
