@@ -28,7 +28,6 @@ export class UrlValueParserService {
    */
   public replacePathValues(path: string, replacement: string = "#val"): string {
     const parseResult = this.parsePathValues(path);
-    console.log({ parseResult, path, replacement });
     return (
       "/" +
       parseResult.chunks
@@ -58,7 +57,6 @@ export class UrlValueParserService {
   private isValue(str: string): boolean {
     for (let mask of REPLACE_MASKS) {
       if (str.match(mask)) {
-        console.log("isValue", { str, mask });
         return true;
       }
     }
