@@ -30,7 +30,7 @@ services:
       - observability
 
   promtail:
-    image: grafana/promtail:2.5.0
+    image: grafana/promtail:2.6.0
     command: ["-config.file=/etc/promtail.yaml"]
     volumes:
       - ./promtail/promtail.yaml:/etc/promtail.yaml
