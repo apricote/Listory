@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/apricote/Listory/compare/v1.18.1...v1.18.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* **api:** missing OpenAPI route tags ([d6af6f9](https://github.com/apricote/Listory/commit/d6af6f9cbaa6558623a045597f80778524bc0dc7))
+
 ## [1.18.1](https://github.com/apricote/Listory/compare/v1.18.0...v1.18.1) (2022-07-07)
 
 
