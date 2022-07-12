@@ -21,7 +21,7 @@ const anyEnabled = metricsEnabled || tracesEnabled;
 let sdkOptions: Partial<NodeSDKConfiguration> = {};
 
 if (metricsEnabled) {
-  sdkOptions.metricExporter = new PrometheusExporter();
+  sdkOptions.metricReader = new PrometheusExporter();
 }
 
 if (tracesEnabled) {

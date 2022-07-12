@@ -42,7 +42,7 @@ export class MetricsInterceptor extends AxiosInterceptor<SpotifyApiMetricsConfig
       {
         description:
           "HTTP latency value recorder in seconds for requests made to Spotify API",
-        boundaries: [0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10],
+        unit: "seconds",
       }
     );
   }
