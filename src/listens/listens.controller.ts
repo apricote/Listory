@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { Pagination } from "nestjs-typeorm-paginate";
 import { AuthAccessToken } from "../auth/decorators/auth-access-token.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
@@ -7,6 +8,7 @@ import { GetListensFilterDto } from "./dto/get-listens.dto";
 import { Listen } from "./listen.entity";
 import { ListensService } from "./listens.service";
 
+@ApiTags("listens")
 @Controller("api/v1/listens")
 export class ListensController {
   constructor(private readonly listensService: ListensService) {}

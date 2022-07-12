@@ -80,9 +80,6 @@ async function bootstrap() {
     .setDescription("Track and analyze your Spotify Listens")
     .setVersion("1.0")
     .addBearerAuth()
-    .addTag("user")
-    .addTag("listens")
-    .addTag("auth")
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("api/docs", app, document);

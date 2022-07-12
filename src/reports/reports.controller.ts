@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { AuthAccessToken } from "../auth/decorators/auth-access-token.decorator";
 import { ReqUser } from "../auth/decorators/req-user.decorator";
 import { User } from "../users/user.entity";
@@ -11,6 +12,7 @@ import { TopTracksReportDto } from "./dto/top-tracks-report.dto";
 import { ReportsService } from "./reports.service";
 import { Timeframe } from "./timeframe.enum";
 
+@ApiTags("reports")
 @Controller("api/v1/reports")
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
