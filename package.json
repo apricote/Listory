@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:console": "nest start --watch --entryFile console",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/ frontend/src/",

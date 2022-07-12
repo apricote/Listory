@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.9"
 
 # Required for promtail scraping
 x-logging: &default-logging
@@ -83,6 +83,34 @@ services:
       - web
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+
+  console:
+    profiles:
+      - console
+    build:
+      context: .
+      target: build-api
+    command: ["npm", "run", "start:console"]
+    stdin_open: true
+    tty: true
+    environment:
+      DB_HOST: db
+      DB_USERNAME: listory
+      DB_PASSWORD: listory
+      DB_DATABASE: listory
+      JWT_SECRET: listory
+      APP_URL: "http://localhost:3000"
+      NODE_ENV: local # pretty logs
+
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318/v1/traces
+    env_file: .env
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "9464:9464" # Metrics
+    networks:
+      - db
+    logging: *default-logging
 
 networks:
   db: {}
