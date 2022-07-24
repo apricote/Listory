@@ -7,7 +7,7 @@ const VERSION = process.env.REACT_APP_VERSION || "Unknown";
 
 export const Footer: React.FC = () => {
   return (
-    <div className="flex items-center justify-between flex-wrap bg-green-500 p-4 text-green-200 hover:text-white text-xs">
+    <div className="flex items-center justify-between flex-wrap bg-green-500 dark:bg-gray-800 p-4 text-green-200 hover:text-white text-xs">
       <div>
         <a
           href={CHANGELOG_URL}

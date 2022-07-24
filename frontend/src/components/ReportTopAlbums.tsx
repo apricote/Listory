@@ -36,9 +36,11 @@ export const ReportTopAlbums: React.FC = () => {
     <div className="md:flex md:justify-center p-4">
       <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
         <div className="flex justify-between">
-          <p className="text-2xl font-normal text-gray-700">Top Albums</p>
+          <p className="text-2xl font-normal text-gray-700 dark:text-gray-400">
+            Top Albums
+          </p>
         </div>
-        <div className="shadow-xl bg-gray-100 rounded p-5 m-2">
+        <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-5 m-2">
           <ReportTimeOptions
             timeOptions={timeOptions}
             setTimeOptions={setTimeOptions}

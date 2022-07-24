@@ -18,7 +18,7 @@ export const TopListItem: React.FC<TopListItemProps> = ({
   maxCount,
 }) => {
   return (
-    <div className="group hover:bg-gray-200 bg-gray-100 border-b border-gray-200 md:justify-around text-gray-700 md:px-2">
+    <div className="group bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-700/25 md:justify-around text-gray-700 dark:text-gray-300 md:px-2">
       <div className="flex pt-2">
         <div className="md:flex w-11/12">
           <div className={`${subTitle ? "md:w-1/2" : "md:w-full"} font-bold`}>
@@ -29,10 +29,10 @@ export const TopListItem: React.FC<TopListItemProps> = ({
         <div className="w-1/12 self-center">{count}</div>
       </div>
       {maxCount && isMaxCountValid(maxCount) && (
-        <div className="h-1 w-full bg-gradient-to-r from-teal-200 via-green-400 to-violet-400 flex flex-row-reverse">
+        <div className="h-1 w-full bg-gradient-to-r from-teal-200/25 via-green-400 to-violet-400 dark:from-teal-700/25 dark:via-green-600/85 dark:to-amber-500 flex flex-row-reverse">
           <div
             style={{ width: numberToPercent(1 - count / maxCount) }}
-            className="h-full group-hover:bg-gray-200 bg-gray-100"
+            className="h-full group-hover:bg-gray-200 dark:group-hover:bg-gray-700 bg-gray-100 dark:bg-gray-800"
           ></div>
         </div>
       )}

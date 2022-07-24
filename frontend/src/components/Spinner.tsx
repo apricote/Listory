@@ -12,7 +12,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
   <div className={`flex justify-center ${className}`}>
     <svg
       role="status"
-      className="text-gray-300 animate-spin fill-green-500"
+      className="text-gray-300 dark:text-gray-700 animate-spin fill-green-500"
       height={size}
       width={size}
       viewBox="0 0 100 101"

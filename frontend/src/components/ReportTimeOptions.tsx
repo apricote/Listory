@@ -24,10 +24,10 @@ export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
 }) => {
   return (
     <div className="md:flex mb-4">
-      <div className="text-gray-700">
+      <div className="text-gray-700 dark:text-gray-300">
         <label className="text-sm">Timeframe</label>
         <select
-          className="block appearance-none min-w-full md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
+          className="block appearance-none min-w-full md:w-1/4 bg-white dark:bg-gray-700 border border-gray-400 hover:border-gray-500 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:text-gray-200 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
           onChange={(e) =>
             setTimeOptions({
               ...timeOptions,
@@ -44,21 +44,25 @@ export const ReportTimeOptions: React.FC<ReportTimeOptionsProps> = ({
         </select>
       </div>
       {timeOptions.timePreset === TimePreset.CUSTOM && (
-        <div className="md:flex text-gray-700">
-          <DateSelect
-            label="Start"
-            value={timeOptions.customTimeStart}
-            onChange={(newDate) =>
-              setTimeOptions({ ...timeOptions, customTimeStart: newDate })
-            }
-          />
-          <DateSelect
-            label="End"
-            value={timeOptions.customTimeEnd}
-            onChange={(newDate) =>
-              setTimeOptions({ ...timeOptions, customTimeEnd: newDate })
-            }
-          />
+        <div className="md:flex text-gray-700 dark:text-gray-200">
+          <div className="pl-2">
+            <DateSelect
+              label="Start"
+              value={timeOptions.customTimeStart}
+              onChange={(newDate) =>
+                setTimeOptions({ ...timeOptions, customTimeStart: newDate })
+              }
+            />
+          </div>
+          <div className="pl-2">
+            <DateSelect
+              label="End"
+              value={timeOptions.customTimeEnd}
+              onChange={(newDate) =>
+                setTimeOptions({ ...timeOptions, customTimeEnd: newDate })
+              }
+            />
+          </div>
         </div>
       )}
     </div>

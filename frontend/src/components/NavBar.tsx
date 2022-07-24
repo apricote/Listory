@@ -8,7 +8,7 @@ export const NavBar: React.FC = () => {
   const { user, loginWithSpotifyProps } = useAuth();
 
   return (
-    <div className="flex items-center justify-between flex-wrap bg-green-500 p-6">
+    <div className="flex items-center justify-between flex-wrap bg-green-500 dark:bg-gray-800 p-6">
       <div className="flex items-center shrink-0 text-white mr-6">
         <span className="font-semibold text-xl tracking-tight">Listory</span>
       </div>

@@ -47,14 +47,16 @@ export const ReportListens: React.FC = () => {
     <div className="md:flex md:justify-center p-4">
       <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
         <div className="flex justify-between">
-          <p className="text-2xl font-normal text-gray-700">Listen Report</p>
+          <p className="text-2xl font-normal text-gray-700 dark:text-gray-400">
+            Listen Report
+          </p>
         </div>
-        <div className="shadow-xl bg-gray-100 rounded p-5 m-2">
+        <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-5 m-2">
           <div className="md:flex">
-            <div className="text-gray-700">
+            <div className="text-gray-700 dark:text-gray-300 mr-2">
               <label className="text-sm">Timeframe</label>
               <select
-                className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
+                className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white dark:bg-gray-700 border border-gray-400 hover:border-gray-500 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:text-gray-200 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
                 onChange={(e) =>
                   setTimeFrame(
                     e.target.value as "day" | "week" | "month" | "year"
@@ -79,7 +81,7 @@ export const ReportListens: React.FC = () => {
             </div>
           )}
           {reportHasItems && (
-            <div className="w-full text-gray-700 mt-5">
+            <div className="w-full text-gray-700 dark:text-gray-300 mt-5">
               <ReportGraph timeFrame={timeFrame} data={report} />
             </div>
           )}
@@ -111,7 +113,7 @@ const ReportGraph: React.FC<{
     const date = format(label as number, dateFormatFromTimeFrame(timeFrame));
 
     return (
-      <div className="bg-gray-100 shadow-xl p-2 rounded text-sm font-light">
+      <div className="bg-gray-100 dark:bg-gray-700 shadow-xl p-2 rounded text-sm font-light">
         <p>{date}</p>
         <p>
           Listens: <span className="font-bold">{listens}</span>
