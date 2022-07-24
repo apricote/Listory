@@ -24,7 +24,16 @@ export const DateSelect: React.FC<DateSelectProps> = ({
         className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white border border-gray-400 hover:border-gray-500 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
         type="date"
         value={formatDateForDateInput(value)}
-        onChange={(e) => onChange(parseDateFromDateInput(e.target.value))}
+        onChange={(e) => {
+          if (e.target.value === "") {
+            // Firefox includes "reset" buttons in date inputs, which set the value to "",
+            // is does not make sense to clear the value in our case.
+            e.target.value = formatDateForDateInput(value);
+            e.preventDefault();
+            return;
+          }
+          onChange(parseDateFromDateInput(e.target.value));
+        }}
       />
     </div>
   );
