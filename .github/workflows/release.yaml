@@ -26,7 +26,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-          helm-version: "v3.2.1"
+          version: "v3.9.0"
 
       - name: Install semantic-release
         run: npm install -g --legacy-peer-deps semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec semantic-release-docker
