@@ -1,3 +1,15 @@
+# [1.19.0](https://github.com/apricote/Listory/compare/v1.18.2...v1.19.0) (2022-07-24)
+
+
+### Bug Fixes
+
+* **frontend:** crash when resetting DateSelect values ([65b0d24](https://github.com/apricote/Listory/commit/65b0d24903aa1df18febf37bb66b830982fd20ee))
+
+
+### Features
+
+* **frontend:** Dark Mode ([78c7afc](https://github.com/apricote/Listory/commit/78c7afc15263b8c93779d5bc07b1932b0e60055a))
+
 ## [1.18.2](https://github.com/apricote/Listory/compare/v1.18.1...v1.18.2) (2022-07-12)
 
 
