@@ -69,7 +69,7 @@
     "passport-jwt": "4.0.0",
     "passport-spotify": "2.0.0",
     "pg": "8.7.3",
-    "pino": "8.3.0",
+    "pino": "8.3.1",
     "pino-http": "8.1.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
