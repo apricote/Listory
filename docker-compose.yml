@@ -8,7 +8,7 @@ x-logging: &default-logging
 
 services:
   db:
-    image: postgres:14.4
+    image: postgres:14.5
     environment:
       POSTGRES_PASSWORD: listory
       POSTGRES_USER: listory
