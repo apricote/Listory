@@ -4,7 +4,7 @@ version: "3.4"
 
 services:
   prometheus:
-    image: prom/prometheus:v2.37.0
+    image: prom/prometheus:v2.38.0
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
