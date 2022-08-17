@@ -47,7 +47,7 @@ services:
       - loki
 
   tempo:
-    image: grafana/tempo:1.4.1
+    image: grafana/tempo:1.5.0
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
