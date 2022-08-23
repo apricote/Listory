@@ -60,7 +60,7 @@ services:
       - api
 
   grafana:
-    image: grafana/grafana-oss:9.1.0
+    image: grafana/grafana-oss:9.1.1
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
