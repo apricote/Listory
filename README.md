@@ -102,15 +102,33 @@ Copy the file `.env.sample` to `.env` and add your Spotify API Key.
 
 ### Starting the application
 
-We use `docker-compose` to provide a full local development environment.
+We use `docker compose` to provide a full local development environment.
 
 ```bash
-$ docker-compose up
+$ docker compose up
 ```
 
 You can now access the frontend at `http://localhost:3000` and the API at `http://localhost:3000/api`.
 
 Frontend and API will automatically reload on any code changes.
+
+### REPL Console
+
+You can start the REPL console by starting the normal environment, and then running:
+
+```bash
+$ docker compose run console
+```
+
+### Observability
+
+If you want to start the observability suite (Metrics & Tracing) locally, you can use the `observability` docker compose profile:
+
+```bash
+$ docker compose --profile observability up
+```
+
+Grafana is then available at `http://localhost:2345` and all sources are preconfigured.
 
 ## Test
 

@@ -7,6 +7,10 @@ x-logging: &default-logging
     tag: "{{.Name}}"
 
 services:
+  #####
+  ## Required services for listory
+  #####
+
   db:
     image: postgres:14.5
     environment:
@@ -84,6 +88,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
 
+  #####
+  ## console REPL
+  #####
+
   console:
     profiles:
       - console
@@ -112,6 +120,93 @@ services:
       - db
     logging: *default-logging
 
+  #####
+  ## Observability
+  ## Adopted from https://github.com/stefanprodan/dockprom/blob/master/docker-compose.yml
+  #####
+
+  prometheus:
+    profiles: ["observability"]
+    image: prom/prometheus:v2.38.0
+    volumes:
+      - ./observability/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    ports:
+      - 9090:9090
+    networks:
+      - observability
+      - web
+
+  loki:
+    profiles: ["observability"]
+    image: grafana/loki:2.6.1
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    ports:
+      - "3100" # loki needs to be exposed so it receives logs
+    volumes:
+      - ./observability/loki/loki.yaml:/etc/loki/loki.yaml
+    networks:
+      - observability
+
+  promtail:
+    profiles: ["observability"]
+    image: grafana/promtail:2.6.1
+    command: ["-config.file=/etc/promtail.yaml"]
+    volumes:
+      - ./observability/promtail/promtail.yaml:/etc/promtail.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+
+      - /var/log/journal/:/var/log/journal/
+      - /run/log/journal/:/run/log/journal/
+      - /etc/machine-id:/etc/machine-id
+    ports:
+      - "3102"
+    networks:
+      - observability
+    depends_on:
+      - loki
+
+  tempo:
+    profiles: ["observability"]
+    image: grafana/tempo:1.5.0
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./observability/tempo/tempo.yaml:/etc/tempo.yaml
+      - tempo_data:/tmp/tempo
+    ports:
+      - "3101" # tempo
+      - "4318" # OpenTelemetry HTTP
+    networks:
+      - observability
+      - web
+
+  grafana:
+    profiles: ["observability"]
+    image: grafana/grafana-oss:9.1.6
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=listory
+      - GF_SECURITY_ADMIN_PASSWORD=listory
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_HTTP_PORT=2345
+    ports:
+      - 2345:2345
+    networks:
+      - observability
+
+volumes:
+  prometheus_data: {}
+  tempo_data: {}
+
 networks:
   db: {}
   web: {}
+  observability: {}

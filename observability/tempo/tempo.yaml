@@ -34,3 +34,6 @@ storage:
     pool:
       max_workers: 100 # the worker pool mainly drives querying, but is also used for polling the blocklist
       queue_depth: 10000
+
+# Enable search functionality
+search_enabled: true
