@@ -53,8 +53,8 @@ services:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
       - tempo_data:/tmp/tempo
     ports:
-      - "55680" # OpenTelemetry
       - "3101" # tempo
+      - "4318" # OpenTelemetry HTTP
     networks:
       - observability
       - api
