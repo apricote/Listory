@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/apricote/Listory/compare/v1.19.0...v1.19.1) (2022-09-26)
+
+
+### Bug Fixes
+
+* **dev:** traces not arriving in tempo 1.4+ ([1ac709d](https://github.com/apricote/Listory/commit/1ac709da24799a625506e161e37468db5b2e71a0))
+
 # [1.19.0](https://github.com/apricote/Listory/compare/v1.18.2...v1.19.0) (2022-07-24)
 
 
