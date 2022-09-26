@@ -36,7 +36,7 @@
     "@nestjs/platform-express": "8.4.7",
     "@nestjs/schedule": "2.1.0",
     "@nestjs/serve-static": "2.2.2",
-    "@nestjs/swagger": "5.2.1",
+    "@nestjs/swagger": "6.1.2",
     "@nestjs/terminus": "8.1.1",
     "@nestjs/typeorm": "8.1.4",
     "@opentelemetry/api": "1.0.4",
