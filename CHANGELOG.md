@@ -1,3 +1,11 @@
+# [1.20.0](https://github.com/apricote/Listory/compare/v1.19.1...v1.20.0) (2022-09-27)
+
+
+### Features
+
+* **api:** add local repl console ([0a9956e](https://github.com/apricote/Listory/commit/0a9956e1aec91019ede0720a4e49bb6501dc171e))
+* **dev:** combine all docker-compose setups ([52a5a39](https://github.com/apricote/Listory/commit/52a5a39cb39c39b547ab57f30eb571fceda08f7a))
+
 ## [1.19.1](https://github.com/apricote/Listory/compare/v1.19.0...v1.19.1) (2022-09-26)
 
 
