@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/apricote/Listory/compare/v1.20.0...v1.20.1) (2022-09-28)
+
+
+### Bug Fixes
+
+* **dev:** broken traces with latest OTEL libraries ([515c80a](https://github.com/apricote/Listory/commit/515c80a6e3009b1fe16623ba12b9fc17b837051e))
+
 # [1.20.0](https://github.com/apricote/Listory/compare/v1.19.1...v1.20.0) (2022-09-27)
 
 
