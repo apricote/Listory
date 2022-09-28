@@ -34,7 +34,7 @@ services:
       APP_URL: "http://localhost:3000"
       NODE_ENV: local # pretty logs
 
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318/v1/traces
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
     env_file: .env
     volumes:
       - ./src:/app/src
@@ -110,7 +110,7 @@ services:
       APP_URL: "http://localhost:3000"
       NODE_ENV: local # pretty logs
 
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318/v1/traces
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
     env_file: .env
     volumes:
       - ./src:/app/src
@@ -173,7 +173,7 @@ services:
 
   tempo:
     profiles: ["observability"]
-    image: grafana/tempo:1.5.0
+    image: grafana/tempo:main-53d34ee-amd64
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./observability/tempo/tempo.yaml:/etc/tempo.yaml
