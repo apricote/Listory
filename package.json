@@ -87,7 +87,7 @@
     "@types/jest": "29.1.1",
     "@types/long": "4.0.2",
     "@types/node": "18.0.0",
-    "@types/passport-jwt": "3.0.6",
+    "@types/passport-jwt": "3.0.7",
     "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.38.1",
     "@typescript-eslint/parser": "5.38.1",
