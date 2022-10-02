@@ -71,7 +71,7 @@
     "passport-spotify": "2.0.0",
     "pg": "8.8.0",
     "pino": "8.6.1",
-    "pino-http": "8.2.0",
+    "pino-http": "8.2.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.5.7",
