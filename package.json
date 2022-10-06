@@ -57,7 +57,7 @@
     "@opentelemetry/sdk-node": "0.33.0",
     "@opentelemetry/sdk-trace-base": "1.7.0",
     "@opentelemetry/semantic-conventions": "1.7.0",
-    "@sentry/node": "7.14.1",
+    "@sentry/node": "7.14.2",
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
     "cookie-parser": "1.4.6",
