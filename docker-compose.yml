@@ -127,7 +127,7 @@ services:
 
   prometheus:
     profiles: ["observability"]
-    image: prom/prometheus:v2.40.2
+    image: prom/prometheus:v2.40.3
     volumes:
       - ./observability/prometheus:/etc/prometheus
       - prometheus_data:/prometheus
