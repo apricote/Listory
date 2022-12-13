@@ -65,7 +65,7 @@
     "nest-raven": "9.0.0",
     "nestjs-otel": "4.1.0",
     "nestjs-pino": "3.1.1",
-    "nestjs-typeorm-paginate": "4.0.2",
+    "nestjs-typeorm-paginate": "4.0.3",
     "passport": "0.6.0",
     "passport-jwt": "4.0.0",
     "passport-spotify": "2.0.0",
