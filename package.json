@@ -28,7 +28,7 @@
   "dependencies": {
     "@hapi/joi": "17.1.1",
     "@narando/nest-axios-interceptor": "2.2.0",
-    "@nestjs/axios": "0.1.0",
+    "@nestjs/axios": "1.0.1",
     "@nestjs/common": "9.2.1",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.2.1",
