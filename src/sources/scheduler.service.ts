@@ -33,11 +33,11 @@ export class SchedulerService implements OnApplicationBootstrap {
   }
 
   private async setupSpotifyCrawlerSupervisor(): Promise<void> {
-    await this.superviseImportJobsJobService.schedule("*/1 * * * *", {}, {});
+    // await this.superviseImportJobsJobService.schedule("*/1 * * * *", {}, {});
   }
 
   @Span()
-  @CrawlerSupervisorJob.Handle()
+  // @CrawlerSupervisorJob.Handle()
   async superviseImportJobs(): Promise<void> {
     this.logger.log("Starting crawler jobs");
     const userInfo = await this.spotifyService.getCrawlableUserInfo();

@@ -37,7 +37,8 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
     env_file: .env
     volumes:
-      - ./src:/app/src
+      - ./src:/app/src:ro
+      - ./dist:/app/dist # build cache
     ports:
       - 3000 # API
       - "9464:9464" # Metrics
@@ -115,7 +116,8 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
     env_file: .env
     volumes:
-      - ./src:/app/src
+      - ./src:/app/src:ro
+      - ./dist:/app/dist # build cache
     ports:
       - "9464:9464" # Metrics
     networks:

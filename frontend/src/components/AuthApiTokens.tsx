@@ -2,7 +2,6 @@ import { format, formatDistanceToNow } from "date-fns";
 import React, { FormEvent, useCallback, useMemo, useState } from "react";
 import { ApiToken, NewApiToken } from "../api/entities/api-token";
 import { useApiTokens } from "../hooks/use-api";
-import { useAuthProtection } from "../hooks/use-auth-protection";
 import { SpinnerIcon } from "../icons/Spinner";
 import TrashcanIcon from "../icons/Trashcan";
 import { Spinner } from "./ui/Spinner";

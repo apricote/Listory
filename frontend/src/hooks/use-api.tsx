@@ -2,12 +2,14 @@ import { useCallback, useMemo } from "react";
 import {
   createApiToken,
   getApiTokens,
+  getExtendedStreamingHistoryStatus,
   getListensReport,
   getRecentListens,
   getTopAlbums,
   getTopArtists,
   getTopGenres,
   getTopTracks,
+  importExtendedStreamingHistory,
   revokeApiToken,
 } from "../api/api";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
@@ -18,6 +20,7 @@ import { TopGenresOptions } from "../api/entities/top-genres-options";
 import { TopTracksOptions } from "../api/entities/top-tracks-options";
 import { useApiClient } from "./use-api-client";
 import { useAsync } from "./use-async";
+import { SpotifyExtendedStreamingHistoryItem } from "../api/entities/spotify-extended-streaming-history-item";
 
 const INITIAL_EMPTY_ARRAY: [] = [];
 Object.freeze(INITIAL_EMPTY_ARRAY);
@@ -143,9 +146,7 @@ export const useApiTokens = () => {
   const createToken = useCallback(
     async (description: string) => {
       const apiToken = await createApiToken(description, client);
-      console.log("apiToken created", apiToken);
       await reload();
-      console.log("reloaded data");
 
       return apiToken;
     },
@@ -161,4 +162,39 @@ export const useApiTokens = () => {
   );
 
   return { apiTokens, isLoading, error, createToken, revokeToken };
+};
+
+export const useSpotifyImportExtendedStreamingHistory = () => {
+  const { client } = useApiClient();
+
+  const importHistory = useCallback(
+    async (listens: SpotifyExtendedStreamingHistoryItem[]) => {
+      return importExtendedStreamingHistory(listens, client);
+    },
+    [client]
+  );
+
+  const getStatus = useCallback(async () => {
+    return getExtendedStreamingHistoryStatus(client);
+  }, [client]);
+
+  return { importHistory, getStatus };
+};
+
+export const useSpotifyImportExtendedStreamingHistoryStatus = () => {
+  const { client } = useApiClient();
+
+  const fetchData = useMemo(
+    () => () => getExtendedStreamingHistoryStatus(client),
+    [client]
+  );
+
+  const {
+    value: importStatus,
+    pending: isLoading,
+    error,
+    reload,
+  } = useAsync(fetchData, { total: 0, imported: 0 });
+
+  return { importStatus, isLoading, error, reload };
 };

@@ -19,5 +19,6 @@
 !frontend/tsconfig.json
 !frontend/vite.config.js
 !frontend/index.html
+!frontend/*.d.ts
 !frontend/src/**/*
 !frontend/public/**/*

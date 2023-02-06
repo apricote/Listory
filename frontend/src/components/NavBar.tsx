@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { User } from "../api/entities/user";
 import { useAuth } from "../hooks/use-auth";
 import { CogwheelIcon } from "../icons/Cogwheel";
+import { ImportIcon } from "../icons/Import";
 import { SpotifyLogo } from "../icons/Spotify";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import {
@@ -186,6 +187,12 @@ const NavUserInfo: React.FC<{ user: User }> = ({ user }) => {
             <Link to="/auth/api-tokens">
               <CogwheelIcon className="w-5 h-5 fill-current pr-2" />
               API Tokens
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/import">
+              <ImportIcon className="w-5 h-5 fill-current pr-2" />
+              Import Listens
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

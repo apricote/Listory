@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import type { Response } from "express";
+import type { Response as ExpressResponse } from "express";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
 import { AuthController } from "./auth.controller";
@@ -27,7 +27,7 @@ describe("AuthController", () => {
 
   describe("spotifyCallback", () => {
     let user: User;
-    let res: Response;
+    let res: ExpressResponse;
     let refreshToken: string;
 
     beforeEach(() => {
@@ -36,7 +36,7 @@ describe("AuthController", () => {
         statusCode: 200,
         cookie: jest.fn(),
         redirect: jest.fn(),
-      } as unknown as Response;
+      } as unknown as ExpressResponse;
 
       refreshToken = "REFRESH_TOKEN";
       authService.createSession = jest.fn().mockResolvedValue({ refreshToken });

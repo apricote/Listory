@@ -1,5 +1,6 @@
 export class FindTrackDto {
   spotify: {
-    id: string;
+    id?: string;
+    uri?: string;
   };
 }

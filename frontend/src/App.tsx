@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AuthApiTokens } from "./components/AuthApiTokens";
 import { Footer } from "./components/Footer";
+import { ImportListens } from "./components/ImportListens";
 import { LoginFailure } from "./components/LoginFailure";
 import { LoginLoading } from "./components/LoginLoading";
 import { NavBar } from "./components/NavBar";
@@ -53,6 +54,7 @@ export function App() {
                   element={<ReportTopGenres />}
                 />
                 <Route path="/auth/api-tokens" element={<AuthApiTokens />} />
+                <Route path="/import" element={<ImportListens />} />
               </Routes>
             )}
             {!user && (

@@ -1,4 +1,5 @@
 import React from "react";
+import { numberToPercent } from "../../util/numberToPercent";
 
 export interface TopListItemProps {
   title: string;
@@ -42,9 +43,3 @@ export const TopListItem: React.FC<TopListItemProps> = ({
 
 const isMaxCountValid = (maxCount: number) =>
   !(Number.isNaN(maxCount) || maxCount === 0);
-
-const numberToPercent = (ratio: number) =>
-  ratio.toLocaleString(undefined, {
-    style: "percent",
-    minimumFractionDigits: 2,
-  });
