@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/apricote/Listory/compare/v1.20.1...v1.21.0) (2023-02-19)
+
+
+### Features
+
+* **api:** API tokens for authentication ([8f7eebb](https://github.com/apricote/Listory/commit/8f7eebb806d2a23f69ab7271f378591e4e9f206b))
+
 ## [1.20.1](https://github.com/apricote/Listory/compare/v1.20.0...v1.20.1) (2022-09-28)
 
 
