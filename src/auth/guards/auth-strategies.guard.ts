@@ -2,7 +2,10 @@ import { AuthGuard } from "@nestjs/passport";
 import { AuthStrategy } from "../strategies/strategies.enum";
 
 // Internal
-export const AccessTokenAuthGuard = AuthGuard(AuthStrategy.AccessToken);
+export const ApiAuthGuard = AuthGuard([
+  AuthStrategy.AccessToken,
+  AuthStrategy.ApiToken,
+]);
 export const RefreshTokenAuthGuard = AuthGuard(AuthStrategy.RefreshToken);
 
 // Auth Provider

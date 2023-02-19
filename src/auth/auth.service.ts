@@ -3,9 +3,12 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "../users/user.entity";
 import { UsersService } from "../users/users.service";
+import { ApiToken } from "./api-token.entity";
+import { ApiTokenRepository } from "./api-token.repository";
 import { AuthSession } from "./auth-session.entity";
 import { AuthSessionRepository } from "./auth-session.repository";
 import { LoginDto } from "./dto/login.dto";
+import { randomBytes } from "crypto";
 
 @Injectable()
 export class AuthService {
@@ -16,7 +19,8 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly authSessionRepository: AuthSessionRepository
+    private readonly authSessionRepository: AuthSessionRepository,
+    private readonly apiTokenRepository: ApiTokenRepository
   ) {
     this.userFilter = this.config.get<string>("SPOTIFY_USER_FILTER");
     this.sessionExpirationTime = this.config.get<string>(
@@ -66,7 +70,7 @@ export class AuthService {
    */
   private async createRefreshToken(
     session: AuthSession
-  ): Promise<{ refreshToken }> {
+  ): Promise<{ refreshToken: string }> {
     const payload = {
       sub: session.user.id,
       name: session.user.displayName,
@@ -81,7 +85,9 @@ export class AuthService {
     return { refreshToken: token };
   }
 
-  async createAccessToken(session: AuthSession): Promise<{ accessToken }> {
+  async createAccessToken(
+    session: AuthSession
+  ): Promise<{ accessToken: string }> {
     if (session.revokedAt) {
       throw new ForbiddenException("SessionIsRevoked");
     }
@@ -99,6 +105,41 @@ export class AuthService {
 
   async findSession(id: string): Promise<AuthSession> {
     return this.authSessionRepository.findOneBy({ id });
+  }
+
+  async createApiToken(user: User, description: string): Promise<ApiToken> {
+    console.log("createApiToken");
+    const apiToken = this.apiTokenRepository.create();
+
+    apiToken.user = user;
+    apiToken.description = description;
+
+    // TODO demagic 20
+    const tokenBuffer = await new Promise<Buffer>((resolve, reject) =>
+      randomBytes(20, (err, buf) => (err ? reject(err) : resolve(buf)))
+    );
+    apiToken.token = `lis${tokenBuffer.toString("hex")}`;
+
+    await this.apiTokenRepository.save(apiToken);
+
+    return apiToken;
+  }
+
+  async listApiTokens(user: User): Promise<ApiToken[]> {
+    return this.apiTokenRepository.scoped.byUser(user).getMany();
+  }
+
+  async revokeApiToken(token: string): Promise<void> {
+    const apiToken = await this.findApiToken(token);
+
+    apiToken.revokedAt = new Date();
+    await this.apiTokenRepository.save(apiToken);
+
+    return;
+  }
+
+  async findApiToken(token: string): Promise<ApiToken> {
+    return this.apiTokenRepository.findOneBy({ token });
   }
 
   async findUser(id: string): Promise<User> {

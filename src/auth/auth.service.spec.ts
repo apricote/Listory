@@ -4,6 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
 import { User } from "../users/user.entity";
 import { UsersService } from "../users/users.service";
+import { ApiTokenRepository } from "./api-token.repository";
 import { AuthSession } from "./auth-session.entity";
 import { AuthSessionRepository } from "./auth-session.repository";
 import { AuthService } from "./auth.service";
@@ -15,6 +16,7 @@ describe("AuthService", () => {
   let usersService: UsersService;
   let jwtService: JwtService;
   let authSessionRepository: AuthSessionRepository;
+  let apiTokenRepository: ApiTokenRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -27,6 +29,7 @@ describe("AuthService", () => {
         { provide: UsersService, useFactory: () => ({}) },
         { provide: JwtService, useFactory: () => ({}) },
         { provide: AuthSessionRepository, useFactory: () => ({}) },
+        { provide: ApiTokenRepository, useFactory: () => ({}) },
       ],
     }).compile();
 
@@ -37,6 +40,7 @@ describe("AuthService", () => {
     authSessionRepository = module.get<AuthSessionRepository>(
       AuthSessionRepository
     );
+    apiTokenRepository = module.get<ApiTokenRepository>(ApiTokenRepository);
   });
 
   it("should be defined", () => {
@@ -45,6 +49,7 @@ describe("AuthService", () => {
     expect(usersService).toBeDefined();
     expect(jwtService).toBeDefined();
     expect(authSessionRepository).toBeDefined();
+    expect(apiTokenRepository).toBeDefined();
   });
 
   describe("spotifyLogin", () => {

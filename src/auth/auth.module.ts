@@ -5,16 +5,18 @@ import { PassportModule } from "@nestjs/passport";
 import { CookieParserMiddleware } from "../cookie-parser";
 import { TypeOrmRepositoryModule } from "../database/entity-repository/typeorm-repository.module";
 import { UsersModule } from "../users/users.module";
+import { ApiTokenRepository } from "./api-token.repository";
 import { AuthSessionRepository } from "./auth-session.repository";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { AccessTokenStrategy } from "./strategies/access-token.strategy";
+import { ApiTokenStrategy } from "./strategies/api-token.strategy";
 import { RefreshTokenStrategy } from "./strategies/refresh-token.strategy";
 import { SpotifyStrategy } from "./strategies/spotify.strategy";
 
 @Module({
   imports: [
-    TypeOrmRepositoryModule.for([AuthSessionRepository]),
+    TypeOrmRepositoryModule.for([AuthSessionRepository, ApiTokenRepository]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
@@ -33,6 +35,7 @@ import { SpotifyStrategy } from "./strategies/spotify.strategy";
     SpotifyStrategy,
     AccessTokenStrategy,
     RefreshTokenStrategy,
+    ApiTokenStrategy,
   ],
   exports: [PassportModule],
   controllers: [AuthController],
