@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
+import { randomBytes } from "crypto";
 import { User } from "../users/user.entity";
 import { UsersService } from "../users/users.service";
 import { ApiToken } from "./api-token.entity";
@@ -8,7 +9,6 @@ import { ApiTokenRepository } from "./api-token.repository";
 import { AuthSession } from "./auth-session.entity";
 import { AuthSessionRepository } from "./auth-session.repository";
 import { LoginDto } from "./dto/login.dto";
-import { randomBytes } from "crypto";
 
 @Injectable()
 export class AuthService {
@@ -129,11 +129,13 @@ export class AuthService {
     return this.apiTokenRepository.scoped.byUser(user).getMany();
   }
 
-  async revokeApiToken(token: string): Promise<void> {
-    const apiToken = await this.findApiToken(token);
+  async revokeApiToken(user: User, id: string): Promise<void> {
+    const apiToken = await this.apiTokenRepository.findOneBy({ user, id });
 
-    apiToken.revokedAt = new Date();
-    await this.apiTokenRepository.save(apiToken);
+    if (apiToken && apiToken.revokedAt == null) {
+      apiToken.revokedAt = new Date();
+      await this.apiTokenRepository.save(apiToken);
+    }
 
     return;
   }

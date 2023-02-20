@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { formatISO, parseISO } from "date-fns";
+import { ApiToken, NewApiToken } from "./entities/api-token";
 import { Listen } from "./entities/listen";
 import { ListenReportItem } from "./entities/listen-report-item";
 import { ListenReportOptions } from "./entities/listen-report-options";
@@ -226,4 +227,66 @@ export const getTopGenres = async (
     data: { items },
   } = res;
   return items;
+};
+
+export const getApiTokens = async (
+  client: AxiosInstance
+): Promise<ApiToken[]> => {
+  const res = await client.get<ApiToken[]>(`/api/v1/auth/api-tokens`);
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to getApiTokens: ${res.status}`);
+    }
+  }
+
+  return res.data;
+};
+
+export const createApiToken = async (
+  description: string,
+  client: AxiosInstance
+): Promise<NewApiToken> => {
+  const res = await client.post<NewApiToken>(`/api/v1/auth/api-tokens`, {
+    description,
+  });
+
+  switch (res.status) {
+    case 201: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to createApiToken: ${res.status}`);
+    }
+  }
+
+  return res.data;
+};
+
+export const revokeApiToken = async (
+  id: string,
+  client: AxiosInstance
+): Promise<void> => {
+  const res = await client.delete<NewApiToken>(`/api/v1/auth/api-tokens/${id}`);
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(`Unable to revokeApiToken: ${res.status}`);
+    }
+  }
 };

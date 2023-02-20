@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { AuthApiTokens } from "./components/AuthApiTokens";
 import { Footer } from "./components/Footer";
 import { LoginFailure } from "./components/LoginFailure";
 import { LoginLoading } from "./components/LoginLoading";
@@ -36,6 +37,7 @@ export function App() {
           <Route path="/reports/top-albums" element={<ReportTopAlbums />} />
           <Route path="/reports/top-tracks" element={<ReportTopTracks />} />
           <Route path="/reports/top-genres" element={<ReportTopGenres />} />
+          <Route path="/auth/api-tokens" element={<AuthApiTokens />} />
         </Routes>
       </main>
       <footer>

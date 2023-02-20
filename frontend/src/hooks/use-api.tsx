@@ -1,11 +1,14 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
+  createApiToken,
+  getApiTokens,
   getListensReport,
   getRecentListens,
   getTopAlbums,
   getTopArtists,
   getTopGenres,
   getTopTracks,
+  revokeApiToken,
 } from "../api/api";
 import { ListenReportOptions } from "../api/entities/listen-report-options";
 import { PaginationOptions } from "../api/entities/pagination-options";
@@ -123,4 +126,39 @@ export const useTopGenres = (options: TopGenresOptions) => {
   } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
 
   return { topGenres, isLoading, error };
+};
+
+export const useApiTokens = () => {
+  const { client } = useApiClient();
+
+  const fetchData = useMemo(() => () => getApiTokens(client), [client]);
+
+  const {
+    value: apiTokens,
+    pending: isLoading,
+    error,
+    reload,
+  } = useAsync(fetchData, INITIAL_EMPTY_ARRAY);
+
+  const createToken = useCallback(
+    async (description: string) => {
+      const apiToken = await createApiToken(description, client);
+      console.log("apiToken created", apiToken);
+      await reload();
+      console.log("reloaded data");
+
+      return apiToken;
+    },
+    [client, reload]
+  );
+
+  const revokeToken = useCallback(
+    async (id: string) => {
+      await revokeApiToken(id, client);
+      await reload();
+    },
+    [client, reload]
+  );
+
+  return { apiTokens, isLoading, error, createToken, revokeToken };
 };
