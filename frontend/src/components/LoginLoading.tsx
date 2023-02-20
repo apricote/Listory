@@ -10,7 +10,7 @@ export const LoginLoading: React.FC = () => (
       <p className="text-2xl font-extralight text-gray-700 dark:text-gray-300 text-center p-6">
         Logging in
       </p>
-      <Spinner className="p-6" size={128} />
+      <Spinner className="p-6" iconClassName="h-32 w-32" />
     </div>
   </main>
 );
