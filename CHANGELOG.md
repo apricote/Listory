@@ -1,3 +1,15 @@
+# [1.22.0](https://github.com/apricote/Listory/compare/v1.21.0...v1.22.0) (2023-02-21)
+
+
+### Bug Fixes
+
+* **frontend:** flashing content on useAsync reload ([e298282](https://github.com/apricote/Listory/commit/e298282f551e8080be88fa66d9672ce33835a736))
+
+
+### Features
+
+* **frontend:** manage API tokens in Frontend ([ac0f9ff](https://github.com/apricote/Listory/commit/ac0f9ff5d3c99a4383e16fea0a2d95c18cee41ea))
+
 # [1.21.0](https://github.com/apricote/Listory/compare/v1.20.1...v1.21.0) (2023-02-19)
 
 
