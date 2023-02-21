@@ -26,7 +26,6 @@ export const useAsync: UseAsync = <T extends any>(
   const execute = useCallback(() => {
     startTransition(() => {
       setPending(true);
-      setValue(initialValue);
       setError(null);
     });
 
@@ -34,7 +33,7 @@ export const useAsync: UseAsync = <T extends any>(
       .then((response) => startTransition(() => setValue(response)))
       .catch((err) => startTransition(() => setError(err)))
       .finally(() => startTransition(() => setPending(false)));
-  }, [asyncFunction, initialValue]);
+  }, [asyncFunction]);
 
   // Call execute if we want to fire it right away.
   // Otherwise execute can be called later, such as
