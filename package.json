@@ -70,7 +70,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "4.0.1",
     "passport-spotify": "2.0.0",
-    "pg": "8.8.0",
+    "pg": "8.10.0",
     "pino": "8.11.0",
     "pino-http": "8.3.3",
     "reflect-metadata": "0.1.13",
