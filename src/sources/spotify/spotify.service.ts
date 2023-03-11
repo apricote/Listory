@@ -36,8 +36,27 @@ export class SpotifyService {
   ) {}
 
   @Span()
-  async getCrawlableUserInfo(): Promise<User[]> {
-    return this.usersService.findAll();
+  async getCrawlableUserInfo(): Promise<{ user: User; lastListen: Date }[]> {
+    // All of this is kinda inefficient, we do two db queries and join in code,
+    // i can't be bothered to do this properly in the db for now.
+    // Should be refactored if listory gets hundreds of users (lol).
+
+    const [users, listens] = await Promise.all([
+      this.usersService.findAll(),
+      this.listensService.getMostRecentListenPerUser(),
+    ]);
+
+    return users.map((user) => {
+      const lastListen = listens.find((listen) => listen.user.id === user.id);
+
+      return {
+        user,
+        // Return 1970 if no listen exists
+        lastListen: lastListen ? lastListen.playedAt : new Date(0),
+      };
+    });
+
+    return;
   }
 
   @ImportSpotifyJob.Handle()

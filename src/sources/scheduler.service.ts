@@ -10,6 +10,7 @@ import {
   UpdateSpotifyLibraryJob,
 } from "./jobs";
 import { JobService } from "@apricote/nest-pg-boss";
+import { Span } from "nestjs-otel";
 
 @Injectable()
 export class SchedulerService implements OnApplicationBootstrap {
@@ -35,15 +36,38 @@ export class SchedulerService implements OnApplicationBootstrap {
     await this.superviseImportJobsJobService.schedule("*/1 * * * *", {}, {});
   }
 
+  @Span()
   @CrawlerSupervisorJob.Handle()
   async superviseImportJobs(): Promise<void> {
     this.logger.log("Starting crawler jobs");
-    const users = await this.spotifyService.getCrawlableUserInfo();
+    const userInfo = await this.spotifyService.getCrawlableUserInfo();
+
+    // To save on Spotify API requests we have two different classes of polling intervals:
+    // - all users are polled at least every 10 minutes, this is a safe interval
+    //   and no listens will be ever missed
+    // - if a user listened to a song within the last 60 minutes, we poll every
+    //   minute to ensure that the UI shows new listens immediately
+    const POLL_RATE_INACTIVE_SEC = 10 * 60;
+    const POLL_RATE_ACTIVE_SEC = 1 * 60;
+
+    const INACTIVE_CUTOFF_MSEC = 60 * 60 * 1000;
 
     await Promise.all(
-      users.map((user) =>
-        this.importSpotifyJobService.sendOnce({ userID: user.id }, {}, user.id)
-      )
+      userInfo.map(({ user, lastListen }) => {
+        let pollRate = POLL_RATE_INACTIVE_SEC;
+
+        const timeSinceLastListen = new Date().getTime() - lastListen.getTime();
+        if (timeSinceLastListen < INACTIVE_CUTOFF_MSEC) {
+          pollRate = POLL_RATE_ACTIVE_SEC;
+        }
+
+        this.importSpotifyJobService.sendThrottled(
+          { userID: user.id },
+          {},
+          pollRate,
+          user.id
+        );
+      })
     );
   }
 
