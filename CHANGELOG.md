@@ -1,3 +1,12 @@
+# [1.23.0](https://github.com/apricote/Listory/compare/v1.22.0...v1.23.0) (2023-03-12)
+
+
+### Features
+
+* **api:** import listens after first sign in ([46b1650](https://github.com/apricote/Listory/commit/46b165006662d72223df9b37a8be68396ea76bab))
+* **api:** poll listens less often if user is inactive ([14478a5](https://github.com/apricote/Listory/commit/14478a5418b6c195c527ba28cf82e52aae8dd6d5))
+* **api:** use nest-pg-boss for spotify interactions ([b9f92bb](https://github.com/apricote/Listory/commit/b9f92bbdfabd418c15d3ef9d6bd82493dfe9b96e))
+
 # [1.22.0](https://github.com/apricote/Listory/compare/v1.21.0...v1.22.0) (2023-02-21)
 
 
