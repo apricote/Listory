@@ -1,3 +1,4 @@
+import type { Job } from "pg-boss";
 import { Injectable, Logger } from "@nestjs/common";
 import { Span } from "nestjs-otel";
 import { ListensService } from "../../listens/listens.service";
@@ -60,7 +61,9 @@ export class SpotifyService {
   }
 
   @ImportSpotifyJob.Handle()
-  async importSpotifyJobHandler({ userID }: IImportSpotifyJob): Promise<void> {
+  async importSpotifyJobHandler({
+    data: { userID },
+  }: Job<IImportSpotifyJob>): Promise<void> {
     const user = await this.usersService.findById(userID);
     if (!user) {
       this.logger.warn("User for import job not found", { userID });
