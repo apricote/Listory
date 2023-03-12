@@ -1,4 +1,6 @@
+import { JobService } from "@apricote/nest-pg-boss";
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { IImportSpotifyJob, ImportSpotifyJob } from "../sources/jobs";
 import { SpotifyConnection } from "../sources/spotify/spotify-connection.entity";
 import { CreateOrUpdateDto } from "./dto/create-or-update.dto";
 import { User } from "./user.entity";
@@ -6,7 +8,11 @@ import { UserRepository } from "./user.repository";
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    @ImportSpotifyJob.Inject()
+    private readonly importSpotifyJobService: JobService<IImportSpotifyJob>
+  ) {}
 
   async findById(id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id });
@@ -27,7 +33,8 @@ export class UsersService {
       spotify: { id: data.spotify.id },
     });
 
-    if (!user) {
+    const isNew = !user;
+    if (isNew) {
       user = this.userRepository.create({
         spotify: {
           id: data.spotify.id,
@@ -41,6 +48,11 @@ export class UsersService {
     user.photo = data.photo;
 
     await this.userRepository.save(user);
+
+    if (isNew) {
+      // Make sure that existing listens are crawled immediately
+      this.importSpotifyJobService.sendOnce({ userID: user.id }, {}, user.id);
+    }
 
     return user;
   }
