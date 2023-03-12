@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/apricote/Listory/compare/v1.23.0...v1.23.1) (2023-03-12)
+
+
+### Bug Fixes
+
+* **api:** importer job was always importing first user ([821b91d](https://github.com/apricote/Listory/commit/821b91defeceec55c7ae84a4722eda0b951732ce))
+
 # [1.23.0](https://github.com/apricote/Listory/compare/v1.22.0...v1.23.0) (2023-03-12)
 
 
