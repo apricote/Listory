@@ -1,3 +1,11 @@
+## [1.23.2](https://github.com/apricote/Listory/compare/v1.23.1...v1.23.2) (2023-03-17)
+
+
+### Bug Fixes
+
+* **api:** album&track reports only contain one artist ([471f46e](https://github.com/apricote/Listory/commit/471f46eb8d2d8347abca9a6a379559cd4f40efa4))
+* **api:** properly handle errors in crawler loop ([0e2c56b](https://github.com/apricote/Listory/commit/0e2c56bf5f3aebef5b96354b873c1cf84e495199))
+
 ## [1.23.1](https://github.com/apricote/Listory/compare/v1.23.0...v1.23.1) (2023-03-12)
 
 
