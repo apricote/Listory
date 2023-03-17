@@ -152,7 +152,7 @@ export class ReportsService {
         .leftJoinAndSelect("listen.track", "track")
         .leftJoinAndSelect("track.album", "album")
         .leftJoinAndSelect("album.artists", "artists")
-        .distinctOn(["album.id"])
+        .distinctOn(["album.id", "artists.id"])
         .getMany(),
     ]);
 
@@ -189,7 +189,7 @@ export class ReportsService {
       this.getListensQueryFromOptions(options)
         .leftJoinAndSelect("listen.track", "track")
         .leftJoinAndSelect("track.artists", "artists")
-        .distinctOn(["track.id"])
+        .distinctOn(["track.id", "artists.id"])
         .getMany(),
     ]);
 
