@@ -99,17 +99,16 @@ export class SpotifyService {
             { userId: user.id },
             `Refreshing access token failed for user "${user.id}": ${errFromAuth}`
           );
+          throw errFromAuth;
         }
-      } else {
-        // TODO sent to sentry
-        this.logger.error(
-          `Unexpected error while fetching recently played tracks: ${err}`
-        );
+
+        return;
       }
 
-      // Makes no sense to keep processing the (inexistent) data but if we throw
-      // the error the fetch loop will not process other users.
-      return;
+      this.logger.error(
+        `Unexpected error while fetching recently played tracks: ${err}`
+      );
+      throw err;
     }
 
     if (playHistory.length === 0) {
