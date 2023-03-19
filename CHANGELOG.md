@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/apricote/Listory/compare/v1.23.2...v1.23.3) (2023-03-19)
+
+
+### Bug Fixes
+
+* **api:** use `PORT` var ([#262](https://github.com/apricote/Listory/issues/262)) ([5ce51c3](https://github.com/apricote/Listory/commit/5ce51c389c98f5b608ac78b45547ad0e3cba07d9))
+
 ## [1.23.2](https://github.com/apricote/Listory/compare/v1.23.1...v1.23.2) (2023-03-17)
 
 
