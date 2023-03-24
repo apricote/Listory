@@ -37,7 +37,75 @@
 
 ## Installation
 
-End-user Installation of Listory is not yet fully supported and the docs in this section are not complete. Please open an issue if you want to install this yourself, and I can help you through the process.
+### Creating the Spotify App
+
+To connect to the Spotify API, you need to create a new App on the [Spotify
+Developer Dashboard](https://developer.spotify.com/dashboard/applications).
+
+Once the App is created, open the App Overview and click on the "Edit Settings"
+button. A new modal should open. In this modal, you need to add a Redirect URI,
+so that the login with Spotify actually works. This URL depends on where you
+want to host your Listory installation, see also `APP_URL` under
+[Configuration / Application](#application). The Redirect URI should be
+`$APP_URL/api/v1/auth/spotify/callback`. For the local example URL which is used
+in development, this would be `http://localhost:3000/api/v1/auth/spotify/callback`.
+If you have your own domain where you want to host Listory, this is probably
+something like `https://listory.your-name.com/api/v1/auth/spotify/callback`.
+
+You can add multiple Redirect URIs and all will work.
+
+Keep the tab open, as you will need the _Client ID_ and _Client Secret_ in the
+next step.
+
+### Deployment
+
+Listory currently supports two deployment mechanisms: _docker compose_ and
+_Kubernetes Helm Chart_.
+
+#### docker compose
+
+There are two `docker compose` files in the repository, for a production
+deployment, you want to use [`docker-compose.prod.yml`](./docker-compose.prod.yml).
+
+You can copy this file to your server or whereever you want to run Listory. You
+will also need to copy the `.env.sample` file next to the
+`docker-compose.prod.yml` file and rename it to `.env`.
+
+Open the `.env` file in an editor and put in the Spotify App _Client ID_ and
+_Client Secret_.
+
+Now you can configure Listory how you like by changing the `environment` of the
+`listory` service in the docker compose file, or by adding new values in the
+`.env` file. For a list of all available options, see section
+[Configuration](#configuration).
+
+If you deploy Listory on the public internet, I recommend you to add a
+reverse proxy like [Traefik][traefik], which you can configure to
+[automatically add TLS certificates][traefik-tls] (putting the S into HTTPS).
+
+[traefik]: https://doc.traefik.io/traefik/getting-started/quick-start/
+[traefik-tls]: https://doc.traefik.io/traefik/user-guides/docker-compose/acme-tls/
+
+Once you have set everything up, you can run this command to start Listory:
+
+```
+docker compose up --daemon --file docker-compose.prod.yml
+```
+
+This will start Listory in the background. Checkout the [docker compose documentation][docker-compose],
+to learn how you can work with the containers, for example to restart them or to
+read the logs.
+
+[docker-compose]: https://docs.docker.com/compose/reference/
+
+### Helm Chart
+
+We publish a Kubernetes Helm Chart that installs Listory into a Kubernetes cluster.
+
+I have not yet setup publishing to an actual Chart Registry, so if you would like
+to use the chart, create an issue and I will set this up properly.
+
+You can find the source code for the Helm Chart under `[charts/listory](./charts/listory/)`.
 
 ### Configuration
 
