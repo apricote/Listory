@@ -30,6 +30,11 @@ plugins:
         mkdir .helm-chart
         helm package charts/listory --destination .helm-charts
 
+        # Update version in prod docker compose
+        sed -i \
+          -e "s/apricote\/listory:.*/apricote\/listory:${nextRelease.version}/g" \
+          docker-compose.prod.yml
+
   - - semantic-release-docker
     - name: apricote/listory
   - - "@semantic-release/git"
@@ -38,6 +43,7 @@ plugins:
         - package.json
         - package-lock.json
         - charts/listory/Chart.yaml
+        - docker-compose.prod.yml
   - - "@semantic-release/github"
     - assets:
         - path: .helm-charts/listory-*.tgz

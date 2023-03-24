@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  #####
+  ## Required services for listory
+  #####
+
+  db:
+    image: postgres:15.2
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: listory
+      POSTGRES_USER: listory
+      POSTGRES_DB: listory
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - db
+
+  api:
+    image: apricote/listory:1.23.3
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USERNAME: listory
+      DB_PASSWORD: listory
+      DB_DATABASE: listory
+      JWT_SECRET: listory
+      APP_URL: "http://localhost:3000"
+
+      # You can add any configuration from the README.md here or in .env,
+      # make sure to restart the container if you made any changes.
+    env_file: .env
+    ports:
+      - 3000:3000 # API
+    networks:
+      - web
+      - db
+
+volumes:
+  db: {}
+
+networks:
+  db: {}
+  web: {}
