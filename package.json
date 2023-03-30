@@ -33,7 +33,7 @@
     "@nestjs/common": "9.3.12",
     "@nestjs/config": "2.3.1",
     "@nestjs/core": "9.3.12",
-    "@nestjs/jwt": "10.0.2",
+    "@nestjs/jwt": "10.0.3",
     "@nestjs/passport": "9.0.3",
     "@nestjs/platform-express": "9.3.12",
     "@nestjs/serve-static": "3.0.1",
