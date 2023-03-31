@@ -37,7 +37,7 @@
     "@nestjs/passport": "9.0.3",
     "@nestjs/platform-express": "9.3.12",
     "@nestjs/serve-static": "3.0.1",
-    "@nestjs/swagger": "6.2.1",
+    "@nestjs/swagger": "6.3.0",
     "@nestjs/terminus": "9.2.2",
     "@nestjs/typeorm": "9.0.1",
     "@opentelemetry/api": "1.4.0",
