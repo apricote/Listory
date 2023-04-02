@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/apricote/Listory/compare/v1.24.0...v1.24.1) (2023-04-02)
+
+
+### Bug Fixes
+
+* broken release pipeline on docker push ([30e8cbf](https://github.com/apricote/Listory/commit/30e8cbf250bd299706295220a95b41561608783a))
+
 # [1.24.0](https://github.com/apricote/Listory/compare/v1.23.3...v1.24.0) (2023-04-02)
 
 
