@@ -1,3 +1,10 @@
+## [1.24.2](https://github.com/apricote/Listory/compare/v1.24.1...v1.24.2) (2023-04-02)
+
+
+### Bug Fixes
+
+* missing docker auth ([b82860d](https://github.com/apricote/Listory/commit/b82860dfbaf7c1bd09fc3dbc1c41775132215697))
+
 ## [1.24.1](https://github.com/apricote/Listory/compare/v1.24.0...v1.24.1) (2023-04-02)
 
 
