@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/apricote/Listory/compare/v1.23.3...v1.24.0) (2023-04-02)
+
+
+### Features
+
+* add arm64 image [#265](https://github.com/apricote/Listory/issues/265) ([fc50d38](https://github.com/apricote/Listory/commit/fc50d3853537a439349ee2db30f33906b6f5e486))
+
 ## [1.23.3](https://github.com/apricote/Listory/compare/v1.23.2...v1.23.3) (2023-03-19)
 
 
