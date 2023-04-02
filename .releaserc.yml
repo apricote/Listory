@@ -11,16 +11,7 @@ plugins:
     - npmPublish: false
   - - "@semantic-release/exec"
     - prepareCmd: |
-        # Build Docker Container
-        # Build now but dont push; this validates that the image builds
-        # successfully and we can later re-use the cached build results to
-        # push in "publish" stage
-        docker buildx build \
-          -t apricote/listory \
-          --build-arg VERSION=${nextRelease.version} \
-          --build-arg GIT_COMMIT=`git rev-parse HEAD` \
-          --platform=linux/amd64,linux/arm64 \
-          .
+        hack/build-docker-image.sh prepare ${nextRelease.version}
 
         # Update version in Helm Chart
         CHART_FILE=charts/listory/Chart.yaml
@@ -40,14 +31,7 @@ plugins:
           docker-compose.prod.yml
 
       publishCmd: |
-        # Build (with cache) & push Docker Images
-        docker buildx build \
-          -t apricote/listory:${nextRelease.version} \
-          -t apricote/listory:latest \
-          --build-arg VERSION=${nextRelease.version} \
-          --build-arg GIT_COMMIT=`git rev-parse HEAD` \
-          --platform=linux/amd64,linux/arm64 \
-          --push \
+        hack/build-docker-image.sh publish ${nextRelease.version}
 
   - - "@semantic-release/git"
     - assets:
