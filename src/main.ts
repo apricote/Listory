@@ -7,24 +7,9 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { context, trace } from "@opentelemetry/api";
 import * as Sentry from "@sentry/node";
 import { RavenInterceptor } from "nest-raven";
-import Pino from "pino";
 import { AppModule } from "./app.module";
 import { Logger } from "nestjs-pino";
 import { Scope } from "@sentry/node";
-
-const logger = Pino({
-  formatters: {
-    log(object) {
-      const span = trace.getSpan(context.active());
-      if (!span) return { ...object };
-      const { spanId, traceId } = span.spanContext();
-      return { ...object, spanId, traceId };
-    },
-  },
-});
-
-// @ts-expect-error
-logger.log = logger.info;
 
 function setupSentry(
   app: NestExpressApplication,
