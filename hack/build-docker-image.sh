@@ -11,7 +11,7 @@ REPO="apricote/listory"
 PLATFORMS="--platform=linux/amd64,linux/arm64"
 TAGS="--tag ${REPO}:${VERSION} --tag ${REPO}:latest"
 ARGS="--build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=`git rev-parse HEAD`"
-CACHE="--cache-from=type=registry,ref=${REPO}:buildcache --cache-to=type=registry,ref=${REPO}:buildcache"
+CACHE="--cache-from=type=registry,ref=${REPO}:buildcache --cache-to=type=registry,ref=${REPO}:buildcache,mode=max"
 
 
 # We "build" the image twice, once in "prepare" and then again in "publish" stage:
