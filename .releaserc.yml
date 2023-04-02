@@ -11,8 +11,6 @@ plugins:
     - npmPublish: false
   - - "@semantic-release/exec"
     - prepareCmd: |
-        hack/build-docker-image.sh prepare ${nextRelease.version}
-
         # Update version in Helm Chart
         CHART_FILE=charts/listory/Chart.yaml
 
@@ -30,6 +28,9 @@ plugins:
           -e "s/apricote\/listory:.*/apricote\/listory:${nextRelease.version}/g" \
           docker-compose.prod.yml
 
+        # Build docker image after updating all versions, to make sure that we
+        # don't bust the cache between prepare & publish
+        hack/build-docker-image.sh prepare ${nextRelease.version}
       publishCmd: |
         hack/build-docker-image.sh publish ${nextRelease.version}
 
