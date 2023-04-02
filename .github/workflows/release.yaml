@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - alpha
 jobs:
   tests:
     uses: ./.github/workflows/ci.yaml
