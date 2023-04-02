@@ -1,20 +1,14 @@
+FROM scratch as ignore
+
+WORKDIR /listory
+COPY . /listory/
+
 ##################
 ## common
 ##################
-FROM node:18-alpine as common
-
-ARG VERSION=unknown
-ARG GIT_COMMIT=unknown
-
-LABEL org.opencontainers.image.title="listory" \
-      org.opencontainers.image.version=$VERSION \
-      org.opencontainers.image.revision=$GIT_COMMIT \
-      stage="common"
+FROM --platform=$BUILDPLATFORM node:18-alpine as common
 
 WORKDIR /app
-
-COPY *.json /app/
-COPY frontend/*.json /app/frontend/
 
 ##################
 ## build-api
@@ -22,6 +16,7 @@ COPY frontend/*.json /app/frontend/
 FROM common as build-api
 LABEL stage="build-api"
 
+COPY *.json /app/
 RUN npm ci
 
 COPY src/ /app/src/
@@ -37,22 +32,31 @@ ARG VERSION=unknown
 
 WORKDIR /app/frontend
 
+COPY frontend/package*.json /app/frontend/
 RUN npm ci
 
-COPY frontend/postcss.config.js /app/frontend/postcss.config.js
-COPY frontend/tailwind.config.js /app/frontend/tailwind.config.js
-COPY frontend/src/ /app/frontend/src/
-COPY frontend/public/ /app/frontend/public/
-COPY frontend/.env.production /app/frontend/.env.production
+COPY frontend/ /app/frontend/
 RUN NODE_ENV=production npm run build
 
 ##################
 ## app
 ##################
-FROM common as app
-LABEL stage="app"
+FROM node:18-alpine as app
 
+ARG VERSION=unknown
+ARG GIT_COMMIT=unknown
+
+LABEL org.opencontainers.image.title="listory" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.revision=$GIT_COMMIT \
+      stage="common"
+
+WORKDIR /app
+
+COPY package.json /app/
+COPY package-lock.json /app/
 RUN npm ci --omit=dev
+
 COPY --from=build-api /app/dist/ /app/dist/
 COPY --from=build-frontend /app/frontend/build /app/static/
 
