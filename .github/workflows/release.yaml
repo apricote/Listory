@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install semantic-release
-        run: npm install -g --legacy-peer-deps semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec semantic-release-docker
+        run: npm install -g --legacy-peer-deps semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec
 
       - name: Release
         env:
