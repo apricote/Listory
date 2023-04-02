@@ -1,7 +1,21 @@
-node_modules/
-dist/
+# Ignore all and then selectivly allow
+**/*
 
-frontend/node_modules/
-frontend/src/tailwind/tailwind.generated.css
+# api
+!package.json
+!package-lock.json
+!nest-cli.json
+!tsconfig.build.json
+!tsconfig.json
 
-charts/
+!src/**/*
+
+# frontend
+!frontend/.env.production
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/postcss.config.js
+!frontend/tailwind.config.js
+!frontend/tsconfig.json
+!frontend/src/**/*
+!frontend/public/**/*
