@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1.5
+
 FROM scratch as ignore
 
 WORKDIR /listory
@@ -17,7 +19,9 @@ FROM common as build-api
 LABEL stage="build-api"
 
 COPY *.json /app/
-RUN npm ci
+RUN --mount=type=cache,target=/home/root/.npm \
+  npm set cache /usr/src/app/.npm && \
+  npm ci
 
 COPY src/ /app/src/
 RUN NODE_ENV=production npm run build
@@ -33,7 +37,10 @@ ARG VERSION=unknown
 WORKDIR /app/frontend
 
 COPY frontend/package*.json /app/frontend/
-RUN npm ci
+RUN --mount=type=cache,target=/home/root/.npm \
+  npm set cache /usr/src/app/.npm && \
+  npm ci
+
 
 COPY frontend/ /app/frontend/
 RUN NODE_ENV=production npm run build
@@ -55,7 +62,9 @@ WORKDIR /app
 
 COPY package.json /app/
 COPY package-lock.json /app/
-RUN npm ci --omit=dev
+RUN --mount=type=cache,target=/home/root/.npm \
+  npm set cache /usr/src/app/.npm && \
+  npm ci --omit=dev
 
 COPY --from=build-api /app/dist/ /app/dist/
 COPY --from=build-frontend /app/frontend/build /app/static/
