@@ -60,6 +60,8 @@ LABEL org.opencontainers.image.title="listory" \
 
 WORKDIR /app
 
+ENV NODE_ENV=production
+
 COPY package.json /app/
 COPY package-lock.json /app/
 RUN --mount=type=cache,target=/home/root/.npm \
