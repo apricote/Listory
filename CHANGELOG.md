@@ -1,3 +1,10 @@
+# [1.25.0-alpha.1](https://github.com/apricote/Listory/compare/v1.24.2...v1.25.0-alpha.1) (2023-04-03)
+
+
+### Features
+
+* optimize dockerfile for multi-platform ([2536d01](https://github.com/apricote/Listory/commit/2536d01b0c810e31e158eced0840c585ab3e8c13))
+
 ## [1.24.2](https://github.com/apricote/Listory/compare/v1.24.1...v1.24.2) (2023-04-02)
 
 
