@@ -63,7 +63,7 @@
     "cookie-parser": "1.4.6",
     "date-fns": "2.30.0",
     "nest-raven": "9.2.0",
-    "nestjs-otel": "5.1.1",
+    "nestjs-otel": "5.1.2",
     "nestjs-pino": "3.2.0",
     "nestjs-typeorm-paginate": "4.0.3",
     "passport": "0.6.0",
