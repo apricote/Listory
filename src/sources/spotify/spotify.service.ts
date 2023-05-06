@@ -125,29 +125,23 @@ export class SpotifyService {
       uniq(playHistory.map((history) => history.track.id))
     );
 
-    await Promise.all(
-      playHistory.map(async (history) => {
-        const listenTrack = tracks.find(
-          (track) => history.track.id === track.spotify.id
-        );
+    const listenData = playHistory.map((history) => ({
+      user,
+      track: tracks.find((track) => history.track.id === track.spotify.id),
+      playedAt: new Date(history.played_at),
+    }));
 
-        const { isDuplicate } = await this.listensService.createListen({
-          user,
-          track: listenTrack,
-          playedAt: new Date(history.played_at),
-        });
+    const results = await this.listensService.createListens(listenData);
 
-        if (!isDuplicate) {
-          this.logger.debug(
-            { userId: user.id },
-            `New listen found! ${user.id} listened to "${
-              listenTrack.name
-            }" by ${listenTrack.artists
-              ?.map((artist) => `"${artist.name}"`)
-              .join(", ")}`
-          );
-        }
-      })
+    results.forEach((listen) =>
+      this.logger.debug(
+        { userId: user.id },
+        `New listen found! ${user.id} listened to "${
+          listen.track.name
+        }" by ${listen.track.artists
+          ?.map((artist) => `"${artist.name}"`)
+          .join(", ")}`
+      )
     );
 
     const newestPlayTime = new Date(
