@@ -173,7 +173,7 @@ services:
 
   tempo:
     profiles: ["observability"]
-    image: grafana/tempo:main-53d34ee-amd64
+    image: grafana/tempo:2.1.1
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./observability/tempo/tempo.yaml:/etc/tempo.yaml
