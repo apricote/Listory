@@ -24,10 +24,11 @@
     },
     {
       "groupName": "sentry",
-      "matchPackageNames": [
-        "@sentry/node",
-        "nest-raven"
-      ]
+      "matchPackageNames": ["@sentry/node", "nest-raven"]
+    },
+    {
+      "groupName": "pg-boss",
+      "matchPackageNames": ["pg-boss", "@apricote/nest-pg-boss"]
     }
   ]
 }
