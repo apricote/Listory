@@ -33,6 +33,12 @@ export class MusicLibraryService {
     });
   }
 
+  async findArtists(query: FindArtistDto[]): Promise<Artist[]> {
+    return this.artistRepository.find({
+      where: query,
+    });
+  }
+
   async getArtistWithOldestUpdate(): Promise<Artist | undefined> {
     const [oldestArtist] = await this.artistRepository.find({
       take: 1,
@@ -86,6 +92,10 @@ export class MusicLibraryService {
     });
   }
 
+  async findAlbums(query: FindAlbumDto[]): Promise<Album[]> {
+    return this.albumRepository.find({ where: query });
+  }
+
   async createAlbum(data: CreateAlbumDto): Promise<Album> {
     const album = this.albumRepository.create();
 
@@ -114,6 +124,12 @@ export class MusicLibraryService {
   async findGenre(query: FindGenreDto): Promise<Genre | undefined> {
     return this.genreRepository.findOneBy({
       name: query.name,
+    });
+  }
+
+  async findGenres(query: FindGenreDto[]): Promise<Genre[]> {
+    return this.genreRepository.find({
+      where: query,
     });
   }
 
