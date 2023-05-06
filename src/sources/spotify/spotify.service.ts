@@ -1,6 +1,7 @@
-import type { Job } from "pg-boss";
 import { Injectable, Logger } from "@nestjs/common";
+import { chunk, uniq } from "lodash";
 import { Span } from "nestjs-otel";
+import type { Job } from "pg-boss";
 import { ListensService } from "../../listens/listens.service";
 import { Album } from "../../music-library/album.entity";
 import { Artist } from "../../music-library/artist.entity";
@@ -20,6 +21,11 @@ import { PlayHistoryObject } from "./spotify-api/entities/play-history-object";
 import { TrackObject } from "./spotify-api/entities/track-object";
 import { SpotifyApiService } from "./spotify-api/spotify-api.service";
 import { SpotifyAuthService } from "./spotify-auth/spotify-auth.service";
+
+/** Number of IDs that can be passed to Spotify Web API "Get Several Artist/Track" calls. */
+const SPOTIFY_BULK_MAX_IDS = 50;
+/** Number of IDs that can be passed to Spotify Web API "Get Several Album" calls. */
+const SPOTIFY_BULK_ALBUMS_MAX_IDS = 20;
 
 @Injectable()
 export class SpotifyService {
@@ -224,6 +230,94 @@ export class SpotifyService {
   }
 
   @Span()
+  async importTracks(
+    spotifyIDs: string[],
+    retryOnExpiredToken: boolean = true
+  ): Promise<Track[]> {
+    const tracks = await this.musicLibraryService.findTracks(
+      spotifyIDs.map((id) => ({ spotify: { id } }))
+    );
+
+    // Get missing ids
+    const missingIDs = spotifyIDs.filter(
+      (id) => !tracks.some((track) => track.spotify.id === id)
+    );
+
+    // No need to make spotify api request if all data is available locally
+    if (missingIDs.length === 0) {
+      return tracks;
+    }
+
+    let spotifyTracks: TrackObject[] = [];
+
+    // Split the import requests so we stay within the spotify api limits
+    try {
+      await Promise.all(
+        chunk(missingIDs, SPOTIFY_BULK_MAX_IDS).map(async (ids) => {
+          const batchTracks = await this.spotifyApi.getTracks(
+            this.appAccessToken,
+            ids
+          );
+
+          spotifyTracks.push(...batchTracks);
+        })
+      );
+    } catch (err) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
+        await this.refreshAppAccessToken();
+
+        return this.importTracks(spotifyIDs, false);
+      }
+
+      throw err;
+    }
+
+    // We import albums & artist in series because the album import also
+    // triggers an artist import. In the best case, all artists will already be
+    // imported by the importArtists() call, and the album call can get them
+    // from the database.
+    const artists = await this.importArtists(
+      uniq(
+        spotifyTracks.flatMap((track) =>
+          track.artists.map((artist) => artist.id)
+        )
+      )
+    );
+
+    const albums = await this.importAlbums(
+      uniq(spotifyTracks.map((track) => track.album.id))
+    );
+
+    // Find the right albums & artists for each spotify track & create db entry
+    const newTracks = await this.musicLibraryService.createTracks(
+      spotifyTracks.map((spotifyTrack) => {
+        const trackAlbum = albums.find(
+          (album) => spotifyTrack.album.id === album.spotify.id
+        );
+
+        const trackArtists = spotifyTrack.artists.map((trackArtist) =>
+          artists.find((artist) => trackArtist.id == artist.spotify.id)
+        );
+
+        return {
+          name: spotifyTrack.name,
+          album: trackAlbum,
+          artists: trackArtists,
+          spotify: {
+            id: spotifyTrack.id,
+            uri: spotifyTrack.uri,
+            type: spotifyTrack.type,
+            href: spotifyTrack.href,
+          },
+        };
+      })
+    );
+
+    // Return new & existing tracks
+    return [...tracks, ...newTracks];
+  }
+
+  @Span()
   async importAlbum(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -271,6 +365,80 @@ export class SpotifyService {
   }
 
   @Span()
+  async importAlbums(
+    spotifyIDs: string[],
+    retryOnExpiredToken: boolean = true
+  ): Promise<Album[]> {
+    const albums = await this.musicLibraryService.findAlbums(
+      spotifyIDs.map((id) => ({ spotify: { id } }))
+    );
+
+    // Get missing ids
+    const missingIDs = spotifyIDs.filter(
+      (id) => !albums.some((album) => album.spotify.id === id)
+    );
+
+    // No need to make spotify api request if all data is available locally
+    if (missingIDs.length === 0) {
+      return albums;
+    }
+
+    let spotifyAlbums: AlbumObject[] = [];
+
+    // Split the import requests so we stay within the spotify api limits
+    try {
+      await Promise.all(
+        chunk(missingIDs, SPOTIFY_BULK_ALBUMS_MAX_IDS).map(async (ids) => {
+          const batchAlbums = await this.spotifyApi.getAlbums(
+            this.appAccessToken,
+            ids
+          );
+
+          spotifyAlbums.push(...batchAlbums);
+        })
+      );
+    } catch (err) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
+        await this.refreshAppAccessToken();
+
+        return this.importAlbums(spotifyIDs, false);
+      }
+
+      throw err;
+    }
+
+    const artists = await this.importArtists(
+      uniq(
+        spotifyAlbums.flatMap((album) =>
+          album.artists.map((artist) => artist.id)
+        )
+      )
+    );
+
+    // Find the right albums & artists for each spotify track & create db entry
+    const newAlbums = await this.musicLibraryService.createAlbums(
+      spotifyAlbums.map((spotifyAlbum) => {
+        const albumArtists = spotifyAlbum.artists.map((albumArtist) =>
+          artists.find((artist) => albumArtist.id == artist.spotify.id)
+        );
+
+        return {
+          name: spotifyAlbum.name,
+          artists: albumArtists,
+          spotify: {
+            id: spotifyAlbum.id,
+            uri: spotifyAlbum.uri,
+            type: spotifyAlbum.type,
+            href: spotifyAlbum.href,
+          },
+        };
+      })
+    );
+
+    return [...albums, ...newAlbums];
+  }
+
+  @Span()
   async importArtist(
     spotifyID: string,
     retryOnExpiredToken: boolean = true
@@ -313,6 +481,76 @@ export class SpotifyService {
         href: spotifyArtist.href,
       },
     });
+  }
+
+  @Span()
+  async importArtists(
+    spotifyIDs: string[],
+    retryOnExpiredToken: boolean = true
+  ): Promise<Artist[]> {
+    const artists = await this.musicLibraryService.findArtists(
+      spotifyIDs.map((id) => ({ spotify: { id } }))
+    );
+
+    // Get missing ids
+    const missingIDs = spotifyIDs.filter(
+      (id) => !artists.some((artist) => artist.spotify.id === id)
+    );
+
+    // No need to make spotify api request if all data is available locally
+    if (missingIDs.length === 0) {
+      return artists;
+    }
+
+    let spotifyArtists: ArtistObject[] = [];
+
+    // Split the import requests so we stay within the spotify api limits
+    try {
+      await Promise.all(
+        chunk(missingIDs, SPOTIFY_BULK_MAX_IDS).map(async (ids) => {
+          const batchArtists = await this.spotifyApi.getArtists(
+            this.appAccessToken,
+            ids
+          );
+
+          spotifyArtists.push(...batchArtists);
+        })
+      );
+    } catch (err) {
+      if (err.response && err.response.status === 401 && retryOnExpiredToken) {
+        await this.refreshAppAccessToken();
+
+        return this.importArtists(spotifyIDs, false);
+      }
+
+      throw err;
+    }
+
+    const genres = await this.importGenres(
+      uniq(spotifyArtists.flatMap((artist) => artist.genres))
+    );
+
+    // Find the right genres for each spotify artist & create db entry
+    const newArtists = await this.musicLibraryService.createArtists(
+      spotifyArtists.map((spotifyArtist) => {
+        const artistGenres = spotifyArtist.genres.map((artistGenre) =>
+          genres.find((genre) => artistGenre == genre.name)
+        );
+
+        return {
+          name: spotifyArtist.name,
+          genres: artistGenres,
+          spotify: {
+            id: spotifyArtist.id,
+            uri: spotifyArtist.uri,
+            type: spotifyArtist.type,
+            href: spotifyArtist.href,
+          },
+        };
+      })
+    );
+
+    return [...artists, ...newArtists];
   }
 
   @Span()
@@ -366,6 +604,29 @@ export class SpotifyService {
     return this.musicLibraryService.createGenre({
       name,
     });
+  }
+
+  @Span()
+  async importGenres(names: string[]): Promise<Genre[]> {
+    const genres = await this.musicLibraryService.findGenres(
+      names.map((name) => ({ name }))
+    );
+
+    // Get missing genres
+    const missingGenres = names.filter(
+      (name) => !genres.some((genre) => genre.name === name)
+    );
+
+    // No need to create genres if all data is available locally
+    if (missingGenres.length === 0) {
+      return genres;
+    }
+
+    const newGenres = await this.musicLibraryService.createGenres(
+      missingGenres.map((name) => ({ name }))
+    );
+
+    return [...genres, ...newGenres];
   }
 
   @Span()
