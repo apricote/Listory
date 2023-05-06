@@ -8,7 +8,7 @@ COPY . /listory/
 ##################
 ## common
 ##################
-FROM --platform=$BUILDPLATFORM node:18-alpine as common
+FROM --platform=$BUILDPLATFORM node:20-alpine as common
 
 WORKDIR /app
 
@@ -48,7 +48,7 @@ RUN NODE_ENV=production npm run build
 ##################
 ## app
 ##################
-FROM node:18-alpine as app
+FROM node:20-alpine as app
 
 ARG VERSION=unknown
 ARG GIT_COMMIT=unknown
