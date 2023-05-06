@@ -121,13 +121,19 @@ export class SpotifyService {
       return;
     }
 
+    const tracks = await this.importTracks(
+      uniq(playHistory.map((history) => history.track.id))
+    );
+
     await Promise.all(
       playHistory.map(async (history) => {
-        const track = await this.importTrack(history.track.id);
+        const listenTrack = tracks.find(
+          (track) => history.track.id === track.spotify.id
+        );
 
         const { isDuplicate } = await this.listensService.createListen({
           user,
-          track,
+          track: listenTrack,
           playedAt: new Date(history.played_at),
         });
 
@@ -135,8 +141,8 @@ export class SpotifyService {
           this.logger.debug(
             { userId: user.id },
             `New listen found! ${user.id} listened to "${
-              track.name
-            }" by ${track.artists
+              listenTrack.name
+            }" by ${listenTrack.artists
               ?.map((artist) => `"${artist.name}"`)
               .join(", ")}`
           );
