@@ -17,5 +17,7 @@
 !frontend/postcss.config.js
 !frontend/tailwind.config.js
 !frontend/tsconfig.json
+!frontend/vite.config.js
+!frontend/index.html
 !frontend/src/**/*
 !frontend/public/**/*
