@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/apricote/Listory/compare/v1.26.0...v1.26.1) (2023-05-07)
+
+
+### Bug Fixes
+
+* missing import for @hapi/joi ([#274](https://github.com/apricote/Listory/issues/274)) ([bbc7ec0](https://github.com/apricote/Listory/commit/bbc7ec08174c070f8eda16a6bf3357e8a5262e70))
+
 # [1.26.0](https://github.com/apricote/Listory/compare/v1.25.0...v1.26.0) (2023-05-07)
 
 
