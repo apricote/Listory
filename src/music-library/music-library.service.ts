@@ -33,6 +33,12 @@ export class MusicLibraryService {
     });
   }
 
+  async findArtists(query: FindArtistDto[]): Promise<Artist[]> {
+    return this.artistRepository.find({
+      where: query,
+    });
+  }
+
   async getArtistWithOldestUpdate(): Promise<Artist | undefined> {
     const [oldestArtist] = await this.artistRepository.find({
       take: 1,
@@ -69,6 +75,12 @@ export class MusicLibraryService {
     return artist;
   }
 
+  async createArtists(data: CreateArtistDto[]): Promise<Artist[]> {
+    return this.artistRepository.save(
+      data.map((entry) => this.artistRepository.create(entry))
+    );
+  }
+
   async updateArtist({
     artist,
     updatedFields,
@@ -84,6 +96,10 @@ export class MusicLibraryService {
     return this.albumRepository.findOneBy({
       spotify: { id: query.spotify.id },
     });
+  }
+
+  async findAlbums(query: FindAlbumDto[]): Promise<Album[]> {
+    return this.albumRepository.find({ where: query });
   }
 
   async createAlbum(data: CreateAlbumDto): Promise<Album> {
@@ -111,9 +127,21 @@ export class MusicLibraryService {
     return album;
   }
 
+  async createAlbums(data: CreateAlbumDto[]): Promise<Album[]> {
+    return this.albumRepository.save(
+      data.map((entry) => this.albumRepository.create(entry))
+    );
+  }
+
   async findGenre(query: FindGenreDto): Promise<Genre | undefined> {
     return this.genreRepository.findOneBy({
       name: query.name,
+    });
+  }
+
+  async findGenres(query: FindGenreDto[]): Promise<Genre[]> {
+    return this.genreRepository.find({
+      where: query,
     });
   }
 
@@ -140,10 +168,20 @@ export class MusicLibraryService {
     return genre;
   }
 
+  async createGenres(data: CreateGenreDto[]): Promise<Genre[]> {
+    return this.genreRepository.save(
+      data.map((entry) => this.genreRepository.create(entry))
+    );
+  }
+
   async findTrack(query: FindTrackDto): Promise<Track | undefined> {
     return this.trackRepository.findOneBy({
       spotify: { id: query.spotify.id },
     });
+  }
+
+  async findTracks(query: FindTrackDto[]): Promise<Track[]> {
+    return this.trackRepository.find({ where: query });
   }
 
   async createTrack(data: CreateTrackDto): Promise<Track> {
@@ -170,5 +208,11 @@ export class MusicLibraryService {
     }
 
     return track;
+  }
+
+  async createTracks(data: CreateTrackDto[]): Promise<Track[]> {
+    return this.trackRepository.save(
+      data.map((entry) => this.trackRepository.create(entry))
+    );
   }
 }

@@ -108,7 +108,6 @@ export class AuthService {
   }
 
   async createApiToken(user: User, description: string): Promise<ApiToken> {
-    console.log("createApiToken");
     const apiToken = this.apiTokenRepository.create();
 
     apiToken.user = user;

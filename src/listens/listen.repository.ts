@@ -68,4 +68,21 @@ export class ListenRepository extends Repository<Listen> {
       isDuplicate: false,
     };
   }
+
+  /**
+   *
+   * @param rows
+   * @returns A list of all new (non-duplicate) listens
+   */
+  async insertsNoConflict(rows: CreateListenRequestDto[]): Promise<Listen[]> {
+    const result = await this.createQueryBuilder()
+      .insert()
+      .values(rows)
+      .orIgnore()
+      .execute();
+
+    return this.findBy(
+      result.identifiers.filter(Boolean).map(({ id }) => ({ id }))
+    );
+  }
 }

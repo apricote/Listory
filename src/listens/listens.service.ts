@@ -31,6 +31,26 @@ export class ListensService {
     return response;
   }
 
+  async createListens(
+    listensData: CreateListenRequestDto[]
+  ): Promise<Listen[]> {
+    const existingListens = await this.listenRepository.findBy(listensData);
+
+    const missingListens = listensData.filter(
+      (newListen) =>
+        !existingListens.some(
+          (existingListen) =>
+            newListen.user.id === existingListen.user.id &&
+            newListen.track.id === existingListen.track.id &&
+            newListen.playedAt.getTime() === existingListen.playedAt.getTime()
+        )
+    );
+
+    return this.listenRepository.save(
+      missingListens.map((entry) => this.listenRepository.create(entry))
+    );
+  }
+
   async getListens(
     options: GetListensDto & IPaginationOptions
   ): Promise<Pagination<Listen>> {
