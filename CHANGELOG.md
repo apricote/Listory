@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/apricote/Listory/compare/v1.25.0...v1.26.0) (2023-05-07)
+
+
+### Features
+
+* use bulk Spotify API calls & inserts to make spotify crawling more efficient ([#271](https://github.com/apricote/Listory/issues/271)) ([8721fd1](https://github.com/apricote/Listory/commit/8721fd101db8cc3797ad234a812903522911e2df))
+
 # [1.25.0](https://github.com/apricote/Listory/compare/v1.24.2...v1.25.0) (2023-04-03)
 
 
