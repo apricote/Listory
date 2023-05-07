@@ -54,14 +54,16 @@ services:
     build:
       context: .
       target: build-frontend
-    command: ["npm", "run", "start"]
+    command: ["npm", "run", "start", "--", "--host"]
     volumes:
+      - ./frontend/vite.config.js:/app/frontend/vite.config.js:ro
       - ./frontend/postcss.config.js:/app/frontend/postcss.config.js:ro
       - ./frontend/tailwind.config.js:/app/frontend/tailwind.config.js:ro
+      - ./frontend/index.html:/app/frontend/index.html:ro
       - ./frontend/src:/app/frontend/src:ro
       - ./frontend/public:/app/frontend/public:ro
     ports:
-      - 3000
+      - 5173
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
