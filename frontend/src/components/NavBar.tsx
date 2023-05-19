@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { User } from "../api/entities/user";
 import { useAuth } from "../hooks/use-auth";
-import { useOutsideClick } from "../hooks/useOutsideClick";
+import { useOutsideClick } from "../hooks/use-outside-click";
 import { CogwheelIcon } from "../icons/Cogwheel";
 import { SpotifyLogo } from "../icons/Spotify";
 
