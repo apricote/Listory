@@ -64,7 +64,7 @@
     "joi": "17.9.2",
     "lodash": "^4.17.21",
     "nest-raven": "9.2.0",
-    "nestjs-otel": "5.1.2",
+    "nestjs-otel": "5.1.4",
     "nestjs-pino": "3.3.0",
     "nestjs-typeorm-paginate": "4.0.3",
     "passport": "0.6.0",
