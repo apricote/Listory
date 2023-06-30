@@ -189,7 +189,7 @@ services:
 
   grafana:
     profiles: ["observability"]
-    image: grafana/grafana-oss:9.5.3
+    image: grafana/grafana-oss:9.5.5
     volumes:
       - ./observability/grafana/provisioning:/etc/grafana/provisioning
     environment:
