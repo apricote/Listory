@@ -27,7 +27,10 @@ export class HealthCheckController {
       () =>
         this.http.pingCheck(
           "spotify-web",
-          this.config.get<string>("SPOTIFY_WEB_API_URL")
+          this.config.get<string>("SPOTIFY_WEB_API_URL"),
+          {
+            validateStatus: () => true,
+          } // Successful as long as we get a valid HTTP response back }
         ),
       () => this.typeorm.pingCheck("db"),
     ]);
