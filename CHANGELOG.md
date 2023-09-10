@@ -1,3 +1,10 @@
+## [1.26.2](https://github.com/apricote/Listory/compare/v1.26.1...v1.26.2) (2023-09-10)
+
+
+### Bug Fixes
+
+* failing healthcheck for spotify api ([6898687](https://github.com/apricote/Listory/commit/689868798dbbcf2e3c0077ece154b5511edd73c4))
+
 ## [1.26.1](https://github.com/apricote/Listory/compare/v1.26.0...v1.26.1) (2023-05-07)
 
 
