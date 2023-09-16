@@ -22,7 +22,7 @@ export const ReportTopAlbums: React.FC = () => {
     () => ({
       time: timeOptions,
     }),
-    [timeOptions]
+    [timeOptions],
   );
 
   const { topAlbums, isLoading } = useTopAlbums(options);

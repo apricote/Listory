@@ -39,7 +39,7 @@ export class SpotifyService {
     private readonly listensService: ListensService,
     private readonly musicLibraryService: MusicLibraryService,
     private readonly spotifyApi: SpotifyApiService,
-    private readonly spotifyAuth: SpotifyAuthService
+    private readonly spotifyAuth: SpotifyAuthService,
   ) {}
 
   @Span()
@@ -82,7 +82,7 @@ export class SpotifyService {
   @Span()
   async crawlListensForUser(
     user: User,
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<void> {
     this.logger.debug({ userId: user.id }, `Crawling recently played tracks`);
 
@@ -93,7 +93,7 @@ export class SpotifyService {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
         try {
           const accessToken = await this.spotifyAuth.refreshAccessToken(
-            user.spotify
+            user.spotify,
           );
           await this.usersService.updateSpotifyConnection(user, {
             ...user.spotify,
@@ -103,7 +103,7 @@ export class SpotifyService {
         } catch (errFromAuth) {
           this.logger.error(
             { userId: user.id },
-            `Refreshing access token failed for user "${user.id}": ${errFromAuth}`
+            `Refreshing access token failed for user "${user.id}": ${errFromAuth}`,
           );
           throw errFromAuth;
         }
@@ -112,7 +112,7 @@ export class SpotifyService {
       }
 
       this.logger.error(
-        `Unexpected error while fetching recently played tracks: ${err}`
+        `Unexpected error while fetching recently played tracks: ${err}`,
       );
       throw err;
     }
@@ -122,7 +122,7 @@ export class SpotifyService {
     }
 
     const tracks = await this.importTracks(
-      uniq(playHistory.map((history) => history.track.id))
+      uniq(playHistory.map((history) => history.track.id)),
     );
 
     const listenData = playHistory.map((history) => ({
@@ -140,15 +140,15 @@ export class SpotifyService {
           listen.track.name
         }" by ${listen.track.artists
           ?.map((artist) => `"${artist.name}"`)
-          .join(", ")}`
-      )
+          .join(", ")}`,
+      ),
     );
 
     const newestPlayTime = new Date(
       playHistory
         .map((history) => history.played_at)
         .sort()
-        .pop()
+        .pop(),
     );
 
     /**
@@ -181,7 +181,7 @@ export class SpotifyService {
   @Span()
   async importTrack(
     spotifyID: string,
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Track> {
     const track = await this.musicLibraryService.findTrack({
       spotify: { id: spotifyID },
@@ -195,7 +195,7 @@ export class SpotifyService {
     try {
       spotifyTrack = await this.spotifyApi.getTrack(
         this.appAccessToken,
-        spotifyID
+        spotifyID,
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -211,8 +211,8 @@ export class SpotifyService {
       this.importAlbum(spotifyTrack.album.id),
       Promise.all(
         spotifyTrack.artists.map(({ id: artistID }) =>
-          this.importArtist(artistID)
-        )
+          this.importArtist(artistID),
+        ),
       ),
     ]);
 
@@ -232,15 +232,15 @@ export class SpotifyService {
   @Span()
   async importTracks(
     spotifyIDs: string[],
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Track[]> {
     const tracks = await this.musicLibraryService.findTracks(
-      spotifyIDs.map((id) => ({ spotify: { id } }))
+      spotifyIDs.map((id) => ({ spotify: { id } })),
     );
 
     // Get missing ids
     const missingIDs = spotifyIDs.filter(
-      (id) => !tracks.some((track) => track.spotify.id === id)
+      (id) => !tracks.some((track) => track.spotify.id === id),
     );
 
     // No need to make spotify api request if all data is available locally
@@ -256,11 +256,11 @@ export class SpotifyService {
         chunk(missingIDs, SPOTIFY_BULK_MAX_IDS).map(async (ids) => {
           const batchTracks = await this.spotifyApi.getTracks(
             this.appAccessToken,
-            ids
+            ids,
           );
 
           spotifyTracks.push(...batchTracks);
-        })
+        }),
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -279,24 +279,24 @@ export class SpotifyService {
     const artists = await this.importArtists(
       uniq(
         spotifyTracks.flatMap((track) =>
-          track.artists.map((artist) => artist.id)
-        )
-      )
+          track.artists.map((artist) => artist.id),
+        ),
+      ),
     );
 
     const albums = await this.importAlbums(
-      uniq(spotifyTracks.map((track) => track.album.id))
+      uniq(spotifyTracks.map((track) => track.album.id)),
     );
 
     // Find the right albums & artists for each spotify track & create db entry
     const newTracks = await this.musicLibraryService.createTracks(
       spotifyTracks.map((spotifyTrack) => {
         const trackAlbum = albums.find(
-          (album) => spotifyTrack.album.id === album.spotify.id
+          (album) => spotifyTrack.album.id === album.spotify.id,
         );
 
         const trackArtists = spotifyTrack.artists.map((trackArtist) =>
-          artists.find((artist) => trackArtist.id == artist.spotify.id)
+          artists.find((artist) => trackArtist.id == artist.spotify.id),
         );
 
         return {
@@ -310,7 +310,7 @@ export class SpotifyService {
             href: spotifyTrack.href,
           },
         };
-      })
+      }),
     );
 
     // Return new & existing tracks
@@ -320,7 +320,7 @@ export class SpotifyService {
   @Span()
   async importAlbum(
     spotifyID: string,
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Album> {
     const album = await this.musicLibraryService.findAlbum({
       spotify: { id: spotifyID },
@@ -334,7 +334,7 @@ export class SpotifyService {
     try {
       spotifyAlbum = await this.spotifyApi.getAlbum(
         this.appAccessToken,
-        spotifyID
+        spotifyID,
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -348,8 +348,8 @@ export class SpotifyService {
 
     const artists = await Promise.all(
       spotifyAlbum.artists.map(({ id: artistID }) =>
-        this.importArtist(artistID)
-      )
+        this.importArtist(artistID),
+      ),
     );
 
     return this.musicLibraryService.createAlbum({
@@ -367,15 +367,15 @@ export class SpotifyService {
   @Span()
   async importAlbums(
     spotifyIDs: string[],
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Album[]> {
     const albums = await this.musicLibraryService.findAlbums(
-      spotifyIDs.map((id) => ({ spotify: { id } }))
+      spotifyIDs.map((id) => ({ spotify: { id } })),
     );
 
     // Get missing ids
     const missingIDs = spotifyIDs.filter(
-      (id) => !albums.some((album) => album.spotify.id === id)
+      (id) => !albums.some((album) => album.spotify.id === id),
     );
 
     // No need to make spotify api request if all data is available locally
@@ -391,11 +391,11 @@ export class SpotifyService {
         chunk(missingIDs, SPOTIFY_BULK_ALBUMS_MAX_IDS).map(async (ids) => {
           const batchAlbums = await this.spotifyApi.getAlbums(
             this.appAccessToken,
-            ids
+            ids,
           );
 
           spotifyAlbums.push(...batchAlbums);
-        })
+        }),
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -410,16 +410,16 @@ export class SpotifyService {
     const artists = await this.importArtists(
       uniq(
         spotifyAlbums.flatMap((album) =>
-          album.artists.map((artist) => artist.id)
-        )
-      )
+          album.artists.map((artist) => artist.id),
+        ),
+      ),
     );
 
     // Find the right albums & artists for each spotify track & create db entry
     const newAlbums = await this.musicLibraryService.createAlbums(
       spotifyAlbums.map((spotifyAlbum) => {
         const albumArtists = spotifyAlbum.artists.map((albumArtist) =>
-          artists.find((artist) => albumArtist.id == artist.spotify.id)
+          artists.find((artist) => albumArtist.id == artist.spotify.id),
         );
 
         return {
@@ -432,7 +432,7 @@ export class SpotifyService {
             href: spotifyAlbum.href,
           },
         };
-      })
+      }),
     );
 
     return [...albums, ...newAlbums];
@@ -441,7 +441,7 @@ export class SpotifyService {
   @Span()
   async importArtist(
     spotifyID: string,
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Artist> {
     const artist = await this.musicLibraryService.findArtist({
       spotify: { id: spotifyID },
@@ -455,7 +455,7 @@ export class SpotifyService {
     try {
       spotifyArtist = await this.spotifyApi.getArtist(
         this.appAccessToken,
-        spotifyID
+        spotifyID,
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -468,7 +468,7 @@ export class SpotifyService {
     }
 
     const genres = await Promise.all(
-      spotifyArtist.genres.map((genreName) => this.importGenre(genreName))
+      spotifyArtist.genres.map((genreName) => this.importGenre(genreName)),
     );
 
     return this.musicLibraryService.createArtist({
@@ -486,15 +486,15 @@ export class SpotifyService {
   @Span()
   async importArtists(
     spotifyIDs: string[],
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Artist[]> {
     const artists = await this.musicLibraryService.findArtists(
-      spotifyIDs.map((id) => ({ spotify: { id } }))
+      spotifyIDs.map((id) => ({ spotify: { id } })),
     );
 
     // Get missing ids
     const missingIDs = spotifyIDs.filter(
-      (id) => !artists.some((artist) => artist.spotify.id === id)
+      (id) => !artists.some((artist) => artist.spotify.id === id),
     );
 
     // No need to make spotify api request if all data is available locally
@@ -510,11 +510,11 @@ export class SpotifyService {
         chunk(missingIDs, SPOTIFY_BULK_MAX_IDS).map(async (ids) => {
           const batchArtists = await this.spotifyApi.getArtists(
             this.appAccessToken,
-            ids
+            ids,
           );
 
           spotifyArtists.push(...batchArtists);
-        })
+        }),
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -527,14 +527,14 @@ export class SpotifyService {
     }
 
     const genres = await this.importGenres(
-      uniq(spotifyArtists.flatMap((artist) => artist.genres))
+      uniq(spotifyArtists.flatMap((artist) => artist.genres)),
     );
 
     // Find the right genres for each spotify artist & create db entry
     const newArtists = await this.musicLibraryService.createArtists(
       spotifyArtists.map((spotifyArtist) => {
         const artistGenres = spotifyArtist.genres.map((artistGenre) =>
-          genres.find((genre) => artistGenre == genre.name)
+          genres.find((genre) => artistGenre == genre.name),
         );
 
         return {
@@ -547,7 +547,7 @@ export class SpotifyService {
             href: spotifyArtist.href,
           },
         };
-      })
+      }),
     );
 
     return [...artists, ...newArtists];
@@ -556,7 +556,7 @@ export class SpotifyService {
   @Span()
   async updateArtist(
     spotifyID: string,
-    retryOnExpiredToken: boolean = true
+    retryOnExpiredToken: boolean = true,
   ): Promise<Artist> {
     const artist = await this.importArtist(spotifyID, retryOnExpiredToken);
 
@@ -565,7 +565,7 @@ export class SpotifyService {
     try {
       spotifyArtist = await this.spotifyApi.getArtist(
         this.appAccessToken,
-        spotifyID
+        spotifyID,
       );
     } catch (err) {
       if (err.response && err.response.status === 401 && retryOnExpiredToken) {
@@ -578,7 +578,7 @@ export class SpotifyService {
     }
 
     const genres = await Promise.all(
-      spotifyArtist.genres.map((genreName) => this.importGenre(genreName))
+      spotifyArtist.genres.map((genreName) => this.importGenre(genreName)),
     );
 
     await this.musicLibraryService.updateArtist({
@@ -609,12 +609,12 @@ export class SpotifyService {
   @Span()
   async importGenres(names: string[]): Promise<Genre[]> {
     const genres = await this.musicLibraryService.findGenres(
-      names.map((name) => ({ name }))
+      names.map((name) => ({ name })),
     );
 
     // Get missing genres
     const missingGenres = names.filter(
-      (name) => !genres.some((genre) => genre.name === name)
+      (name) => !genres.some((genre) => genre.name === name),
     );
 
     // No need to create genres if all data is available locally
@@ -623,7 +623,7 @@ export class SpotifyService {
     }
 
     const newGenres = await this.musicLibraryService.createGenres(
-      missingGenres.map((name) => ({ name }))
+      missingGenres.map((name) => ({ name })),
     );
 
     return [...genres, ...newGenres];
@@ -646,7 +646,7 @@ export class SpotifyService {
           resolve();
         } catch (err) {
           this.logger.warn(
-            `Error while refreshing spotify app access token ${err}`
+            `Error while refreshing spotify app access token ${err}`,
           );
 
           reject(err);

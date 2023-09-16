@@ -19,7 +19,7 @@ describe("UrlValueParserService", () => {
   describe("replacePathValues", () => {
     it("works with default replacement", () => {
       const replaced = service.replacePathValues(
-        "/in/world/14/userId/abca12d231"
+        "/in/world/14/userId/abca12d231",
       );
       expect(replaced).toBe("/in/world/#val/userId/#val");
     });
@@ -27,21 +27,21 @@ describe("UrlValueParserService", () => {
     it("works with custom replacement", () => {
       const replaced = service.replacePathValues(
         "/in/world/14/userId/abca12d231",
-        "<id>"
+        "<id>",
       );
       expect(replaced).toBe("/in/world/<id>/userId/<id>");
     });
 
     it("works with negative decimal numbers", () => {
       const replaced = service.replacePathValues(
-        "/some/path/-154/userId/-ABC363AFE2"
+        "/some/path/-154/userId/-ABC363AFE2",
       );
       expect(replaced).toBe("/some/path/#val/userId/-ABC363AFE2");
     });
 
     it("works with spotify ids", () => {
       const replaced = service.replacePathValues(
-        "/v1/albums/2PzfMWIpq6JKucGhkS1X5M"
+        "/v1/albums/2PzfMWIpq6JKucGhkS1X5M",
       );
       expect(replaced).toBe("/v1/albums/#val");
     });

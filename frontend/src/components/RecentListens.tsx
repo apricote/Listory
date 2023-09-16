@@ -111,7 +111,7 @@ const Pagination: React.FC<{
           >
             ...
           </div>
-        )
+        ),
       )}
       <button
         className={`${

@@ -57,7 +57,7 @@ export class AuthController {
   @UseGuards(RefreshTokenAuthGuard)
   async refreshAccessToken(
     // With RefreshTokenAuthGuard the session is available instead of user
-    @ReqUser() session: AuthSession
+    @ReqUser() session: AuthSession,
   ): Promise<RefreshAccessTokenResponseDto> {
     const { accessToken } = await this.authService.createAccessToken(session);
 
@@ -69,7 +69,7 @@ export class AuthController {
   @AuthAccessToken()
   async createApiToken(
     @ReqUser() user: User,
-    @Body("description") description: string
+    @Body("description") description: string,
   ): Promise<NewApiTokenDto> {
     const apiToken = await this.authService.createApiToken(user, description);
 
@@ -100,7 +100,7 @@ export class AuthController {
   @AuthAccessToken()
   async revokeApiToken(
     @ReqUser() user: User,
-    @Param("id") id: string
+    @Param("id") id: string,
   ): Promise<void> {
     return this.authService.revokeApiToken(user, id);
   }

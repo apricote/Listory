@@ -22,7 +22,7 @@ export class ReportsController {
   async getListens(
     @Query() time: ReportTimeDto,
     @Query("timeFrame") timeFrame: Timeframe,
-    @ReqUser() user: User
+    @ReqUser() user: User,
   ): Promise<ListenReportDto> {
     return this.reportsService.getListens({ user, timeFrame, time });
   }
@@ -31,7 +31,7 @@ export class ReportsController {
   @AuthAccessToken()
   async getTopArtists(
     @Query() time: ReportTimeDto,
-    @ReqUser() user: User
+    @ReqUser() user: User,
   ): Promise<TopArtistsReportDto> {
     return this.reportsService.getTopArtists({ user, time });
   }
@@ -40,7 +40,7 @@ export class ReportsController {
   @AuthAccessToken()
   async getTopAlbums(
     @Query() time: ReportTimeDto,
-    @ReqUser() user: User
+    @ReqUser() user: User,
   ): Promise<TopAlbumsReportDto> {
     return this.reportsService.getTopAlbums({ user, time });
   }
@@ -49,7 +49,7 @@ export class ReportsController {
   @AuthAccessToken()
   async getTopTracks(
     @Query() time: ReportTimeDto,
-    @ReqUser() user: User
+    @ReqUser() user: User,
   ): Promise<TopTracksReportDto> {
     return this.reportsService.getTopTracks({ user, time });
   }
@@ -58,7 +58,7 @@ export class ReportsController {
   @AuthAccessToken()
   async getTopGenres(
     @Query() time: ReportTimeDto,
-    @ReqUser() user: User
+    @ReqUser() user: User,
   ): Promise<TopGenresReportDto> {
     return this.reportsService.getTopGenres({ user, time });
   }

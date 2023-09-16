@@ -8,17 +8,17 @@ import { AuthStrategy } from "./strategies.enum";
 @Injectable()
 export class SpotifyStrategy extends PassportStrategy(
   Strategy,
-  AuthStrategy.Spotify
+  AuthStrategy.Spotify,
 ) {
   constructor(
     private readonly authService: AuthService,
-    config: ConfigService
+    config: ConfigService,
   ) {
     super({
       clientID: config.get<string>("SPOTIFY_CLIENT_ID"),
       clientSecret: config.get<string>("SPOTIFY_CLIENT_SECRET"),
       callbackURL: `${config.get<string>(
-        "APP_URL"
+        "APP_URL",
       )}/api/v1/auth/spotify/callback`,
       scope: [
         "user-read-private",

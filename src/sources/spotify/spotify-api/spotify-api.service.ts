@@ -25,8 +25,8 @@ export class SpotifyApiService {
         {
           headers: { Authorization: `Bearer ${accessToken}` },
           params: parameters,
-        }
-      )
+        },
+      ),
     );
 
     return history.data.items;
@@ -34,12 +34,12 @@ export class SpotifyApiService {
 
   async getArtist(
     accessToken: string,
-    spotifyID: string
+    spotifyID: string,
   ): Promise<ArtistObject> {
     const artist = await firstValueFrom(
       this.httpService.get<ArtistObject>(`v1/artists/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      }),
     );
 
     return artist.data;
@@ -47,7 +47,7 @@ export class SpotifyApiService {
 
   async getArtists(
     accessToken: string,
-    spotifyIDs: string[]
+    spotifyIDs: string[],
   ): Promise<ArtistObject[]> {
     const artist = await firstValueFrom(
       this.httpService.get<{ artists: ArtistObject[] }>(`v1/artists`, {
@@ -55,7 +55,7 @@ export class SpotifyApiService {
         params: {
           ids: spotifyIDs.join(","),
         },
-      })
+      }),
     );
 
     return artist.data.artists;
@@ -65,14 +65,14 @@ export class SpotifyApiService {
     const album = await firstValueFrom(
       this.httpService.get<AlbumObject>(`v1/albums/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      }),
     );
     return album.data;
   }
 
   async getAlbums(
     accessToken: string,
-    spotifyIDs: string[]
+    spotifyIDs: string[],
   ): Promise<AlbumObject[]> {
     const album = await firstValueFrom(
       this.httpService.get<{ albums: AlbumObject[] }>(`v1/albums`, {
@@ -80,7 +80,7 @@ export class SpotifyApiService {
         params: {
           ids: spotifyIDs.join(","),
         },
-      })
+      }),
     );
     return album.data.albums;
   }
@@ -89,7 +89,7 @@ export class SpotifyApiService {
     const track = await firstValueFrom(
       this.httpService.get<TrackObject>(`v1/tracks/${spotifyID}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      }),
     );
 
     return track.data;
@@ -97,7 +97,7 @@ export class SpotifyApiService {
 
   async getTracks(
     accessToken: string,
-    spotifyIDs: string[]
+    spotifyIDs: string[],
   ): Promise<TrackObject[]> {
     const track = await firstValueFrom(
       this.httpService.get<{ tracks: TrackObject[] }>(`v1/tracks`, {
@@ -105,7 +105,7 @@ export class SpotifyApiService {
         params: {
           ids: spotifyIDs.join(","),
         },
-      })
+      }),
     );
 
     return track.data.tracks;

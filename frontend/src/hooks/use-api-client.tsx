@@ -1,4 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
 import React, {
   createContext,
   useContext,
@@ -13,7 +17,7 @@ interface ApiClientContext {
 }
 
 const apiClientContext = createContext<ApiClientContext>(
-  undefined as any as ApiClientContext
+  undefined as any as ApiClientContext,
 );
 
 export const ProvideApiClient: React.FC<{ children: React.ReactNode }> = ({
@@ -35,13 +39,13 @@ export function useApiClient() {
 function useProvideApiClient(): ApiClientContext {
   const { accessToken, refreshAccessToken } = useAuth();
 
-  // Wrap value to immediatly update when refreshing access token
+  // Wrap value to immediately update when refreshing access token
   // and always having access to newest access token in interceptor
   const localAccessToken = useRef(accessToken);
 
   // initialState must be passed as function as return value of axios.create()
   // is also callable and react will call it and then use that result (promise)
-  // as the initial state instead of the axios instace.
+  // as the initial state instead of the axios instance.
   const [client] = useState<AxiosInstance>(() => axios.create());
 
   useEffect(() => {
@@ -54,15 +58,11 @@ function useProvideApiClient(): ApiClientContext {
     // Setup Axios Interceptors
     const requestInterceptor = client.interceptors.request.use(
       (config) => {
-        if (!config.headers) {
-          config.headers = {};
-        }
-
         config.headers.Authorization = `Bearer ${localAccessToken.current}`;
 
         return config;
       },
-      (err) => Promise.reject(err)
+      (err) => Promise.reject(err),
     );
     const responseInterceptor = client.interceptors.response.use(
       (data) => data,
@@ -73,7 +73,7 @@ function useProvideApiClient(): ApiClientContext {
 
         const { response, config } = err as {
           response: AxiosResponse;
-          config: AxiosRequestConfig;
+          config: InternalAxiosRequestConfig;
         };
 
         if (response && response.status !== 401) {
@@ -84,7 +84,7 @@ function useProvideApiClient(): ApiClientContext {
         localAccessToken.current = await refreshAccessToken();
 
         return client.request(config);
-      }
+      },
     );
 
     return () => {

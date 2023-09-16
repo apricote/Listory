@@ -19,7 +19,7 @@ export class UnauthenticatedError extends Error {}
 
 export const getRecentListens = async (
   options: PaginationOptions = { page: 1, limit: 10 },
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<Pagination<Listen>> => {
   const { page, limit } = options;
 
@@ -44,7 +44,7 @@ export const getRecentListens = async (
 
 export const getListensReport = async (
   options: ListenReportOptions,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<ListenReportItem[]> => {
   const {
     timeFrame,
@@ -60,7 +60,7 @@ export const getListensReport = async (
         customTimeStart: formatISO(customTimeStart),
         customTimeEnd: formatISO(customTimeEnd),
       },
-    }
+    },
   );
 
   switch (res.status) {
@@ -83,7 +83,7 @@ export const getListensReport = async (
 
 export const getTopArtists = async (
   options: TopArtistsOptions,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<TopArtistsItem[]> => {
   const {
     time: { timePreset, customTimeStart, customTimeEnd },
@@ -97,7 +97,7 @@ export const getTopArtists = async (
         customTimeStart: formatISO(customTimeStart),
         customTimeEnd: formatISO(customTimeEnd),
       },
-    }
+    },
   );
 
   switch (res.status) {
@@ -120,7 +120,7 @@ export const getTopArtists = async (
 
 export const getTopAlbums = async (
   options: TopAlbumsOptions,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<TopAlbumsItem[]> => {
   const {
     time: { timePreset, customTimeStart, customTimeEnd },
@@ -134,7 +134,7 @@ export const getTopAlbums = async (
         customTimeStart: formatISO(customTimeStart),
         customTimeEnd: formatISO(customTimeEnd),
       },
-    }
+    },
   );
 
   switch (res.status) {
@@ -157,7 +157,7 @@ export const getTopAlbums = async (
 
 export const getTopTracks = async (
   options: TopTracksOptions,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<TopTracksItem[]> => {
   const {
     time: { timePreset, customTimeStart, customTimeEnd },
@@ -171,7 +171,7 @@ export const getTopTracks = async (
         customTimeStart: formatISO(customTimeStart),
         customTimeEnd: formatISO(customTimeEnd),
       },
-    }
+    },
   );
 
   switch (res.status) {
@@ -194,7 +194,7 @@ export const getTopTracks = async (
 
 export const getTopGenres = async (
   options: TopGenresOptions,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<TopGenresItem[]> => {
   const {
     time: { timePreset, customTimeStart, customTimeEnd },
@@ -208,7 +208,7 @@ export const getTopGenres = async (
         customTimeStart: formatISO(customTimeStart),
         customTimeEnd: formatISO(customTimeEnd),
       },
-    }
+    },
   );
 
   switch (res.status) {
@@ -230,7 +230,7 @@ export const getTopGenres = async (
 };
 
 export const getApiTokens = async (
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<ApiToken[]> => {
   const res = await client.get<ApiToken[]>(`/api/v1/auth/api-tokens`);
 
@@ -251,7 +251,7 @@ export const getApiTokens = async (
 
 export const createApiToken = async (
   description: string,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<NewApiToken> => {
   const res = await client.post<NewApiToken>(`/api/v1/auth/api-tokens`, {
     description,
@@ -274,7 +274,7 @@ export const createApiToken = async (
 
 export const revokeApiToken = async (
   id: string,
-  client: AxiosInstance
+  client: AxiosInstance,
 ): Promise<void> => {
   const res = await client.delete<NewApiToken>(`/api/v1/auth/api-tokens/${id}`);
 

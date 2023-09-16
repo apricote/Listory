@@ -82,7 +82,7 @@ export class ListenRepository extends Repository<Listen> {
       .execute();
 
     return this.findBy(
-      result.identifiers.filter(Boolean).map(({ id }) => ({ id }))
+      result.identifiers.filter(Boolean).map(({ id }) => ({ id })),
     );
   }
 }

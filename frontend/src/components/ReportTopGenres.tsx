@@ -25,7 +25,7 @@ export const ReportTopGenres: React.FC = () => {
     () => ({
       time: timeOptions,
     }),
-    [timeOptions]
+    [timeOptions],
   );
 
   const { topGenres, isLoading } = useTopGenres(options);

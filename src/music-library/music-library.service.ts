@@ -24,7 +24,7 @@ export class MusicLibraryService {
     private readonly albumRepository: AlbumRepository,
     private readonly artistRepository: ArtistRepository,
     private readonly genreRepository: GenreRepository,
-    private readonly trackRepository: TrackRepository
+    private readonly trackRepository: TrackRepository,
   ) {}
 
   async findArtist(query: FindArtistDto): Promise<Artist | undefined> {
@@ -77,7 +77,7 @@ export class MusicLibraryService {
 
   async createArtists(data: CreateArtistDto[]): Promise<Artist[]> {
     return this.artistRepository.save(
-      data.map((entry) => this.artistRepository.create(entry))
+      data.map((entry) => this.artistRepository.create(entry)),
     );
   }
 
@@ -129,7 +129,7 @@ export class MusicLibraryService {
 
   async createAlbums(data: CreateAlbumDto[]): Promise<Album[]> {
     return this.albumRepository.save(
-      data.map((entry) => this.albumRepository.create(entry))
+      data.map((entry) => this.albumRepository.create(entry)),
     );
   }
 
@@ -170,7 +170,7 @@ export class MusicLibraryService {
 
   async createGenres(data: CreateGenreDto[]): Promise<Genre[]> {
     return this.genreRepository.save(
-      data.map((entry) => this.genreRepository.create(entry))
+      data.map((entry) => this.genreRepository.create(entry)),
     );
   }
 
@@ -212,7 +212,7 @@ export class MusicLibraryService {
 
   async createTracks(data: CreateTrackDto[]): Promise<Track[]> {
     return this.trackRepository.save(
-      data.map((entry) => this.trackRepository.create(entry))
+      data.map((entry) => this.trackRepository.create(entry)),
     );
   }
 }

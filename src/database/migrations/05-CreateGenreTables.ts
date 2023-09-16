@@ -34,7 +34,7 @@ export class CreateGenreTables0000000000005 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
 
     await queryRunner.createTable(
@@ -77,7 +77,7 @@ export class CreateGenreTables0000000000005 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
   }
 

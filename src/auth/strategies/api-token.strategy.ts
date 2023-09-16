@@ -12,7 +12,7 @@ import { AuthStrategy } from "./strategies.enum";
 @Injectable()
 export class ApiTokenStrategy extends PassportStrategy(
   Strategy,
-  AuthStrategy.ApiToken
+  AuthStrategy.ApiToken,
 ) {
   constructor(private readonly authService: AuthService) {
     super();

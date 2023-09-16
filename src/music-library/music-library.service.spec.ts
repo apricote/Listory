@@ -57,7 +57,7 @@ describe("MusicLibraryService", () => {
         artistRepository.findOneBy = jest.fn().mockResolvedValue(artist);
 
         await expect(
-          service.findArtist({ spotify: { id: "spotify_artist" } })
+          service.findArtist({ spotify: { id: "spotify_artist" } }),
         ).resolves.toEqual(artist);
 
         expect(artistRepository.findOneBy).toHaveBeenCalledTimes(1);
@@ -90,7 +90,7 @@ describe("MusicLibraryService", () => {
 
       it("creates the entity", async () => {
         await expect(service.createArtist(createArtistDto)).resolves.toEqual(
-          artist
+          artist,
         );
 
         expect(artistRepository.create).toHaveBeenCalledTimes(1);
@@ -115,7 +115,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(uniqueViolationError);
 
         await expect(service.createArtist(createArtistDto)).resolves.toEqual(
-          artist
+          artist,
         );
 
         expect(service.findArtist).toHaveBeenCalledTimes(1);
@@ -130,7 +130,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.createArtist(createArtistDto)).rejects.toThrow(
-          "Generic Error"
+          "Generic Error",
         );
       });
     });
@@ -167,7 +167,7 @@ describe("MusicLibraryService", () => {
 
       it("updates the entity", async () => {
         await expect(service.updateArtist(updateArtistDto)).resolves.toEqual(
-          artist
+          artist,
         );
 
         expect(artistRepository.save).toHaveBeenCalledTimes(1);
@@ -183,7 +183,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.updateArtist(updateArtistDto)).rejects.toThrow(
-          "Generic Error"
+          "Generic Error",
         );
       });
     });
@@ -198,7 +198,7 @@ describe("MusicLibraryService", () => {
         albumRepository.findOneBy = jest.fn().mockResolvedValue(album);
 
         await expect(
-          service.findAlbum({ spotify: { id: "spotify_album" } })
+          service.findAlbum({ spotify: { id: "spotify_album" } }),
         ).resolves.toEqual(album);
 
         expect(albumRepository.findOneBy).toHaveBeenCalledTimes(1);
@@ -231,7 +231,7 @@ describe("MusicLibraryService", () => {
 
       it("creates the entity", async () => {
         await expect(service.createAlbum(createAlbumDto)).resolves.toEqual(
-          album
+          album,
         );
 
         expect(albumRepository.create).toHaveBeenCalledTimes(1);
@@ -256,7 +256,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(uniqueViolationError);
 
         await expect(service.createAlbum(createAlbumDto)).resolves.toEqual(
-          album
+          album,
         );
 
         expect(service.findAlbum).toHaveBeenCalledTimes(1);
@@ -271,7 +271,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.createAlbum(createAlbumDto)).rejects.toThrow(
-          "Generic Error"
+          "Generic Error",
         );
       });
     });
@@ -287,7 +287,7 @@ describe("MusicLibraryService", () => {
         genreRepository.findOneBy = jest.fn().mockResolvedValue(genre);
 
         await expect(service.findGenre({ name: "Foo" })).resolves.toEqual(
-          genre
+          genre,
         );
 
         expect(genreRepository.findOneBy).toHaveBeenCalledTimes(1);
@@ -317,7 +317,7 @@ describe("MusicLibraryService", () => {
 
       it("creates the entity", async () => {
         await expect(service.createGenre(createGenreDto)).resolves.toEqual(
-          genre
+          genre,
         );
 
         expect(genreRepository.create).toHaveBeenCalledTimes(1);
@@ -342,7 +342,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(uniqueViolationError);
 
         await expect(service.createGenre(createGenreDto)).resolves.toEqual(
-          genre
+          genre,
         );
 
         expect(service.findGenre).toHaveBeenCalledTimes(1);
@@ -357,7 +357,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.createGenre(createGenreDto)).rejects.toThrow(
-          "Generic Error"
+          "Generic Error",
         );
       });
     });
@@ -372,7 +372,7 @@ describe("MusicLibraryService", () => {
         trackRepository.findOneBy = jest.fn().mockResolvedValue(track);
 
         await expect(
-          service.findTrack({ spotify: { id: "spotify_track" } })
+          service.findTrack({ spotify: { id: "spotify_track" } }),
         ).resolves.toEqual(track);
 
         expect(trackRepository.findOneBy).toHaveBeenCalledTimes(1);
@@ -405,7 +405,7 @@ describe("MusicLibraryService", () => {
 
       it("creates the entity", async () => {
         await expect(service.createTrack(createTrackDto)).resolves.toEqual(
-          track
+          track,
         );
 
         expect(trackRepository.create).toHaveBeenCalledTimes(1);
@@ -430,7 +430,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(uniqueViolationError);
 
         await expect(service.createTrack(createTrackDto)).resolves.toEqual(
-          track
+          track,
         );
 
         expect(service.findTrack).toHaveBeenCalledTimes(1);
@@ -445,7 +445,7 @@ describe("MusicLibraryService", () => {
           .mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.createTrack(createTrackDto)).rejects.toThrow(
-          "Generic Error"
+          "Generic Error",
         );
       });
     });

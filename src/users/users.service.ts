@@ -11,7 +11,7 @@ export class UsersService {
   constructor(
     private readonly userRepository: UserRepository,
     @ImportSpotifyJob.Inject()
-    private readonly importSpotifyJobService: JobService<IImportSpotifyJob>
+    private readonly importSpotifyJobService: JobService<IImportSpotifyJob>,
   ) {}
 
   async findById(id: string): Promise<User> {
@@ -59,7 +59,7 @@ export class UsersService {
 
   async updateSpotifyConnection(
     user: User,
-    spotify: SpotifyConnection
+    spotify: SpotifyConnection,
   ): Promise<void> {
     // eslint-disable-next-line no-param-reassign
     user.spotify = spotify;

@@ -24,7 +24,7 @@ export class SchedulerService implements OnApplicationBootstrap {
     @ImportSpotifyJob.Inject()
     private readonly importSpotifyJobService: JobService<IImportSpotifyJob>,
     @UpdateSpotifyLibraryJob.Inject()
-    private readonly updateSpotifyLibraryJobService: JobService<IUpdateSpotifyLibraryJob>
+    private readonly updateSpotifyLibraryJobService: JobService<IUpdateSpotifyLibraryJob>,
   ) {}
 
   async onApplicationBootstrap() {
@@ -65,9 +65,9 @@ export class SchedulerService implements OnApplicationBootstrap {
           { userID: user.id },
           {},
           pollRate,
-          user.id
+          user.id,
         );
-      })
+      }),
     );
   }
 

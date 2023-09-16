@@ -41,7 +41,7 @@ describe("Listens Controller", () => {
 
     it("returns the listens", async () => {
       await expect(
-        controller.getRecentlyPlayed(filter, user, 1, 10)
+        controller.getRecentlyPlayed(filter, user, 1, 10),
       ).resolves.toEqual(listens);
 
       expect(listensService.getListens).toHaveBeenCalledTimes(1);
@@ -57,7 +57,7 @@ describe("Listens Controller", () => {
       await controller.getRecentlyPlayed(filter, user, 1, 1000);
 
       expect(listensService.getListens).toHaveBeenCalledWith(
-        expect.objectContaining({ limit: 100 })
+        expect.objectContaining({ limit: 100 }),
       );
     });
   });

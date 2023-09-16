@@ -8,7 +8,7 @@ export class AddUpdatedAtColumnes0000000000006 implements MigrationInterface {
         name: "updatedAt",
         type: "timestamp",
         default: "NOW()",
-      })
+      }),
     );
   }
 

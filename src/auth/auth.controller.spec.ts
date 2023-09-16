@@ -56,7 +56,7 @@ describe("AuthController", () => {
       expect(res.cookie).toHaveBeenCalledWith(
         COOKIE_REFRESH_TOKEN,
         refreshToken,
-        { httpOnly: true }
+        { httpOnly: true },
       );
     });
 
@@ -65,7 +65,7 @@ describe("AuthController", () => {
 
       expect(res.redirect).toHaveBeenCalledTimes(1);
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login/success?source=spotify"
+        "/login/success?source=spotify",
       );
     });
   });

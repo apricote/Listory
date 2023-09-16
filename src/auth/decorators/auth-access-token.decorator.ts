@@ -6,6 +6,6 @@ export function AuthAccessToken() {
   return applyDecorators(
     UseGuards(ApiAuthGuard),
     ApiBearerAuth(),
-    ApiUnauthorizedResponse({ description: "Unauthorized" })
+    ApiUnauthorizedResponse({ description: "Unauthorized" }),
   );
 }

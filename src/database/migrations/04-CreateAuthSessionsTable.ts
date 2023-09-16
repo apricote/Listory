@@ -60,7 +60,7 @@ export class CreateAuthSessionsTable0000000000004
           }),
         ],
       }),
-      true
+      true,
     );
   }
 

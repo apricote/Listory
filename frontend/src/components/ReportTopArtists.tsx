@@ -21,7 +21,7 @@ export const ReportTopArtists: React.FC = () => {
     () => ({
       time: timeOptions,
     }),
-    [timeOptions]
+    [timeOptions],
   );
 
   const { topArtists, isLoading } = useTopArtists(options);

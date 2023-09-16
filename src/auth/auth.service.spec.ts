@@ -38,7 +38,7 @@ describe("AuthService", () => {
     usersService = module.get<UsersService>(UsersService);
     jwtService = module.get<JwtService>(JwtService);
     authSessionRepository = module.get<AuthSessionRepository>(
-      AuthSessionRepository
+      AuthSessionRepository,
     );
     apiTokenRepository = module.get<ApiTokenRepository>(ApiTokenRepository);
   });
@@ -84,7 +84,7 @@ describe("AuthService", () => {
 
       expect(service.allowedByUserFilter).toHaveBeenCalledTimes(1);
       expect(service.allowedByUserFilter).toHaveBeenCalledWith(
-        loginDto.profile.id
+        loginDto.profile.id,
       );
     });
 
@@ -92,7 +92,7 @@ describe("AuthService", () => {
       service.allowedByUserFilter = jest.fn().mockReturnValue(false);
 
       await expect(service.spotifyLogin(loginDto)).rejects.toThrow(
-        ForbiddenException
+        ForbiddenException,
       );
     });
 
@@ -197,7 +197,7 @@ describe("AuthService", () => {
         {
           jwtid: session.id,
           expiresIn: "EXPIRATION_TIME",
-        }
+        },
       );
     });
   });
@@ -231,7 +231,7 @@ describe("AuthService", () => {
       session.revokedAt = new Date("2020-01-01T00:00:00Z");
 
       await expect(service.createAccessToken(session)).rejects.toThrow(
-        ForbiddenException
+        ForbiddenException,
       );
     });
 
@@ -258,7 +258,7 @@ describe("AuthService", () => {
 
     it("returns the session", async () => {
       await expect(service.findSession("AUTH_SESSION")).resolves.toEqual(
-        session
+        session,
       );
 
       expect(authSessionRepository.findOneBy).toHaveBeenCalledTimes(1);

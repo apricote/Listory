@@ -11,7 +11,7 @@ export class SpotifyAuthService {
 
   constructor(
     private readonly httpService: HttpService,
-    config: ConfigService
+    config: ConfigService,
   ) {
     this.clientID = config.get<string>("SPOTIFY_CLIENT_ID");
     this.clientSecret = config.get<string>("SPOTIFY_CLIENT_SECRET");
@@ -27,8 +27,8 @@ export class SpotifyAuthService {
             username: this.clientID,
             password: this.clientSecret,
           },
-        }
-      )
+        },
+      ),
     );
 
     return response.data.access_token;
@@ -44,8 +44,8 @@ export class SpotifyAuthService {
             username: this.clientID,
             password: this.clientSecret,
           },
-        }
-      )
+        },
+      ),
     );
 
     return response.data.access_token;

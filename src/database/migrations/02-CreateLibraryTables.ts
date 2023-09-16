@@ -43,7 +43,7 @@ export class CreateLibraryTables0000000000002 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
 
     await queryRunner.createTable(
@@ -64,7 +64,7 @@ export class CreateLibraryTables0000000000002 implements MigrationInterface {
             isUnique: true,
           }),
         ],
-      })
+      }),
     );
 
     await queryRunner.createTable(
@@ -94,7 +94,7 @@ export class CreateLibraryTables0000000000002 implements MigrationInterface {
             referencedTableName: "album",
           }),
         ],
-      })
+      }),
     );
 
     await queryRunner.createTable(
@@ -137,7 +137,7 @@ export class CreateLibraryTables0000000000002 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
 
     await queryRunner.createTable(
@@ -180,7 +180,7 @@ export class CreateLibraryTables0000000000002 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
   }
 
