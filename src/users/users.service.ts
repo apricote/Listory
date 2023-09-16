@@ -1,3 +1,4 @@
+import { SelectQueryBuilder } from "typeorm";
 import { JobService } from "@apricote/nest-pg-boss";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { IImportSpotifyJob, ImportSpotifyJob } from "../sources/jobs";
@@ -64,5 +65,9 @@ export class UsersService {
     // eslint-disable-next-line no-param-reassign
     user.spotify = spotify;
     await this.userRepository.save(user);
+  }
+
+  getQueryBuilder(): SelectQueryBuilder<User> {
+    return this.userRepository.createQueryBuilder("user");
   }
 }
