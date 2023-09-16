@@ -54,7 +54,7 @@ describe("RefreshTokenStrategy", () => {
       authService.findSession = jest.fn().mockResolvedValue(undefined);
 
       await expect(strategy.validate(payload)).rejects.toThrow(
-        UnauthorizedException
+        UnauthorizedException,
       );
     });
 
@@ -62,7 +62,7 @@ describe("RefreshTokenStrategy", () => {
       session.revokedAt = "2021-01-01";
 
       await expect(strategy.validate(payload)).rejects.toThrow(
-        ForbiddenException
+        ForbiddenException,
       );
     });
   });

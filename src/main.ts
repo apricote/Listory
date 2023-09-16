@@ -13,7 +13,7 @@ import { Scope } from "@sentry/node";
 
 function setupSentry(
   app: NestExpressApplication,
-  configService: ConfigService
+  configService: ConfigService,
 ) {
   Sentry.init({
     dsn: configService.get<string>("SENTRY_DSN"),
@@ -34,7 +34,7 @@ function setupSentry(
           }
         },
       ],
-    })
+    }),
   );
 }
 
@@ -49,7 +49,7 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       transformOptions: { enableImplicitConversion: true },
-    })
+    }),
   );
   app.enableShutdownHooks();
 

@@ -32,7 +32,7 @@ export class UrlValueParserService {
       "/" +
       parseResult.chunks
         .map((chunk, i) =>
-          parseResult.valueIndexes.includes(i) ? replacement : chunk
+          parseResult.valueIndexes.includes(i) ? replacement : chunk,
         )
         .join("/")
     );

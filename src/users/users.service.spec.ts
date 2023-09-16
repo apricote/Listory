@@ -24,7 +24,7 @@ describe("UsersService", () => {
     service = module.get<UsersService>(UsersService);
     userRepository = module.get<UserRepository>(UserRepository);
     importSpotifyJobService = module.get<JobService<IImportSpotifyJob>>(
-      ImportSpotifyJob.ServiceProvider.provide
+      ImportSpotifyJob.ServiceProvider.provide,
     );
   });
 

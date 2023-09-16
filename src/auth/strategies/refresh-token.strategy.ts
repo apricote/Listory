@@ -19,11 +19,11 @@ const extractJwtFromCookie: JwtFromRequestFunction = (req) => {
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  AuthStrategy.RefreshToken
+  AuthStrategy.RefreshToken,
 ) {
   constructor(
     private readonly authService: AuthService,
-    config: ConfigService
+    config: ConfigService,
   ) {
     super({
       jwtFromRequest: extractJwtFromCookie,

@@ -1,7 +1,7 @@
 export const getPaginationItems = (
   currentPage: number,
   totalPages: number,
-  delta: number = 1
+  delta: number = 1,
 ): (number | null)[] => {
   const left = currentPage - delta;
   const right = currentPage + delta;

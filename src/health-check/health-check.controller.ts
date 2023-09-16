@@ -17,7 +17,7 @@ export class HealthCheckController {
     private readonly health: HealthCheckService,
     private readonly http: HttpHealthIndicator,
     private readonly typeorm: TypeOrmHealthIndicator,
-    private readonly config: ConfigService
+    private readonly config: ConfigService,
   ) {}
 
   @Get()
@@ -30,7 +30,7 @@ export class HealthCheckController {
           this.config.get<string>("SPOTIFY_WEB_API_URL"),
           {
             validateStatus: () => true,
-          } // Successful as long as we get a valid HTTP response back }
+          }, // Successful as long as we get a valid HTTP response back }
         ),
       () => this.typeorm.pingCheck("db"),
     ]);

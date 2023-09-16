@@ -29,7 +29,7 @@ export class SpotifyAuthFilter implements ExceptionFilter {
 
     this.logger.error(
       `Login with Spotify failed: ${exception}`,
-      exception.stack
+      exception.stack,
     );
 
     response.redirect(`/login/failure?reason=${reason}&source=spotify`);

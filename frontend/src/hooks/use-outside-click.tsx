@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
  */
 export const useOutsideClick = (
   ref: React.MutableRefObject<any>,
-  callback: () => void
+  callback: () => void,
 ) => {
   useEffect(() => {
     /**

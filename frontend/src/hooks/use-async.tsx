@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useTransition } from "react";
 
 type UseAsync = <T>(
   asyncFunction: () => Promise<T>,
-  initialValue: T
+  initialValue: T,
 ) => {
   pending: boolean;
   value: T;
@@ -12,7 +12,7 @@ type UseAsync = <T>(
 
 export const useAsync: UseAsync = <T extends any>(
   asyncFunction: () => Promise<T>,
-  initialValue: T
+  initialValue: T,
 ) => {
   const [pending, setPending] = useState(false);
   const [value, setValue] = useState<T>(initialValue);

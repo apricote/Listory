@@ -23,7 +23,7 @@ export const ReportListens: React.FC = () => {
   const { requireUser } = useAuthProtection();
 
   const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
-    "day"
+    "day",
   );
 
   const [timeOptions, setTimeOptions] = useState<TimeOptions>({
@@ -34,7 +34,7 @@ export const ReportListens: React.FC = () => {
 
   const reportOptions = useMemo(
     () => ({ timeFrame, time: timeOptions }),
-    [timeFrame, timeOptions]
+    [timeFrame, timeOptions],
   );
 
   const { report, isLoading } = useListensReport(reportOptions);
@@ -59,7 +59,7 @@ export const ReportListens: React.FC = () => {
                 className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white dark:bg-gray-700 border border-gray-400 hover:border-gray-500 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:text-gray-200 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
                 onChange={(e) =>
                   setTimeFrame(
-                    e.target.value as "day" | "week" | "month" | "year"
+                    e.target.value as "day" | "week" | "month" | "year",
                   )
                 }
               >
@@ -163,7 +163,7 @@ const ReportGraph: React.FC<{
 };
 
 const shortDateFormatFromTimeFrame = (
-  timeFrame: "day" | "week" | "month" | "year"
+  timeFrame: "day" | "week" | "month" | "year",
 ): string => {
   const FORMAT_DAY = "P";
   const FORMAT_WEEK = "'Week' w yyyy";
@@ -186,7 +186,7 @@ const shortDateFormatFromTimeFrame = (
 };
 
 const dateFormatFromTimeFrame = (
-  timeFrame: "day" | "week" | "month" | "year"
+  timeFrame: "day" | "week" | "month" | "year",
 ): string => {
   const FORMAT_DAY = "PPPP";
   const FORMAT_WEEK = "'Week starting on' PPPP";

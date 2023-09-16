@@ -5,7 +5,7 @@ import { TYPEORM_ENTITY_REPOSITORY } from "./entity-repository.decorator";
 
 export class TypeOrmRepositoryModule {
   public static for<T extends new (...args: any[]) => any>(
-    repositories: T[]
+    repositories: T[],
   ): DynamicModule {
     const providers: Provider[] = [];
 
@@ -24,7 +24,7 @@ export class TypeOrmRepositoryModule {
           return new repository(
             baseRepository.target,
             baseRepository.manager,
-            baseRepository.queryRunner
+            baseRepository.queryRunner,
           );
         },
       });

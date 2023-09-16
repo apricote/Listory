@@ -20,11 +20,11 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly authSessionRepository: AuthSessionRepository,
-    private readonly apiTokenRepository: ApiTokenRepository
+    private readonly apiTokenRepository: ApiTokenRepository,
   ) {
     this.userFilter = this.config.get<string>("SPOTIFY_USER_FILTER");
     this.sessionExpirationTime = this.config.get<string>(
-      "SESSION_EXPIRATION_TIME"
+      "SESSION_EXPIRATION_TIME",
     );
   }
 
@@ -69,7 +69,7 @@ export class AuthService {
    * @param session
    */
   private async createRefreshToken(
-    session: AuthSession
+    session: AuthSession,
   ): Promise<{ refreshToken: string }> {
     const payload = {
       sub: session.user.id,
@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   async createAccessToken(
-    session: AuthSession
+    session: AuthSession,
   ): Promise<{ accessToken: string }> {
     if (session.revokedAt) {
       throw new ForbiddenException("SessionIsRevoked");
@@ -115,7 +115,7 @@ export class AuthService {
 
     // TODO demagic 20
     const tokenBuffer = await new Promise<Buffer>((resolve, reject) =>
-      randomBytes(20, (err, buf) => (err ? reject(err) : resolve(buf)))
+      randomBytes(20, (err, buf) => (err ? reject(err) : resolve(buf))),
     );
     apiToken.token = `lis${tokenBuffer.toString("hex")}`;
 

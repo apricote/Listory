@@ -13,7 +13,7 @@ export const AuthApiTokens: React.FC = () => {
   const { apiTokens, isLoading, createToken, revokeToken } = useApiTokens();
   const sortedTokens = useMemo(
     () => apiTokens.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
-    [apiTokens]
+    [apiTokens],
   );
 
   requireUser();
@@ -97,7 +97,7 @@ const NewTokenForm: React.FC<{
       createToken,
       setNewToken,
       setNewTokenDescription,
-    ]
+    ],
   );
 
   return (

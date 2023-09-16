@@ -17,5 +17,5 @@ root.render(
         </BrowserRouter>
       </ProvideApiClient>
     </ProvideAuth>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

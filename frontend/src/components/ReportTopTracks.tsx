@@ -22,7 +22,7 @@ export const ReportTopTracks: React.FC = () => {
     () => ({
       time: timeOptions,
     }),
-    [timeOptions]
+    [timeOptions],
   );
 
   const { topTracks, isLoading } = useTopTracks(options);

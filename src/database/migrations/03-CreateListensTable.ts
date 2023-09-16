@@ -65,7 +65,7 @@ export class CreateListensTable0000000000003 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
   }
 

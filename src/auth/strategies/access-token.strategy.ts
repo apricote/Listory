@@ -8,11 +8,11 @@ import { AuthStrategy } from "./strategies.enum";
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(
   Strategy,
-  AuthStrategy.AccessToken
+  AuthStrategy.AccessToken,
 ) {
   constructor(
     private readonly authService: AuthService,
-    config: ConfigService
+    config: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

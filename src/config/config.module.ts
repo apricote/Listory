@@ -27,7 +27,7 @@ import * as Joi from "joi";
         SPOTIFY_UPDATE_INTERVAL_SEC: Joi.number().default(60),
         SPOTIFY_WEB_API_URL: Joi.string().default("https://api.spotify.com/"),
         SPOTIFY_AUTH_API_URL: Joi.string().default(
-          "https://accounts.spotify.com/"
+          "https://accounts.spotify.com/",
         ),
         SPOTIFY_USER_FILTER: Joi.string(),
 
@@ -53,14 +53,14 @@ import * as Joi from "joi";
           {
             is: Joi.valid(true),
             then: Joi.required(),
-          }
+          },
         ),
         PROMETHEUS_BASIC_AUTH_PASSWORD: Joi.string().when(
           "PROMETHEUS_BASIC_AUTH",
           {
             is: Joi.valid(true),
             then: Joi.required(),
-          }
+          },
         ),
       }),
     }),

@@ -90,7 +90,7 @@ export class ReportsService {
     //       efficient or make pauses for event loop.
     const reportItems = eachOfInterval(interval).map((date) => {
       const count = listens.filter((listen) =>
-        isSame(date, listen.playedAt)
+        isSame(date, listen.playedAt),
       ).length;
       return { date: formatISO(date), count };
     });
@@ -99,7 +99,7 @@ export class ReportsService {
   }
 
   async getTopArtists(
-    options: GetTopArtistsReportDto
+    options: GetTopArtistsReportDto,
   ): Promise<TopArtistsReportDto> {
     const getArtistsWithCountQB = this.getListensQueryFromOptions(options)
       .leftJoin("listen.track", "track")
@@ -125,7 +125,7 @@ export class ReportsService {
             href: data.spotifyHref,
           },
         },
-      })
+      }),
     );
 
     return {
@@ -134,7 +134,7 @@ export class ReportsService {
   }
 
   async getTopAlbums(
-    options: GetTopAlbumsReportDto
+    options: GetTopAlbumsReportDto,
   ): Promise<TopAlbumsReportDto> {
     const [rawAlbumsWithCount, rawAlbumDetails] = await Promise.all([
       this.getListensQueryFromOptions(options)
@@ -164,7 +164,7 @@ export class ReportsService {
       (data) => ({
         count: Number.parseInt(data.listens, 10),
         album: albumDetails.find((album) => album.id === data.album_id),
-      })
+      }),
     );
 
     return {
@@ -173,7 +173,7 @@ export class ReportsService {
   }
 
   async getTopTracks(
-    options: GetTopTracksReportDto
+    options: GetTopTracksReportDto,
   ): Promise<TopTracksReportDto> {
     const [rawTracksWithCount, rawTrackDetails] = await Promise.all([
       this.getListensQueryFromOptions(options)
@@ -201,7 +201,7 @@ export class ReportsService {
       (data) => ({
         count: Number.parseInt(data.listens, 10),
         track: trackDetails.find((track) => track.id === data.id),
-      })
+      }),
     );
 
     return {
@@ -210,7 +210,7 @@ export class ReportsService {
   }
 
   async getTopGenres(
-    options: GetTopGenresReportDto
+    options: GetTopGenresReportDto,
   ): Promise<TopGenresReportDto> {
     const [rawGenresWithCount, rawGenresWithArtistsCount] = await Promise.all([
       this.getListensQueryFromOptions(options)
@@ -298,7 +298,7 @@ export class ReportsService {
       case TimePreset.LAST_180_DAYS:
       case TimePreset.LAST_365_DAYS: {
         interval.start = startOfDay(
-          sub(interval.start, { days: timePresetToDays[options.timePreset] })
+          sub(interval.start, { days: timePresetToDays[options.timePreset] }),
         );
         break;
       }

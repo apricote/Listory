@@ -67,7 +67,7 @@ export class CreateApiTokensTable0000000000007 implements MigrationInterface {
           }),
         ],
       }),
-      true
+      true,
     );
   }
 

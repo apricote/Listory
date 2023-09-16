@@ -27,7 +27,7 @@ export const useRecentListens = (options: PaginationOptions) => {
 
   const fetchData = useMemo(
     () => () => getRecentListens(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -48,7 +48,7 @@ export const useListensReport = (options: ListenReportOptions) => {
 
   const fetchData = useMemo(
     () => () => getListensReport(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -65,7 +65,7 @@ export const useTopArtists = (options: TopArtistsOptions) => {
 
   const fetchData = useMemo(
     () => () => getTopArtists(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -82,7 +82,7 @@ export const useTopAlbums = (options: TopAlbumsOptions) => {
 
   const fetchData = useMemo(
     () => () => getTopAlbums(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -99,7 +99,7 @@ export const useTopTracks = (options: TopTracksOptions) => {
 
   const fetchData = useMemo(
     () => () => getTopTracks(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -116,7 +116,7 @@ export const useTopGenres = (options: TopGenresOptions) => {
 
   const fetchData = useMemo(
     () => () => getTopGenres(options, client),
-    [options, client]
+    [options, client],
   );
 
   const {
@@ -149,7 +149,7 @@ export const useApiTokens = () => {
 
       return apiToken;
     },
-    [client, reload]
+    [client, reload],
   );
 
   const revokeToken = useCallback(
@@ -157,7 +157,7 @@ export const useApiTokens = () => {
       await revokeApiToken(id, client);
       await reload();
     },
-    [client, reload]
+    [client, reload],
   );
 
   return { apiTokens, isLoading, error, createToken, revokeToken };

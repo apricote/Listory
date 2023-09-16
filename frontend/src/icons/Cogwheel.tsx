@@ -1,7 +1,7 @@
 import React from "react";
 
 export const CogwheelIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
+  props,
 ) => {
   return (
     <svg

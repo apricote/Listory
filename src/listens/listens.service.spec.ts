@@ -56,7 +56,7 @@ describe("ListensService", () => {
 
     it("creates the listen", async () => {
       await expect(
-        service.createListen({ user, track, playedAt })
+        service.createListen({ user, track, playedAt }),
       ).resolves.toEqual(response);
 
       expect(listenRepository.insertNoConflict).toHaveBeenCalledTimes(1);
