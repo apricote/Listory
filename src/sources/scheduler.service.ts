@@ -53,7 +53,7 @@ export class SchedulerService implements OnApplicationBootstrap {
     const INACTIVE_CUTOFF_MSEC = 60 * 60 * 1000;
 
     await Promise.all(
-      userInfo.map(({ user, lastListen }) => {
+      userInfo.map(({ userID, lastListen }) => {
         let pollRate = POLL_RATE_INACTIVE_SEC;
 
         const timeSinceLastListen = new Date().getTime() - lastListen.getTime();
@@ -62,10 +62,10 @@ export class SchedulerService implements OnApplicationBootstrap {
         }
 
         this.importSpotifyJobService.sendThrottled(
-          { userID: user.id },
+          { userID },
           {},
           pollRate,
-          user.id,
+          userID,
         );
       }),
     );

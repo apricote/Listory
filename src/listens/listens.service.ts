@@ -77,16 +77,6 @@ export class ListensService {
     });
   }
 
-  async getMostRecentListenPerUser(): Promise<Listen[]> {
-    return this.listenRepository
-      .createQueryBuilder("listen")
-      .leftJoinAndSelect("listen.user", "user")
-      .distinctOn(["user.id"])
-      .orderBy({ "user.id": "ASC", "listen.playedAt": "DESC" })
-      .limit(1)
-      .getMany();
-  }
-
   getScopedQueryBuilder(): ListenScopes {
     return this.listenRepository.scoped;
   }
