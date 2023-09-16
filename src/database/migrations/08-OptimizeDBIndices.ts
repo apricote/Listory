@@ -19,7 +19,7 @@ export class OptimizeDBIndices0000000000008 implements MigrationInterface {
     ]);
 
     // handled by Primary Key on (albumId, artistId)
-    await queryRunner.dropIndex("album_artist", "IDX_ALBUM_ARTISTS_ALBUM_ID");
+    await queryRunner.dropIndex("album_artists", "IDX_ALBUM_ARTISTS_ALBUM_ID");
 
     // handled by Primary Key on (artistId, genreId)
     await queryRunner.dropIndex("artist_genres", "IDX_ARTIST_GENRES_ARTIST_ID");
@@ -34,7 +34,7 @@ export class OptimizeDBIndices0000000000008 implements MigrationInterface {
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.createIndices("album_artist", [
+    await queryRunner.createIndices("album_artists", [
       new TableIndex({
         name: "IDX_ALBUM_ARTISTS_ALBUM_ID",
         columnNames: ["albumId"],
