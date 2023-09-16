@@ -10,7 +10,6 @@ import {
   isSameMonth,
   isSameWeek,
   isSameYear,
-  min,
   parseJSON,
   startOfDay,
   sub,
@@ -73,7 +72,13 @@ export class ReportsService {
   async getListens(options: GetListenReportDto): Promise<ListenReportDto> {
     const { timeFrame, time: timePreset } = options;
 
-    const listens = await this.getListensQueryFromOptions(options).getMany();
+    const results = await this.getListensQueryFromOptions(options)
+      .select(`count(*) as "listenCount"`)
+      .addSelect(`date_trunc(:timeFrame, "playedAt") as date`)
+      .groupBy("date")
+      .orderBy("date")
+      .setParameter("timeFrame", timeFrame)
+      .getRawMany<{ listenCount: string; date: Date }>();
 
     const interval = this.getIntervalFromPreset(timePreset);
     const { eachOfInterval, isSame } = timeframeToDateFns[timeFrame];
@@ -81,18 +86,19 @@ export class ReportsService {
     // Optimize performance for ALL_TIME by skipping eachOfInterval for time
     // between 1970 and first listen
     if (timePreset.timePreset === TimePreset.ALL_TIME) {
-      let firstListen = min(listens.map(({ playedAt }) => playedAt));
-      interval.start = startOfDay(firstListen);
+      interval.start = startOfDay(results[0].date);
     }
 
-    // TODO: This code blocks the eventloop for multiple seconds if running for
-    //       a large interval and with many listens. Refactor to make this more
-    //       efficient or make pauses for event loop.
     const reportItems = eachOfInterval(interval).map((date) => {
-      const count = listens.filter((listen) =>
-        isSame(date, listen.playedAt),
-      ).length;
-      return { date: formatISO(date), count };
+      const dayResults = results.find((listen) => isSame(date, listen.date));
+
+      return {
+        date: formatISO(date),
+        count:
+          dayResults && dayResults.listenCount
+            ? Number.parseInt(dayResults.listenCount)
+            : 0,
+      };
     });
 
     return { items: reportItems };

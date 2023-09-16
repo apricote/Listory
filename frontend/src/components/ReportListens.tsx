@@ -77,7 +77,7 @@ export const ReportListens: React.FC = () => {
           {isLoading && <Spinner className="m-8" />}
           {!reportHasItems && !isLoading && (
             <div>
-              <p>Report is emtpy! :(</p>
+              <p>Report is empty! :(</p>
             </div>
           )}
           {reportHasItems && (
@@ -128,7 +128,7 @@ const ReportGraph: React.FC<{
         <AreaChart
           data={dataLocal}
           margin={{
-            left: -20,
+            left: -5,
           }}
         >
           <defs>
