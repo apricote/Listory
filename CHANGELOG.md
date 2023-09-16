@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/apricote/Listory/compare/v1.26.2...v1.27.0) (2023-09-16)
+
+
+### Features
+
+* improve listens report response time ([89440da](https://github.com/apricote/Listory/commit/89440daf7ba38ff97fabd19cf3a9d11ab21efb45))
+
 ## [1.26.2](https://github.com/apricote/Listory/compare/v1.26.1...v1.26.2) (2023-09-10)
 
 
