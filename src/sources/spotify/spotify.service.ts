@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { chunk, uniq } from "lodash";
-import { Span } from "nestjs-otel";
+import { Span, TraceService } from "nestjs-otel";
 import type { Job } from "pg-boss";
 import { ListensService } from "../../listens/listens.service";
 import { Album } from "../../music-library/album.entity";
@@ -40,6 +40,7 @@ export class SpotifyService {
     private readonly musicLibraryService: MusicLibraryService,
     private readonly spotifyApi: SpotifyApiService,
     private readonly spotifyAuth: SpotifyAuthService,
+    private readonly traceService: TraceService,
   ) {}
 
   @Span()
@@ -89,6 +90,7 @@ export class SpotifyService {
     retryOnExpiredToken: boolean = true,
   ): Promise<void> {
     this.logger.debug({ userId: user.id }, `Crawling recently played tracks`);
+    this.traceService.getSpan().setAttribute("userId", user.id);
 
     let playHistory: PlayHistoryObject[];
     try {
