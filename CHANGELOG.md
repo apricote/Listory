@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/apricote/Listory/compare/v1.27.0...v1.28.0) (2023-09-16)
+
+
+### Features
+
+* optimize db queries ([#297](https://github.com/apricote/Listory/issues/297)) ([dd57a52](https://github.com/apricote/Listory/commit/dd57a52ab66684e713c5d0766a8fed281b472e40))
+
 # [1.27.0](https://github.com/apricote/Listory/compare/v1.26.2...v1.27.0) (2023-09-16)
 
 
