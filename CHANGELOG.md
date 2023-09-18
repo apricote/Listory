@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/apricote/Listory/compare/v1.28.1...v1.28.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* slow query taking up 66% of db time ([#298](https://github.com/apricote/Listory/issues/298)) ([625db7d](https://github.com/apricote/Listory/commit/625db7dbe71a7315921562bfab82420c04aa6c17))
+
 ## [1.28.1](https://github.com/apricote/Listory/compare/v1.28.0...v1.28.1) (2023-09-16)
 
 
