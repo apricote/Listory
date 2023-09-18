@@ -42,6 +42,10 @@ export class SpotifyService {
     private readonly spotifyAuth: SpotifyAuthService,
   ) {}
 
+  /**
+   * Returns a list of users that should be crawled for new listens.
+   * Only returns the lastListen date if it was within the last hour.
+   */
   @Span()
   async getCrawlableUserInfo(): Promise<
     { userID: string; lastListen: Date }[]
@@ -57,6 +61,7 @@ export class SpotifyService {
             .select(`listen."userId"`)
             .addSelect(`listen."playedAt"`)
             .from("listen", "listen")
+            .where(`listen."playedAt" > now() - interval '1 hour'`)
             .orderBy("listen.userId", "DESC")
             .addOrderBy("listen.playedAt", "DESC"),
         "listen",
