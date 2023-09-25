@@ -91,7 +91,7 @@
     "@types/node": "20.6.5",
     "@types/passport-http-bearer": "1.0.38",
     "@types/passport-jwt": "3.0.10",
-    "@types/supertest": "2.0.12",
+    "@types/supertest": "2.0.13",
     "@typescript-eslint/eslint-plugin": "6.7.2",
     "@typescript-eslint/parser": "6.7.2",
     "eslint": "8.49.0",
