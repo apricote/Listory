@@ -19,7 +19,7 @@
     "@types/recharts": "1.8.24",
     "@vitejs/plugin-react": "4.1.0",
     "autoprefixer": "10.4.16",
-    "axios": "1.5.0",
+    "axios": "1.5.1",
     "date-fns": "2.30.0",
     "eslint-config-react-app": "7.0.1",
     "jsdom": "22.1.0",
