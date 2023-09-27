@@ -65,7 +65,7 @@
     "lodash": "4.17.21",
     "nest-raven": "10.0.0",
     "nestjs-otel": "5.1.5",
-    "nestjs-pino": "3.4.0",
+    "nestjs-pino": "3.5.0",
     "nestjs-typeorm-paginate": "4.0.4",
     "passport": "0.6.0",
     "passport-http-bearer": "1.0.1",
