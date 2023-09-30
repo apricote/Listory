@@ -1,5 +1,5 @@
 import React from "react";
-import { SpinnerIcon } from "../icons/Spinner";
+import { SpinnerIcon } from "../../icons/Spinner";
 
 interface SpinnerProps {
   className?: string;

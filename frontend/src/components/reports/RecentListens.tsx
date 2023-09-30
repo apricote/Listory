@@ -1,17 +1,16 @@
 import { format, formatDistanceToNow } from "date-fns";
 import React, { useEffect, useMemo, useState } from "react";
-import { Listen } from "../api/entities/listen";
-import { useRecentListens } from "../hooks/use-api";
-import { useAuthProtection } from "../hooks/use-auth-protection";
-import { ReloadIcon } from "../icons/Reload";
-import { getPaginationItems } from "../util/getPaginationItems";
-import { Spinner } from "./Spinner";
+import { Listen } from "../../api/entities/listen";
+import { useRecentListens } from "../../hooks/use-api";
+import { ReloadIcon } from "../../icons/Reload";
+import { getPaginationItems } from "../../util/getPaginationItems";
+import { Spinner } from "../ui/Spinner";
+import { Table, TableBody, TableCell, TableRow } from "../ui/table";
+import { Button } from "../ui/button";
 
 const LISTENS_PER_PAGE = 15;
 
 export const RecentListens: React.FC = () => {
-  const { requireUser } = useAuthProtection();
-
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -26,44 +25,43 @@ export const RecentListens: React.FC = () => {
     }
   }, [totalPages, paginationMeta]);
 
-  requireUser();
-
   return (
-    <div className="md:flex md:justify-center p-4">
-      <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
-        <div className="flex justify-between">
-          <p className="text-2xl font-normal text-gray-700 dark:text-gray-400">
-            Recent listens
-          </p>
-          <button
-            className="shrink-0 mx-2 bg-transparent hover:bg-green-500 text-green-500 hover:text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
-            onClick={reload}
-          >
-            <ReloadIcon className="w-5 h-5 fill-current" />
-          </button>
-        </div>
-        <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-2 m-2">
-          {isLoading && <Spinner className="m-8" />}
-          {recentListens.length === 0 && (
-            <div className="text-center m-4">
-              <p className="text-gray-700 dark:text-gray-400">
-                Could not find any listens!
-              </p>
-            </div>
-          )}
-          <div>
-            {recentListens.length > 0 && (
-              <div className="table-auto w-full">
+    <>
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-normal text-gray-700 dark:text-gray-400">
+          Recent listens
+        </h2>
+        <Button
+          className="shrink-0 mx-2 bg-transparent hover:bg-green-500 text-green-500 hover:text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
+          onClick={reload}
+          variant="outline"
+        >
+          <ReloadIcon className="w-5 h-5 fill-current" />
+        </Button>
+      </div>
+      <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-2 m-2">
+        {isLoading && <Spinner className="m-8" />}
+        {recentListens.length === 0 && (
+          <div className="text-center m-4">
+            <p className="text-gray-700 dark:text-gray-400">
+              Could not find any listens!
+            </p>
+          </div>
+        )}
+        <div>
+          {recentListens.length > 0 && (
+            <Table className="table-auto w-full text-base">
+              <TableBody>
                 {recentListens.map((listen) => (
                   <ListenItem listen={listen} key={listen.id} />
                 ))}
-              </div>
-            )}
-          </div>
-          <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+              </TableBody>
+            </Table>
+          )}
         </div>
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -134,15 +132,19 @@ const ListenItem: React.FC<{ listen: Listen }> = ({ listen }) => {
   });
   const dateTime = format(new Date(listen.playedAt), "PP p");
   return (
-    <div className="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-700/25 md:flex md:justify-around text-gray-700 dark:text-gray-300 px-2 py-2">
-      <div className="md:w-1/2 font-bold">{trackName}</div>
-      <div className=" md:w-1/3">{artists}</div>
-      <div
-        className="md:w-1/6 text-gray-500 font-extra-light text-sm"
+    <TableRow className="sm:flex sm:justify-around sm:hover:bg-gray-100 sm:dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-700/25 text-gray-700 dark:text-gray-300 px-2 py-2">
+      <TableCell className="block py-1 sm:p-1 sm:table-cell sm:w-1/2 font-bold text-l">
+        {trackName}
+      </TableCell>
+      <TableCell className="block py-1 sm:p-1 sm:table-cell sm:w-1/3 text-l">
+        {artists}
+      </TableCell>
+      <TableCell
+        className="block py-1 sm:p-1 sm:table-cell sm:w-1/6 font-extra-light text-sm"
         title={dateTime}
       >
         {timeAgo}
-      </div>
-    </div>
+      </TableCell>
+    </TableRow>
   );
 };

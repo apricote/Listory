@@ -5,62 +5,56 @@ import { useApiTokens } from "../hooks/use-api";
 import { useAuthProtection } from "../hooks/use-auth-protection";
 import { SpinnerIcon } from "../icons/Spinner";
 import TrashcanIcon from "../icons/Trashcan";
-import { Spinner } from "./Spinner";
+import { Spinner } from "./ui/Spinner";
 
 export const AuthApiTokens: React.FC = () => {
-  const { requireUser } = useAuthProtection();
-
   const { apiTokens, isLoading, createToken, revokeToken } = useApiTokens();
   const sortedTokens = useMemo(
     () => apiTokens.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
     [apiTokens],
   );
 
-  requireUser();
-
   return (
-    <div className="md:flex md:justify-center p-4 text-gray-700 dark:text-gray-400">
-      <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
-        <div className="flex justify-between">
-          <p className="text-2xl font-normal">API Tokens</p>
+    <>
+      <div className="flex justify-between">
+        <p className="text-2xl font-normal">API Tokens</p>
+      </div>
+      <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-4 m-2">
+        <p className="mb-4">
+          You can use API Tokens to access the Listory API directly. You can
+          find the API docs{" "}
+          <a href="/api/docs" target="_blank">
+            here
+          </a>
+          .
+        </p>
+        <div className="mb-4">
+          <NewTokenForm createToken={createToken} />
         </div>
-        <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-4 m-2">
-          <p className="mb-4">
-            You can use API Tokens to access the Listory API directly. You can
-            find the API docs{" "}
-            <a href="/api/docs" target="_blank">
-              here
-            </a>
-            .
-          </p>
-          <div className="mb-4">
-            <NewTokenForm createToken={createToken} />
-          </div>
+        <div>
+          <h3 className="text-xl">Manage Existing Tokens</h3>
+          {isLoading && <Spinner className="m-8" />}
+          {sortedTokens.length === 0 && (
+            <div className="text-center m-4">
+              <p className="">Could not find any api tokens!</p>
+            </div>
+          )}
           <div>
-            <h3 className="text-xl">Manage Existing Tokens</h3>
-            {isLoading && <Spinner className="m-8" />}
-            {sortedTokens.length === 0 && (
-              <div className="text-center m-4">
-                <p className="">Could not find any api tokens!</p>
+            {sortedTokens.length > 0 && (
+              <div className="table-auto w-full">
+                {sortedTokens.map((apiToken) => (
+                  <ApiTokenItem
+                    apiToken={apiToken}
+                    revokeToken={revokeToken}
+                    key={apiToken.id}
+                  />
+                ))}
               </div>
             )}
-            <div>
-              {sortedTokens.length > 0 && (
-                <div className="table-auto w-full">
-                  {sortedTokens.map((apiToken) => (
-                    <ApiTokenItem
-                      apiToken={apiToken}
-                      revokeToken={revokeToken}
-                      key={apiToken.id}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

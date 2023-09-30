@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "./Spinner";
+import { Spinner } from "./ui/Spinner";
 
 export const LoginLoading: React.FC = () => (
   <main className="sm:flex sm:justify-center p-4 dark:bg-gray-900 h-screen">

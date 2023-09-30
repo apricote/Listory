@@ -5,6 +5,7 @@ import { App } from "./App";
 import { ProvideApiClient } from "./hooks/use-api-client";
 import { ProvideAuth } from "./hooks/use-auth";
 import "./index.css";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const root = createRoot(document.getElementById("root")!);
 
@@ -13,7 +14,9 @@ root.render(
     <ProvideAuth>
       <ProvideApiClient>
         <BrowserRouter>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </BrowserRouter>
       </ProvideApiClient>
     </ProvideAuth>
