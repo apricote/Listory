@@ -7,7 +7,8 @@
     ":automergeBranch",
     ":automergeLinters",
     ":automergeTesters",
-    ":automergeTypes"
+    ":automergeTypes",
+    ":maintainLockFilesWeekly"
   ],
   "packageRules": [
     {
