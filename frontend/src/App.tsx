@@ -4,18 +4,18 @@ import { AuthApiTokens } from "./components/AuthApiTokens";
 import { Footer } from "./components/Footer";
 import { LoginFailure } from "./components/LoginFailure";
 import { LoginLoading } from "./components/LoginLoading";
-import { LoginSuccess } from "./components/LoginSuccess";
 import { NavBar } from "./components/NavBar";
-import { RecentListens } from "./components/RecentListens";
-import { ReportListens } from "./components/ReportListens";
-import { ReportTopAlbums } from "./components/ReportTopAlbums";
-import { ReportTopArtists } from "./components/ReportTopArtists";
-import { ReportTopGenres } from "./components/ReportTopGenres";
-import { ReportTopTracks } from "./components/ReportTopTracks";
+import { Navigate } from "react-router-dom";
+import { RecentListens } from "./components/reports/RecentListens";
+import { ReportListens } from "./components/reports/ReportListens";
+import { ReportTopAlbums } from "./components/reports/ReportTopAlbums";
+import { ReportTopArtists } from "./components/reports/ReportTopArtists";
+import { ReportTopGenres } from "./components/reports/ReportTopGenres";
+import { ReportTopTracks } from "./components/reports/ReportTopTracks";
 import { useAuth } from "./hooks/use-auth";
 
 export function App() {
-  const { isLoaded } = useAuth();
+  const { isLoaded, user } = useAuth();
 
   if (!isLoaded) {
     return <LoginLoading />;
@@ -27,18 +27,42 @@ export function App() {
         <NavBar />
       </header>
       <main className="mb-auto" /* mb-auto is for sticky footer */>
-        <Routes>
-          <Route path="/" />
-          <Route path="/login/success" element={<LoginSuccess />} />
-          <Route path="/login/failure" element={<LoginFailure />} />
-          <Route path="/listens" element={<RecentListens />} />
-          <Route path="/reports/listens" element={<ReportListens />} />
-          <Route path="/reports/top-artists" element={<ReportTopArtists />} />
-          <Route path="/reports/top-albums" element={<ReportTopAlbums />} />
-          <Route path="/reports/top-tracks" element={<ReportTopTracks />} />
-          <Route path="/reports/top-genres" element={<ReportTopGenres />} />
-          <Route path="/auth/api-tokens" element={<AuthApiTokens />} />
-        </Routes>
+        <div className="md:flex md:justify-center p-4 text-gray-700 dark:text-gray-400">
+          <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 lg:max-w-screen-lg">
+            {user && (
+              <Routes>
+                <Route index element={<Navigate to="/listens" />} />
+                <Route path="/login/success" element={<Navigate to="/" />} />
+                <Route path="/login/failure" element={<LoginFailure />} />
+                <Route path="/listens" element={<RecentListens />} />
+                <Route path="/reports/listens" element={<ReportListens />} />
+                <Route
+                  path="/reports/top-artists"
+                  element={<ReportTopArtists />}
+                />
+                <Route
+                  path="/reports/top-albums"
+                  element={<ReportTopAlbums />}
+                />
+                <Route
+                  path="/reports/top-tracks"
+                  element={<ReportTopTracks />}
+                />
+                <Route
+                  path="/reports/top-genres"
+                  element={<ReportTopGenres />}
+                />
+                <Route path="/auth/api-tokens" element={<AuthApiTokens />} />
+              </Routes>
+            )}
+            {!user && (
+              <Routes>
+                <Route index />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            )}
+          </div>
+        </div>
       </main>
       <footer>
         <Footer />

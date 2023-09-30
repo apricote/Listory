@@ -10,18 +10,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ListenReportItem } from "../api/entities/listen-report-item";
-import { ListenReportOptions } from "../api/entities/listen-report-options";
-import { TimeOptions } from "../api/entities/time-options";
-import { TimePreset } from "../api/entities/time-preset.enum";
-import { useListensReport } from "../hooks/use-api";
-import { useAuthProtection } from "../hooks/use-auth-protection";
+import { ListenReportItem } from "../../api/entities/listen-report-item";
+import { ListenReportOptions } from "../../api/entities/listen-report-options";
+import { TimeOptions } from "../../api/entities/time-options";
+import { TimePreset } from "../../api/entities/time-preset.enum";
+import { useListensReport } from "../../hooks/use-api";
 import { ReportTimeOptions } from "./ReportTimeOptions";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../ui/Spinner";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export const ReportListens: React.FC = () => {
-  const { requireUser } = useAuthProtection();
-
   const [timeFrame, setTimeFrame] = useState<"day" | "week" | "month" | "year">(
     "day",
   );
@@ -41,53 +46,53 @@ export const ReportListens: React.FC = () => {
 
   const reportHasItems = report.length !== 0;
 
-  requireUser();
-
   return (
-    <div className="md:flex md:justify-center p-4">
-      <div className="md:shrink-0 min-w-full xl:min-w-0 xl:w-2/3 max-w-screen-lg">
-        <div className="flex justify-between">
-          <p className="text-2xl font-normal text-gray-700 dark:text-gray-400">
-            Listen Report
-          </p>
-        </div>
-        <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-5 m-2">
-          <div className="md:flex">
-            <div className="text-gray-700 dark:text-gray-300 mr-2">
-              <label className="text-sm">Timeframe</label>
-              <select
-                className="block appearance-none min-w-full md:win-w-0 md:w-1/4 bg-white dark:bg-gray-700 border border-gray-400 hover:border-gray-500 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:text-gray-200 p-2 rounded shadow leading-tight focus:outline-none focus:ring"
-                onChange={(e) =>
-                  setTimeFrame(
-                    e.target.value as "day" | "week" | "month" | "year",
-                  )
-                }
-              >
-                <option value="day">Daily</option>
-                <option value="week">Weekly</option>
-                <option value="month">Monthly</option>
-                <option value="year">Yearly</option>
-              </select>
-            </div>
-            <ReportTimeOptions
-              timeOptions={timeOptions}
-              setTimeOptions={setTimeOptions}
-            />
-          </div>
-          {isLoading && <Spinner className="m-8" />}
-          {!reportHasItems && !isLoading && (
-            <div>
-              <p>Report is empty! :(</p>
-            </div>
-          )}
-          {reportHasItems && (
-            <div className="w-full text-gray-700 dark:text-gray-300 mt-5">
-              <ReportGraph timeFrame={timeFrame} data={report} />
-            </div>
-          )}
-        </div>
+    <>
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-normal text-gray-700 dark:text-gray-400">
+          Listen Report
+        </h2>
       </div>
-    </div>
+      <div className="shadow-xl bg-gray-100 dark:bg-gray-800 rounded p-5 m-2">
+        <div className="sm:flex">
+          <div className="text-gray-700 dark:text-gray-300 mr-2">
+            <Label className="text-sm" htmlFor={"timeframe"}>
+              Timeframe
+            </Label>
+            <Select
+              onValueChange={(e: "day" | "week" | "month" | "year") =>
+                setTimeFrame(e)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Choose aggregation" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="day">Daily</SelectItem>
+                <SelectItem value="week">Weekly</SelectItem>
+                <SelectItem value="month">Monthly</SelectItem>
+                <SelectItem value="year">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <ReportTimeOptions
+            timeOptions={timeOptions}
+            setTimeOptions={setTimeOptions}
+          />
+        </div>
+        {isLoading && <Spinner className="m-8" />}
+        {!reportHasItems && !isLoading && (
+          <div>
+            <p>Report is empty! :(</p>
+          </div>
+        )}
+        {reportHasItems && (
+          <div className="w-full text-gray-700 dark:text-gray-300 mt-5">
+            <ReportGraph timeFrame={timeFrame} data={report} />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
