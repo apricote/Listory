@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/apricote/Listory/compare/v1.28.2...v1.29.0) (2023-09-30)
+
+
+### Features
+
+* **frontend:** general revamp of navigation & pages ([#303](https://github.com/apricote/Listory/issues/303)) ([4b1dd10](https://github.com/apricote/Listory/commit/4b1dd10846d741cd39fe9b0f41150e68510f2220))
+
 ## [1.28.2](https://github.com/apricote/Listory/compare/v1.28.1...v1.28.2) (2023-09-18)
 
 
