@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/apricote/Listory/compare/v1.29.0...v1.30.0) (2023-10-01)
+
+
+### Features
+
+* import listens from spotify extended streaming history ([#305](https://github.com/apricote/Listory/issues/305)) ([7140cb0](https://github.com/apricote/Listory/commit/7140cb0679ec3aac8a2102197d9edb070cf0e6c0))
+
 # [1.29.0](https://github.com/apricote/Listory/compare/v1.28.2...v1.29.0) (2023-09-30)
 
 
