@@ -5,14 +5,14 @@ import {
   ForbiddenException,
   Logger,
 } from "@nestjs/common";
-import type { Response } from "express";
+import type { Response as ExpressResponse } from "express";
 
 @Catch()
 export class SpotifyAuthFilter implements ExceptionFilter {
   private readonly logger = new Logger(this.constructor.name);
 
   catch(exception: Error, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse<Response>();
+    const response = host.switchToHttp().getResponse<ExpressResponse>();
 
     let reason = "unknown";
 

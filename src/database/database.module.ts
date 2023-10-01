@@ -27,7 +27,7 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
 
     // Debug/Development Options
     //
-    // logging: true,
+    //logging: true,
     //
     // synchronize: true,
     // migrationsRun: false,

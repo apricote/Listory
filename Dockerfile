@@ -1,10 +1,5 @@
 # syntax=docker/dockerfile:1.5
 
-FROM scratch as ignore
-
-WORKDIR /listory
-COPY . /listory/
-
 ##################
 ## common
 ##################

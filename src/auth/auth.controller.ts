@@ -1,5 +1,5 @@
 import {
-  Body,
+  Body as NestBody,
   Controller,
   Delete,
   Get,
@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
-import type { Response } from "express";
+import type { Response as ExpressResponse } from "express";
 import { User } from "../users/user.entity";
 import { AuthSession } from "./auth-session.entity";
 import { AuthService } from "./auth.service";
@@ -42,7 +42,7 @@ export class AuthController {
   @Get("spotify/callback")
   @UseFilters(SpotifyAuthFilter)
   @UseGuards(SpotifyAuthGuard)
-  async spotifyCallback(@ReqUser() user: User, @Res() res: Response) {
+  async spotifyCallback(@ReqUser() user: User, @Res() res: ExpressResponse) {
     const { refreshToken } = await this.authService.createSession(user);
 
     // Refresh token should not be accessible to frontend to reduce risk
@@ -69,7 +69,7 @@ export class AuthController {
   @AuthAccessToken()
   async createApiToken(
     @ReqUser() user: User,
-    @Body("description") description: string,
+    @NestBody("description") description: string,
   ): Promise<NewApiTokenDto> {
     const apiToken = await this.authService.createApiToken(user, description);
 

@@ -50,7 +50,7 @@ export const RecentListens: React.FC = () => {
         )}
         <div>
           {recentListens.length > 0 && (
-            <Table className="table-auto w-full text-base">
+            <Table className="table-auto w-full">
               <TableBody>
                 {recentListens.map((listen) => (
                   <ListenItem listen={listen} key={listen.id} />

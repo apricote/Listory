@@ -175,9 +175,7 @@ export class MusicLibraryService {
   }
 
   async findTrack(query: FindTrackDto): Promise<Track | undefined> {
-    return this.trackRepository.findOneBy({
-      spotify: { id: query.spotify.id },
-    });
+    return this.trackRepository.findOneBy(query);
   }
 
   async findTracks(query: FindTrackDto[]): Promise<Track[]> {

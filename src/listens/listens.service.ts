@@ -1,14 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { Span } from "nestjs-otel";
 import {
   IPaginationOptions,
   paginate,
   Pagination,
   PaginationTypeEnum,
 } from "nestjs-typeorm-paginate";
-import {
-  CreateListenRequestDto,
-  CreateListenResponseDto,
-} from "./dto/create-listen.dto";
+import { CreateListenRequestDto } from "./dto/create-listen.dto";
 import { GetListensDto } from "./dto/get-listens.dto";
 import { Listen } from "./listen.entity";
 import { ListenRepository, ListenScopes } from "./listen.repository";
@@ -17,20 +15,7 @@ import { ListenRepository, ListenScopes } from "./listen.repository";
 export class ListensService {
   constructor(private readonly listenRepository: ListenRepository) {}
 
-  async createListen({
-    user,
-    track,
-    playedAt,
-  }: CreateListenRequestDto): Promise<CreateListenResponseDto> {
-    const response = await this.listenRepository.insertNoConflict({
-      user,
-      track,
-      playedAt,
-    });
-
-    return response;
-  }
-
+  @Span()
   async createListens(
     listensData: CreateListenRequestDto[],
   ): Promise<Listen[]> {
@@ -46,9 +31,11 @@ export class ListensService {
         ),
     );
 
-    return this.listenRepository.save(
+    const newListens = await this.listenRepository.save(
       missingListens.map((entry) => this.listenRepository.create(entry)),
     );
+
+    return [...existingListens, ...newListens];
   }
 
   async getListens(

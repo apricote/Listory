@@ -4,9 +4,7 @@ import {
   paginate,
   PaginationTypeEnum,
 } from "nestjs-typeorm-paginate";
-import { Track } from "../music-library/track.entity";
 import { User } from "../users/user.entity";
-import { CreateListenResponseDto } from "./dto/create-listen.dto";
 import { GetListensDto } from "./dto/get-listens.dto";
 import { Listen } from "./listen.entity";
 import { ListenRepository, ListenScopes } from "./listen.repository";
@@ -33,39 +31,6 @@ describe("ListensService", () => {
   it("should be defined", () => {
     expect(service).toBeDefined();
     expect(listenRepository).toBeDefined();
-  });
-
-  describe("createListen", () => {
-    let user: User;
-    let track: Track;
-    let playedAt: Date;
-    let response: CreateListenResponseDto;
-    beforeEach(() => {
-      user = { id: "USER" } as User;
-      track = { id: "TRACK" } as Track;
-      playedAt = new Date("2021-01-01T00:00:00Z");
-
-      response = {
-        listen: {
-          id: "LISTEN",
-        } as Listen,
-        isDuplicate: true,
-      };
-      listenRepository.insertNoConflict = jest.fn().mockResolvedValue(response);
-    });
-
-    it("creates the listen", async () => {
-      await expect(
-        service.createListen({ user, track, playedAt }),
-      ).resolves.toEqual(response);
-
-      expect(listenRepository.insertNoConflict).toHaveBeenCalledTimes(1);
-      expect(listenRepository.insertNoConflict).toHaveBeenLastCalledWith({
-        user,
-        track,
-        playedAt,
-      });
-    });
   });
 
   describe("getListens", () => {

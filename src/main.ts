@@ -43,6 +43,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
+    rawBody: true,
   });
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(
@@ -51,6 +52,10 @@ async function bootstrap() {
       transformOptions: { enableImplicitConversion: true },
     }),
   );
+  app.useBodyParser("json", {
+    limit:
+      "10mb" /* Need large bodies for Spotify Extended Streaming History */,
+  });
   app.enableShutdownHooks();
 
   const configService = app.get<ConfigService>(ConfigService);

@@ -14,6 +14,8 @@ import { TopGenresItem } from "./entities/top-genres-item";
 import { TopGenresOptions } from "./entities/top-genres-options";
 import { TopTracksItem } from "./entities/top-tracks-item";
 import { TopTracksOptions } from "./entities/top-tracks-options";
+import { SpotifyExtendedStreamingHistoryItem } from "./entities/spotify-extended-streaming-history-item";
+import { ExtendedStreamingHistoryStatus } from "./entities/extended-streaming-history-status";
 
 export class UnauthenticatedError extends Error {}
 
@@ -276,7 +278,7 @@ export const revokeApiToken = async (
   id: string,
   client: AxiosInstance,
 ): Promise<void> => {
-  const res = await client.delete<NewApiToken>(`/api/v1/auth/api-tokens/${id}`);
+  const res = await client.delete(`/api/v1/auth/api-tokens/${id}`);
 
   switch (res.status) {
     case 200: {
@@ -289,4 +291,51 @@ export const revokeApiToken = async (
       throw new Error(`Unable to revokeApiToken: ${res.status}`);
     }
   }
+};
+
+export const importExtendedStreamingHistory = async (
+  listens: SpotifyExtendedStreamingHistoryItem[],
+  client: AxiosInstance
+): Promise<void> => {
+  const res = await client.post(`/api/v1/import/extended-streaming-history`, {
+    listens,
+  });
+
+  switch (res.status) {
+    case 201: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(
+        `Unable to importExtendedStreamingHistory: ${res.status}`
+      );
+    }
+  }
+};
+
+export const getExtendedStreamingHistoryStatus = async (
+  client: AxiosInstance
+): Promise<ExtendedStreamingHistoryStatus> => {
+  const res = await client.get<ExtendedStreamingHistoryStatus>(
+    `/api/v1/import/extended-streaming-history/status`
+  );
+
+  switch (res.status) {
+    case 200: {
+      break;
+    }
+    case 401: {
+      throw new UnauthenticatedError(`No token or token expired`);
+    }
+    default: {
+      throw new Error(
+        `Unable to getExtendedStreamingHistoryStatus: ${res.status}`
+      );
+    }
+  }
+
+  return res.data;
 };
