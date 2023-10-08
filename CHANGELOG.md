@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/apricote/Listory/compare/v1.30.0...v1.30.1) (2023-10-08)
+
+
+### Bug Fixes
+
+* no listens are being crawled ([#306](https://github.com/apricote/Listory/issues/306)) ([9af3115](https://github.com/apricote/Listory/commit/9af3115cab19cc4ac4a6cd0fb680371154069aa2))
+
 # [1.30.0](https://github.com/apricote/Listory/compare/v1.29.0...v1.30.0) (2023-10-01)
 
 
