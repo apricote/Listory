@@ -46,7 +46,7 @@
     "@opentelemetry/exporter-trace-otlp-http": "0.44.0",
     "@opentelemetry/instrumentation": "0.44.0",
     "@opentelemetry/instrumentation-dns": "0.32.3",
-    "@opentelemetry/instrumentation-express": "0.33.1",
+    "@opentelemetry/instrumentation-express": "0.33.2",
     "@opentelemetry/instrumentation-http": "0.44.0",
     "@opentelemetry/instrumentation-nestjs-core": "0.33.1",
     "@opentelemetry/instrumentation-pg": "0.36.1",
