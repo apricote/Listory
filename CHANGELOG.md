@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/apricote/Listory/compare/v1.30.1...v1.31.0) (2023-10-15)
+
+
+### Features
+
+* **frontend:** hide revoked api tokens ([#307](https://github.com/apricote/Listory/issues/307)) ([4cef4f7](https://github.com/apricote/Listory/commit/4cef4f75ace6a38ba19c1d2f93d81389ec2b7cb8))
+
 ## [1.30.1](https://github.com/apricote/Listory/compare/v1.30.0...v1.30.1) (2023-10-08)
 
 
