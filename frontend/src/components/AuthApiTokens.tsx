@@ -9,7 +9,10 @@ import { Spinner } from "./ui/Spinner";
 export const AuthApiTokens: React.FC = () => {
   const { apiTokens, isLoading, createToken, revokeToken } = useApiTokens();
   const sortedTokens = useMemo(
-    () => apiTokens.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
+    () =>
+      apiTokens
+        .filter((token) => !token.revokedAt)
+        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
     [apiTokens],
   );
 
@@ -22,7 +25,7 @@ export const AuthApiTokens: React.FC = () => {
         <p className="mb-4">
           You can use API Tokens to access the Listory API directly. You can
           find the API docs{" "}
-          <a href="/api/docs" target="_blank">
+          <a href="/api/docs" target="_blank" className={"underline"}>
             here
           </a>
           .
