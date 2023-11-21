@@ -89,7 +89,7 @@
     "@types/jest": "29.5.9",
     "@types/lodash": "4.14.202",
     "@types/node": "20.9.3",
-    "@types/passport-http-bearer": "1.0.40",
+    "@types/passport-http-bearer": "1.0.41",
     "@types/passport-jwt": "3.0.13",
     "@types/supertest": "2.0.16",
     "@typescript-eslint/eslint-plugin": "6.12.0",
