@@ -50,7 +50,7 @@
     "@opentelemetry/instrumentation-http": "0.45.1",
     "@opentelemetry/instrumentation-nestjs-core": "0.33.3",
     "@opentelemetry/instrumentation-pg": "0.37.1",
-    "@opentelemetry/instrumentation-pino": "0.34.3",
+    "@opentelemetry/instrumentation-pino": "0.34.4",
     "@opentelemetry/resources": "1.18.1",
     "@opentelemetry/sdk-metrics": "1.18.1",
     "@opentelemetry/sdk-node": "0.45.1",
