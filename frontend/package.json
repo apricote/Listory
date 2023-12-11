@@ -22,7 +22,7 @@
     "@types/react": "18.2.43",
     "@types/react-dom": "18.2.17",
     "@types/react-router-dom": "5.3.3",
-    "@types/recharts": "1.8.28",
+    "@types/recharts": "1.8.29",
     "@vitejs/plugin-react": "4.2.1",
     "autoprefixer": "10.4.16",
     "axios": "1.6.2",
