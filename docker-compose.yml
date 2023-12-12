@@ -159,7 +159,7 @@ services:
 
   promtail:
     profiles: ["observability"]
-    image: grafana/promtail:2.9.2
+    image: grafana/promtail:2.9.3
     command: ["-config.file=/etc/promtail.yaml"]
     volumes:
       - ./observability/promtail/promtail.yaml:/etc/promtail.yaml
