@@ -27,7 +27,7 @@
     "autoprefixer": "10.4.16",
     "axios": "1.6.3",
     "class-variance-authority": "0.7.0",
-    "clsx": "2.0.0",
+    "clsx": "2.1.0",
     "date-fns": "2.30.0",
     "eslint-config-react-app": "7.0.1",
     "jsdom": "22.1.0",
