@@ -58,7 +58,7 @@
     "@opentelemetry/semantic-conventions": "1.19.0",
     "@sentry/node": "7.93.0",
     "class-transformer": "0.5.1",
-    "class-validator": "0.14.0",
+    "class-validator": "0.14.1",
     "cookie-parser": "1.4.6",
     "date-fns": "2.30.0",
     "joi": "17.11.0",
