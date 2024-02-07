@@ -28,7 +28,7 @@
   "dependencies": {
     "@apricote/nest-pg-boss": "2.1.0",
     "@narando/nest-axios-interceptor": "3.0.0",
-    "@nestjs/axios": "3.0.1",
+    "@nestjs/axios": "3.0.2",
     "@nestjs/common": "10.3.1",
     "@nestjs/config": "3.1.1",
     "@nestjs/core": "10.3.1",
