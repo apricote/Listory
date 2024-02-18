@@ -73,7 +73,7 @@
     "passport-spotify": "2.0.0",
     "pg": "8.11.3",
     "pg-boss": "9.0.3",
-    "pino": "8.18.0",
+    "pino": "8.19.0",
     "pino-http": "8.6.1",
     "reflect-metadata": "0.1.14",
     "rimraf": "5.0.5",
