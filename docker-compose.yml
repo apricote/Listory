@@ -148,7 +148,7 @@ services:
 
   loki:
     profiles: ["observability"]
-    image: grafana/loki:2.9.4
+    image: grafana/loki:2.9.5
     command: ["-config.file=/etc/loki/loki.yaml"]
     ports:
       - "3100" # loki needs to be exposed so it receives logs
