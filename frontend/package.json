@@ -30,7 +30,7 @@
     "clsx": "2.1.0",
     "date-fns": "2.30.0",
     "eslint-config-react-app": "7.0.1",
-    "jsdom": "22.1.0",
+    "jsdom": "24.1.2",
     "lucide-react": "0.358.0",
     "npm-run-all": "4.1.5",
     "postcss": "8.4.35",
