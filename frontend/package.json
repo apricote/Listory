@@ -37,7 +37,7 @@
     "prettier": "3.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-files": "3.0.0",
+    "react-files": "3.0.3",
     "react-router-dom": "6.22.3",
     "recharts": "2.12.3",
     "tailwind-merge": "1.14.0",
