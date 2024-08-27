@@ -73,7 +73,7 @@ services:
       - web
 
   proxy:
-    image: traefik:2.11.0
+    image: traefik:v2.11.8
     command:
       #- --log.level=debug
       #- --accesslog=true
