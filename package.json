@@ -81,7 +81,7 @@
     "typeorm": "0.3.20"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.4.4",
+    "@nestjs/cli": "10.4.5",
     "@nestjs/schematics": "10.1.1",
     "@nestjs/testing": "10.3.3",
     "@types/cookie-parser": "1.4.7",
