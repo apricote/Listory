@@ -177,7 +177,7 @@ services:
 
   tempo:
     profiles: ["observability"]
-    image: grafana/tempo:2.5.0
+    image: grafana/tempo:2.6.0
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./observability/tempo/tempo.yaml:/etc/tempo.yaml
