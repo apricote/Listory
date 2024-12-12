@@ -12,7 +12,7 @@ services:
   #####
 
   db:
-    image: postgres:16.5
+    image: postgres:16.6
     environment:
       POSTGRES_PASSWORD: listory
       POSTGRES_USER: listory
