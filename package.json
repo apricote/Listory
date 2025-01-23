@@ -88,7 +88,7 @@
     "@types/express": "5.0.0",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.14",
-    "@types/node": "20.17.14",
+    "@types/node": "20.17.16",
     "@types/passport-http-bearer": "1.0.41",
     "@types/passport-jwt": "4.0.1",
     "@types/supertest": "6.0.2",
