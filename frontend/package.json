@@ -45,7 +45,7 @@
     "tailwindcss-animate": "1.0.7",
     "typescript": "5.7.2",
     "vite": "5.4.12",
-    "vitest": "1.6.0"
+    "vitest": "1.6.1"
   },
   "scripts": {
     "format": "prettier --write \"./*.js\" \"src/**/*.(tsx|ts|css)\"",
